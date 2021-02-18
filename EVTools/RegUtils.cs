@@ -144,6 +144,10 @@ namespace EVTools
             MessageBox.Show("设置完成！若发现环境变量并没有成功设定，请退出程序然后右键-以管理员身份运行此程序重试。有的电脑设置了环境变量可能需要重启才能生效！", "完成", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        /// <summary>
+        /// 把指定值加入到Path环境变量中去
+        /// </summary>
+        /// <param name="value">指定值</param>
         public static void AddValueToPath(string value)
         {
             RegistryKey key = Registry.LocalMachine;
