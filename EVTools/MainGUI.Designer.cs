@@ -156,7 +156,6 @@ namespace EVTools
             // 
             // recheck
             // 
-            this.recheck.Enabled = false;
             this.recheck.Location = new System.Drawing.Point(252, 4);
             this.recheck.Name = "recheck";
             this.recheck.Size = new System.Drawing.Size(75, 23);
