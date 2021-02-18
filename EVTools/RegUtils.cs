@@ -73,35 +73,37 @@ namespace EVTools
         {
             jdkVersions.Clear();
             RegistryKey key = Registry.LocalMachine;
-            if (!IsRegExists(key, @"SOFTWARE\JavaSoft\Java Development Kit") && !IsRegExists(key, @"SOFTWARE\JavaSoft\JDK"))
-            {
-                return;
-            }
             //检测jdk8及其以下版本
-            RegistryKey jdkOldVersionsKey = key.OpenSubKey(@"SOFTWARE\JavaSoft\Java Development Kit");
-            string[] jdkOldVersions = jdkOldVersionsKey.GetSubKeyNames();
-            foreach (string version in jdkOldVersions)
+            if (IsRegExists(key, @"SOFTWARE\JavaSoft\Java Development Kit"))
             {
-                if (Array.IndexOf(NOT_ADD_VERSION_VALUE, version) == -1)
+                RegistryKey jdkOldVersionsKey = key.OpenSubKey(@"SOFTWARE\JavaSoft\Java Development Kit");
+                string[] jdkOldVersions = jdkOldVersionsKey.GetSubKeyNames();
+                foreach (string version in jdkOldVersions)
                 {
-                    RegistryKey jdkVersionKey = key.OpenSubKey(@"SOFTWARE\JavaSoft\Java Development Kit\" + version);
+                    if (Array.IndexOf(NOT_ADD_VERSION_VALUE, version) == -1)
+                    {
+                        RegistryKey jdkVersionKey = key.OpenSubKey(@"SOFTWARE\JavaSoft\Java Development Kit\" + version);
+                        string path = jdkVersionKey.GetValue("JavaHome").ToString();
+                        jdkVersions.Add(version, path);
+                        jdkVersionKey.Close();
+                    }
+                }
+                jdkOldVersionsKey.Close();
+            }
+            //检测jdk9及其以上版本
+            if (IsRegExists(key, @"SOFTWARE\JavaSoft\JDK"))
+            {
+                RegistryKey jdkNewVersionsKey = key.OpenSubKey(@"SOFTWARE\JavaSoft\JDK");
+                string[] jdkNewVersions = jdkNewVersionsKey.GetSubKeyNames();
+                foreach (string version in jdkNewVersions)
+                {
+                    RegistryKey jdkVersionKey = key.OpenSubKey(@"SOFTWARE\JavaSoft\JDK\" + version);
                     string path = jdkVersionKey.GetValue("JavaHome").ToString();
                     jdkVersions.Add(version, path);
                     jdkVersionKey.Close();
                 }
+                jdkNewVersionsKey.Close();
             }
-            //检测jdk9及其以上版本
-            RegistryKey jdkNewVersionsKey = key.OpenSubKey(@"SOFTWARE\JavaSoft\JDK");
-            string[] jdkNewVersions = jdkNewVersionsKey.GetSubKeyNames();
-            foreach (string version in jdkNewVersions)
-            {
-                RegistryKey jdkVersionKey = key.OpenSubKey(@"SOFTWARE\JavaSoft\JDK\" + version);
-                string path = jdkVersionKey.GetValue("JavaHome").ToString();
-                jdkVersions.Add(version, path);
-                jdkVersionKey.Close();
-            }
-            jdkOldVersionsKey.Close();
-            jdkNewVersionsKey.Close();
         }
 
         /// <summary>
