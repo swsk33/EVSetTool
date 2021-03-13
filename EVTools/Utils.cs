@@ -1,11 +1,12 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace EVTools
 {
-    class RegUtils
+    class Utils
     {
         //冗余版本信息
         private static readonly string[] NOT_ADD_VERSION_VALUE = { "1.1", "1.2", "1.3", "1.4", "1.5", "1.6", "1.7", "1.8" };
@@ -17,6 +18,43 @@ namespace EVTools
         private static readonly string CLASSPATH_VALUE = ".;" + JAVA_HOME_NAME + @"\lib\dt.jar;" + JAVA_HOME_NAME + @"\lib\tools.jar";
         //追加Path变量值
         private static readonly string ADD_PATH_VALUE = JAVA_HOME_NAME + @"\bin";
+
+        /// <summary>
+        /// 运行setx命令设定环境变量
+        /// </summary>
+        /// <param name="varName">设定变量名</param>
+        /// <param name="value">变量值</param>
+        /// <param name="isSysVar">是否是系统变量</param>
+        private static void RunSetx(string varName, string value, bool isSysVar)
+        {
+            string args = "\"" + varName + "\" " + "\"" + value + "\"";
+            if (isSysVar)
+            {
+                args = args + " /m";
+            }
+            Process process = new Process();
+            process.StartInfo.FileName = "setx";
+            process.StartInfo.Arguments = args;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.CreateNoWindow = true;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardError = true;
+            try
+            {
+                process.Start();
+                _ = process.StandardOutput.ReadToEnd();
+                _ = process.StandardError.ReadToEnd();
+                process.WaitForExit();
+            }
+            catch
+            {
+                // none
+            }
+            finally
+            {
+                process.Close();
+            }
+        }
 
         /// <summary>
         /// 判断注册表项是否存在
@@ -115,7 +153,7 @@ namespace EVTools
         {
             RegistryKey key = Registry.LocalMachine;
             RegistryKey EVKey = key.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", true);
-            EVKey.SetValue("JAVA_HOME", javaPath);
+            RunSetx("JAVA_HOME", javaPath, true);
             if (isJDK9AndAbove)
             {
                 if (IsRegValueExists(key, @"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", "classpath"))
@@ -127,7 +165,7 @@ namespace EVTools
             {
                 if (!IsRegValueExists(key, @"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", "classpath") || !EVKey.GetValue("classpath").Equals(CLASSPATH_VALUE))
                 {
-                    EVKey.SetValue("classpath", CLASSPATH_VALUE, RegistryValueKind.ExpandString);
+                    RunSetx("classpath", CLASSPATH_VALUE, true);
                 }
             }
             string pathValue = EVKey.GetValue("Path", "", RegistryValueOptions.DoNotExpandEnvironmentNames).ToString();
@@ -135,15 +173,15 @@ namespace EVTools
             {
                 if (pathValue.EndsWith(";"))
                 {
-                    EVKey.SetValue("Path", pathValue + ADD_PATH_VALUE);
+                    RunSetx("Path", pathValue + ADD_PATH_VALUE, true);
                 }
                 else
                 {
-                    EVKey.SetValue("Path", pathValue + ";" + ADD_PATH_VALUE);
+                    RunSetx("Path", pathValue + ";" + ADD_PATH_VALUE, true);
                 }
             }
             EVKey.Close();
-            MessageBox.Show("设置完成！若发现环境变量并没有成功设定，请退出程序然后右键-以管理员身份运行此程序重试。有的电脑设置了环境变量可能需要重启才能生效！", "完成", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("设置完成！若发现环境变量并没有成功设定，请退出程序然后右键-以管理员身份运行此程序重试。", "完成", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         /// <summary>
@@ -155,21 +193,21 @@ namespace EVTools
             RegistryKey key = Registry.LocalMachine;
             RegistryKey EVKey = key.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", true);
             string pathValue = EVKey.GetValue("Path", "", RegistryValueOptions.DoNotExpandEnvironmentNames).ToString();
-            if (pathValue.Contains(value))
+            if (pathValue.Contains(value + ";") || pathValue.EndsWith(value))
             {
                 MessageBox.Show("这个值已经存在于Path中！无需重复添加！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             if (pathValue.EndsWith(";"))
             {
-                EVKey.SetValue("Path", pathValue + value);
+                RunSetx("Path", pathValue + value, true);
             }
             else
             {
-                EVKey.SetValue("Path", pathValue + ";" + value);
+                RunSetx("Path", pathValue + ";" + value, true);
             }
             EVKey.Close();
-            MessageBox.Show("设置完成！若发现环境变量并没有成功设定，请退出程序然后右键-以管理员身份运行此程序重试。有的电脑设置了环境变量可能需要重启才能生效！", "完成", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("设置完成！若发现环境变量并没有成功设定，请退出程序然后右键-以管理员身份运行此程序重试。", "完成", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

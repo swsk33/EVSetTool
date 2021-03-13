@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace EVTools
@@ -9,6 +10,7 @@ namespace EVTools
         public MainGUI()
         {
             InitializeComponent();
+            CheckForIllegalCrossThreadCalls = false;
         }
 
         /// <summary>
@@ -32,8 +34,8 @@ namespace EVTools
 
         private void MainGUI_Load(object sender, System.EventArgs e)
         {
-            RegUtils.GetJDKVersion();
-            if (RegUtils.jdkVersions.Count == 0)
+            Utils.GetJDKVersion();
+            if (Utils.jdkVersions.Count == 0)
             {
                 autoSetOption.Enabled = false;
                 autoSetValue.Enabled = false;
@@ -43,7 +45,7 @@ namespace EVTools
             }
             else
             {
-                foreach (string version in RegUtils.jdkVersions.Keys)
+                foreach (string version in Utils.jdkVersions.Keys)
                 {
                     autoSetValue.Items.Add(version);
                 }
@@ -73,7 +75,7 @@ namespace EVTools
             bool isJDK9Above = false;
             if (autoSetOption.Checked)
             {
-                javaPath = RegUtils.jdkVersions[autoSetValue.SelectedItem.ToString()];
+                javaPath = Utils.jdkVersions[autoSetValue.SelectedItem.ToString()];
                 isJDK9Above = false;
                 if (!autoSetValue.SelectedItem.ToString().StartsWith("1."))
                 {
@@ -94,20 +96,25 @@ namespace EVTools
                     isJDK9Above = true;
                 }
             }
-            RegUtils.SetJDKValue(javaPath, isJDK9Above);
+            jdkSettingTip.Visible = true;
+            new Thread(() =>
+            {
+                Utils.SetJDKValue(javaPath, isJDK9Above);
+                jdkSettingTip.Visible = false;
+            }).Start();
         }
 
         private void recheck_Click(object sender, EventArgs e)
         {
-            RegUtils.GetJDKVersion();
-            if (RegUtils.jdkVersions.Count != 0)
+            Utils.GetJDKVersion();
+            if (Utils.jdkVersions.Count != 0)
             {
                 autoSetOption.Enabled = true;
                 autoSetValue.Enabled = true;
                 jdkNotFoundTip.Visible = false;
                 recheck.Visible = false;
                 autoSetOption.Checked = true;
-                foreach (string version in RegUtils.jdkVersions.Keys)
+                foreach (string version in Utils.jdkVersions.Keys)
                 {
                     autoSetValue.Items.Add(version);
                 }
@@ -122,7 +129,12 @@ namespace EVTools
                 MessageBox.Show("请先指定待添加路径！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            RegUtils.AddValueToPath(otherSetValue.Text);
+            otherSettingTip.Visible = true;
+            new Thread(() =>
+            {
+                Utils.AddValueToPath(otherSetValue.Text);
+                otherSettingTip.Visible = false;
+            }).Start();
         }
     }
 }
