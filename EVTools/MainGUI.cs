@@ -18,17 +18,29 @@ namespace EVTools
         /// </summary>
         private void GetRadioButtonChanged(object sender, System.EventArgs e)
         {
-            if (autoSetOption.Checked)
+            if (jdkAutoSetOption.Checked)
             {
-                autoSetValue.Enabled = true;
-                manualSetValue.Enabled = false;
-                manualSetButton.Enabled = false;
+                jdkAutoSetValue.Enabled = true;
+                jdkManualSetValue.Enabled = false;
+                jdkManualSetButton.Enabled = false;
             }
-            else if (manualSetOption.Checked)
+            else if (jdkManualSetOption.Checked)
             {
-                autoSetValue.Enabled = false;
-                manualSetValue.Enabled = true;
-                manualSetButton.Enabled = true;
+                jdkAutoSetValue.Enabled = false;
+                jdkManualSetValue.Enabled = true;
+                jdkManualSetButton.Enabled = true;
+            }
+            if (pyAutoSetOption.Checked)
+            {
+                pyAutoSetValue.Enabled = true;
+                pyManualSetValue.Enabled = false;
+                pyManualSetButton.Enabled = false;
+            }
+            else if (pyManualSetOption.Checked)
+            {
+                pyAutoSetValue.Enabled = false;
+                pyManualSetValue.Enabled = true;
+                pyManualSetButton.Enabled = true;
             }
         }
 
@@ -37,28 +49,45 @@ namespace EVTools
             Utils.GetJDKVersion();
             if (Utils.jdkVersions.Count == 0)
             {
-                autoSetOption.Enabled = false;
-                autoSetValue.Enabled = false;
+                jdkAutoSetOption.Enabled = false;
+                jdkAutoSetValue.Enabled = false;
                 jdkNotFoundTip.Visible = true;
-                recheck.Visible = true;
-                manualSetOption.Checked = true;
+                jdkRecheck.Visible = true;
+                jdkManualSetOption.Checked = true;
             }
             else
             {
                 foreach (string version in Utils.jdkVersions.Keys)
                 {
-                    autoSetValue.Items.Add(version);
+                    jdkAutoSetValue.Items.Add(version);
                 }
-                autoSetValue.SelectedIndex = 0;
+                jdkAutoSetValue.SelectedIndex = 0;
+            }
+            Utils.GetPyVersions();
+            if (Utils.pyVersions.Count == 0)
+            {
+                pyAutoSetOption.Enabled = false;
+                pyAutoSetValue.Enabled = false;
+                pyNotFoundTip.Visible = true;
+                pyRecheck.Visible = true;
+                pyManualSetOption.Checked = true;
+            }
+            else
+            {
+                foreach (string version in Utils.pyVersions.Keys)
+                {
+                    pyAutoSetValue.Items.Add(version);
+                }
+                pyAutoSetValue.SelectedIndex = 0;
             }
         }
 
-        private void manualSetButton_Click(object sender, System.EventArgs e)
+        private void jdkManualSetButton_Click(object sender, System.EventArgs e)
         {
             FolderBrowserDialog dialog = new FolderBrowserDialog();
             dialog.Description = "请选择jdk所在的文件夹";
             dialog.ShowDialog();
-            manualSetValue.Text = dialog.SelectedPath;
+            jdkManualSetValue.Text = dialog.SelectedPath;
         }
 
         private void otherSetButton_Click(object sender, System.EventArgs e)
@@ -73,18 +102,18 @@ namespace EVTools
         {
             string javaPath = "";
             bool isJDK9Above = false;
-            if (autoSetOption.Checked)
+            if (jdkAutoSetOption.Checked)
             {
-                javaPath = Utils.jdkVersions[autoSetValue.SelectedItem.ToString()];
+                javaPath = Utils.jdkVersions[jdkAutoSetValue.SelectedItem.ToString()];
                 isJDK9Above = false;
-                if (!autoSetValue.SelectedItem.ToString().StartsWith("1."))
+                if (!jdkAutoSetValue.SelectedItem.ToString().StartsWith("1."))
                 {
                     isJDK9Above = true;
                 }
             }
-            else if (manualSetOption.Checked)
+            else if (jdkManualSetOption.Checked)
             {
-                javaPath = manualSetValue.Text.ToString();
+                javaPath = jdkManualSetValue.Text.ToString();
                 if (javaPath.Equals(""))
                 {
                     MessageBox.Show("请先指定jdk所在路径！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -104,21 +133,21 @@ namespace EVTools
             }).Start();
         }
 
-        private void recheck_Click(object sender, EventArgs e)
+        private void jdkRecheck_Click(object sender, EventArgs e)
         {
             Utils.GetJDKVersion();
             if (Utils.jdkVersions.Count != 0)
             {
-                autoSetOption.Enabled = true;
-                autoSetValue.Enabled = true;
+                jdkAutoSetOption.Enabled = true;
+                jdkAutoSetValue.Enabled = true;
                 jdkNotFoundTip.Visible = false;
-                recheck.Visible = false;
-                autoSetOption.Checked = true;
+                jdkRecheck.Visible = false;
+                jdkAutoSetOption.Checked = true;
                 foreach (string version in Utils.jdkVersions.Keys)
                 {
-                    autoSetValue.Items.Add(version);
+                    jdkAutoSetValue.Items.Add(version);
                 }
-                autoSetValue.SelectedIndex = 0;
+                jdkAutoSetValue.SelectedIndex = 0;
             }
         }
 
@@ -132,9 +161,35 @@ namespace EVTools
             otherSettingTip.Visible = true;
             new Thread(() =>
             {
-                Utils.AddValueToPath(otherSetValue.Text);
+                Utils.AddValueToPath(otherSetValue.Text, true);
                 otherSettingTip.Visible = false;
             }).Start();
+        }
+
+        private void pyRecheck_Click(object sender, EventArgs e)
+        {
+            Utils.GetPyVersions();
+            if (Utils.pyVersions.Count != 0)
+            {
+                pyAutoSetValue.Enabled = true;
+                pyAutoSetOption.Enabled = true;
+                pyNotFoundTip.Visible = false;
+                pyRecheck.Visible = false;
+                pyAutoSetOption.Checked = true;
+                foreach (string version in Utils.pyVersions.Keys)
+                {
+                    pyAutoSetValue.Items.Add(version);
+                }
+                pyAutoSetValue.SelectedIndex = 0;
+            }
+        }
+
+        private void pyManualSetFind_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            dialog.Description = "请选择Python所在的文件夹";
+            dialog.ShowDialog();
+            pyManualSetValue.Text = dialog.SelectedPath;
         }
     }
 }

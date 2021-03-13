@@ -18,6 +18,8 @@ namespace EVTools
         private static readonly string CLASSPATH_VALUE = ".;" + JAVA_HOME_NAME + @"\lib\dt.jar;" + JAVA_HOME_NAME + @"\lib\tools.jar";
         //追加Path变量值
         private static readonly string ADD_PATH_VALUE = JAVA_HOME_NAME + @"\bin";
+        //python版本列表
+        public static Dictionary<string, string> pyVersions = new Dictionary<string, string>();
 
         /// <summary>
         /// 运行setx命令设定环境变量
@@ -105,7 +107,7 @@ namespace EVTools
         }
 
         /// <summary>
-        /// 检测已安装jdk版本，信息储存至RegUtils类的全局静态变量jdkVersions中。
+        /// 检测已安装jdk版本，信息储存至Utils类的全局静态变量jdkVersions中。
         /// </summary>
         public static void GetJDKVersion()
         {
@@ -185,17 +187,65 @@ namespace EVTools
         }
 
         /// <summary>
+        /// 获取已安装Python版本，存放于Utils类的全局静态变量pyVersions中。
+        /// </summary>
+        public static void GetPyVersions()
+        {
+            pyVersions.Clear();
+            RegistryKey key = Registry.LocalMachine;
+            if (IsRegExists(key, @"SOFTWARE\Python\PythonCore"))
+            {
+                RegistryKey pyVersionKey = key.OpenSubKey(@"SOFTWARE\Python\PythonCore");
+                string[] pyVers = pyVersionKey.GetSubKeyNames();
+                foreach (string v in pyVers)
+                {
+                    RegistryKey eachPyVerKey = key.OpenSubKey(@"SOFTWARE\Python\PythonCore\" + v + @"\InstallPath");
+                    string pyPath = eachPyVerKey.GetValue("").ToString();
+                    pyVersions.Add(v, pyPath);
+                }
+                pyVersionKey.Close();
+            }
+        }
+
+        /// <summary>
+        /// 设定Python环境变量
+        /// </summary>
+        /// <param name="pyPath">python所在位置</param>
+        public static void SetPyPath(string pyPath)
+        {
+            if (pyPath.EndsWith("\\"))
+            {
+                pyPath = pyPath.Substring(0, pyPath.Length - 1);
+            }
+            RegistryKey key = Registry.LocalMachine;
+            RegistryKey EVKey = key.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment");
+            string pathValue = EVKey.GetValue("Path", "", RegistryValueOptions.DoNotExpandEnvironmentNames).ToString();
+            if (!pathValue.Contains(pyPath + ";") && !pathValue.EndsWith(pyPath))
+            {
+                AddValueToPath(pyPath, false);
+            }
+            if (!pathValue.Contains(pyPath + "\\Scripts;") && !pathValue.EndsWith(pyPath + "\\Scripts"))
+            {
+                AddValueToPath(pyPath + "\\Scripts", false);
+            }
+        }
+
+        /// <summary>
         /// 把指定值加入到Path环境变量中去
         /// </summary>
         /// <param name="value">指定值</param>
-        public static void AddValueToPath(string value)
+        /// <param name="showTip">是否显示错误提示</param>
+        public static void AddValueToPath(string value, bool showTip)
         {
             RegistryKey key = Registry.LocalMachine;
-            RegistryKey EVKey = key.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", true);
+            RegistryKey EVKey = key.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment");
             string pathValue = EVKey.GetValue("Path", "", RegistryValueOptions.DoNotExpandEnvironmentNames).ToString();
             if (pathValue.Contains(value + ";") || pathValue.EndsWith(value))
             {
-                MessageBox.Show("这个值已经存在于Path中！无需重复添加！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (showTip)
+                {
+                    MessageBox.Show("这个值已经存在于Path中！无需重复添加！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
                 return;
             }
             if (pathValue.EndsWith(";"))
