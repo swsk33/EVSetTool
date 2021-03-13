@@ -191,5 +191,29 @@ namespace EVTools
             dialog.ShowDialog();
             pyManualSetValue.Text = dialog.SelectedPath;
         }
+
+        private void pyOk_Click(object sender, EventArgs e)
+        {
+            string pyPath = "";
+            if (pyAutoSetOption.Checked)
+            {
+                pyPath = Utils.pyVersions[pyAutoSetValue.SelectedItem.ToString()];
+            }
+            else if (pyManualSetOption.Checked)
+            {
+                if (pyManualSetValue.Text.Equals(""))
+                {
+                    MessageBox.Show("请先指定Python所在路径！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                pyPath = pyManualSetValue.Text;
+            }
+            pySettingTip.Visible = true;
+            new Thread(() =>
+            {
+                Utils.SetPythonValue(pyPath);
+                pySettingTip.Visible = false;
+            }).Start();
+        }
     }
 }

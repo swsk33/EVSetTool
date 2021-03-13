@@ -211,7 +211,7 @@ namespace EVTools
         /// 设定Python环境变量
         /// </summary>
         /// <param name="pyPath">python所在位置</param>
-        public static void SetPyPath(string pyPath)
+        public static void SetPythonValue(string pyPath)
         {
             if (pyPath.EndsWith("\\"))
             {
@@ -228,13 +228,15 @@ namespace EVTools
             {
                 AddValueToPath(pyPath + "\\Scripts", false);
             }
+            EVKey.Close();
+            MessageBox.Show("设置完成！若发现环境变量并没有成功设定，请退出程序然后右键-以管理员身份运行此程序重试。", "完成", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         /// <summary>
         /// 把指定值加入到Path环境变量中去
         /// </summary>
         /// <param name="value">指定值</param>
-        /// <param name="showTip">是否显示错误提示</param>
+        /// <param name="showTip">是否显示提示</param>
         public static void AddValueToPath(string value, bool showTip)
         {
             RegistryKey key = Registry.LocalMachine;
@@ -257,7 +259,10 @@ namespace EVTools
                 RunSetx("Path", pathValue + ";" + value, true);
             }
             EVKey.Close();
-            MessageBox.Show("设置完成！若发现环境变量并没有成功设定，请退出程序然后右键-以管理员身份运行此程序重试。", "完成", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (showTip)
+            {
+                MessageBox.Show("设置完成！若发现环境变量并没有成功设定，请退出程序然后右键-以管理员身份运行此程序重试。", "完成", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }

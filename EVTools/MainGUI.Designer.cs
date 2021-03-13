@@ -291,6 +291,7 @@ namespace EVTools
             this.pyOk.TabIndex = 13;
             this.pyOk.Text = "设定";
             this.pyOk.UseVisualStyleBackColor = true;
+            this.pyOk.Click += new System.EventHandler(this.pyOk_Click);
             // 
             // pyNotFoundTip
             // 
