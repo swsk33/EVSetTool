@@ -28,9 +28,14 @@ namespace EVTools
                 string[] pyVers = pyVersionKey.GetSubKeyNames();
                 foreach (string v in pyVers)
                 {
-                    RegistryKey eachPyVerKey = key.OpenSubKey(@"SOFTWARE\Python\PythonCore\" + v + @"\InstallPath");
-                    string pyPath = eachPyVerKey.GetValue("").ToString();
-                    pyVersions.Add(v, pyPath);
+                    string eachPyVarsionPath = @"SOFTWARE\Python\PythonCore\" + v + @"\InstallPath";
+                    if (Utils.IsRegExists(key, eachPyVarsionPath))
+                    {
+                        RegistryKey eachPyVerKey = key.OpenSubKey(eachPyVarsionPath);
+                        string pyPath = eachPyVerKey.GetValue("").ToString();
+                        pyVersions.Add(v, pyPath);
+                        eachPyVerKey.Close();
+                    }
                 }
                 pyVersionKey.Close();
             }
