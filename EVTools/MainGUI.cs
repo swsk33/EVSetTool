@@ -46,8 +46,8 @@ namespace EVTools
 
         private void MainGUI_Load(object sender, System.EventArgs e)
         {
-            Utils.GetJDKVersion();
-            if (Utils.jdkVersions.Count == 0)
+            JDKUtils.GetJDKVersion();
+            if (JDKUtils.jdkVersions.Count == 0)
             {
                 jdkAutoSetOption.Enabled = false;
                 jdkAutoSetValue.Enabled = false;
@@ -57,14 +57,14 @@ namespace EVTools
             }
             else
             {
-                foreach (string version in Utils.jdkVersions.Keys)
+                foreach (string version in JDKUtils.jdkVersions.Keys)
                 {
                     jdkAutoSetValue.Items.Add(version);
                 }
                 jdkAutoSetValue.SelectedIndex = 0;
             }
-            Utils.GetPyVersions();
-            if (Utils.pyVersions.Count == 0)
+            PyUtils.GetPyVersions();
+            if (PyUtils.pyVersions.Count == 0)
             {
                 pyAutoSetOption.Enabled = false;
                 pyAutoSetValue.Enabled = false;
@@ -74,7 +74,7 @@ namespace EVTools
             }
             else
             {
-                foreach (string version in Utils.pyVersions.Keys)
+                foreach (string version in PyUtils.pyVersions.Keys)
                 {
                     pyAutoSetValue.Items.Add(version);
                 }
@@ -104,7 +104,7 @@ namespace EVTools
             bool isJDK9Above = false;
             if (jdkAutoSetOption.Checked)
             {
-                javaPath = Utils.jdkVersions[jdkAutoSetValue.SelectedItem.ToString()];
+                javaPath = JDKUtils.jdkVersions[jdkAutoSetValue.SelectedItem.ToString()];
                 isJDK9Above = false;
                 if (!jdkAutoSetValue.SelectedItem.ToString().StartsWith("1."))
                 {
@@ -128,22 +128,22 @@ namespace EVTools
             jdkSettingTip.Visible = true;
             new Thread(() =>
             {
-                Utils.SetJDKValue(javaPath, isJDK9Above);
+                JDKUtils.SetJDKValue(javaPath, isJDK9Above);
                 jdkSettingTip.Visible = false;
             }).Start();
         }
 
         private void jdkRecheck_Click(object sender, EventArgs e)
         {
-            Utils.GetJDKVersion();
-            if (Utils.jdkVersions.Count != 0)
+            JDKUtils.GetJDKVersion();
+            if (JDKUtils.jdkVersions.Count != 0)
             {
                 jdkAutoSetOption.Enabled = true;
                 jdkAutoSetValue.Enabled = true;
                 jdkNotFoundTip.Visible = false;
                 jdkRecheck.Visible = false;
                 jdkAutoSetOption.Checked = true;
-                foreach (string version in Utils.jdkVersions.Keys)
+                foreach (string version in JDKUtils.jdkVersions.Keys)
                 {
                     jdkAutoSetValue.Items.Add(version);
                 }
@@ -168,15 +168,15 @@ namespace EVTools
 
         private void pyRecheck_Click(object sender, EventArgs e)
         {
-            Utils.GetPyVersions();
-            if (Utils.pyVersions.Count != 0)
+            PyUtils.GetPyVersions();
+            if (PyUtils.pyVersions.Count != 0)
             {
                 pyAutoSetValue.Enabled = true;
                 pyAutoSetOption.Enabled = true;
                 pyNotFoundTip.Visible = false;
                 pyRecheck.Visible = false;
                 pyAutoSetOption.Checked = true;
-                foreach (string version in Utils.pyVersions.Keys)
+                foreach (string version in PyUtils.pyVersions.Keys)
                 {
                     pyAutoSetValue.Items.Add(version);
                 }
@@ -197,7 +197,7 @@ namespace EVTools
             string pyPath = "";
             if (pyAutoSetOption.Checked)
             {
-                pyPath = Utils.pyVersions[pyAutoSetValue.SelectedItem.ToString()];
+                pyPath = PyUtils.pyVersions[pyAutoSetValue.SelectedItem.ToString()];
             }
             else if (pyManualSetOption.Checked)
             {
@@ -211,7 +211,7 @@ namespace EVTools
             pySettingTip.Visible = true;
             new Thread(() =>
             {
-                Utils.SetPythonValue(pyPath);
+                PyUtils.SetPythonValue(pyPath);
                 pySettingTip.Visible = false;
             }).Start();
         }
