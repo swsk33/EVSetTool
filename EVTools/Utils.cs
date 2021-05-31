@@ -100,8 +100,7 @@ namespace EVTools
 		/// <param name="append">为true时将值追加到Path变量之后，否则插入到最前</param>
 		public static void AddValueToPath(string value, bool showTip, bool append)
 		{
-			RegistryKey key = Registry.LocalMachine;
-			RegistryKey EVKey = key.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment");
+			RegistryKey EVKey = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment");
 			string pathValue = EVKey.GetValue("Path", "", RegistryValueOptions.DoNotExpandEnvironmentNames).ToString();
 			if (pathValue.Contains(value + ";") || pathValue.EndsWith(value))
 			{

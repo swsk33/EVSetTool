@@ -216,5 +216,10 @@ namespace EVTools
 				pySettingTip.Visible = false;
 			}).Start();
 		}
+
+		private void managePath_Click(object sender, EventArgs e)
+		{
+			new ManagePathForm().ShowDialog();
+		}
 	}
 }

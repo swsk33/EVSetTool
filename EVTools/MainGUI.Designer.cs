@@ -55,13 +55,14 @@ namespace EVTools
 			this.pyManualSetOption = new System.Windows.Forms.RadioButton();
 			this.pyManualSetValue = new System.Windows.Forms.TextBox();
 			this.other = new System.Windows.Forms.TabPage();
+			this.isAppend = new System.Windows.Forms.CheckBox();
 			this.otherSettingTip = new System.Windows.Forms.Label();
 			this.otherSetTip = new System.Windows.Forms.Label();
 			this.otherOK = new System.Windows.Forms.Button();
 			this.otherSetButton = new System.Windows.Forms.Button();
 			this.otherSetValue = new System.Windows.Forms.TextBox();
-			this.isAppend = new System.Windows.Forms.CheckBox();
 			this.appendToolTip = new System.Windows.Forms.ToolTip(this.components);
+			this.managePath = new System.Windows.Forms.Button();
 			this.mainTabPane.SuspendLayout();
 			this.jdkSetTab.SuspendLayout();
 			this.pythonTab.SuspendLayout();
@@ -178,7 +179,7 @@ namespace EVTools
 			this.jdkSetTab.Margin = new System.Windows.Forms.Padding(4);
 			this.jdkSetTab.Name = "jdkSetTab";
 			this.jdkSetTab.Padding = new System.Windows.Forms.Padding(4);
-			this.jdkSetTab.Size = new System.Drawing.Size(496, 291);
+			this.jdkSetTab.Size = new System.Drawing.Size(500, 291);
 			this.jdkSetTab.TabIndex = 0;
 			this.jdkSetTab.Text = "jdk环境变量设置";
 			this.jdkSetTab.UseVisualStyleBackColor = true;
@@ -233,7 +234,7 @@ namespace EVTools
 			this.pythonTab.Controls.Add(this.pyManualSetValue);
 			this.pythonTab.Location = new System.Drawing.Point(4, 25);
 			this.pythonTab.Name = "pythonTab";
-			this.pythonTab.Size = new System.Drawing.Size(496, 291);
+			this.pythonTab.Size = new System.Drawing.Size(500, 291);
 			this.pythonTab.TabIndex = 2;
 			this.pythonTab.Text = "python环境变量设置";
 			this.pythonTab.UseVisualStyleBackColor = true;
@@ -357,6 +358,7 @@ namespace EVTools
 			// 
 			// other
 			// 
+			this.other.Controls.Add(this.managePath);
 			this.other.Controls.Add(this.isAppend);
 			this.other.Controls.Add(this.otherSettingTip);
 			this.other.Controls.Add(this.otherSetTip);
@@ -371,6 +373,19 @@ namespace EVTools
 			this.other.TabIndex = 1;
 			this.other.Text = "加入路径至Path环境变量";
 			this.other.UseVisualStyleBackColor = true;
+			// 
+			// isAppend
+			// 
+			this.isAppend.AutoSize = true;
+			this.isAppend.Checked = true;
+			this.isAppend.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.isAppend.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.isAppend.Location = new System.Drawing.Point(40, 90);
+			this.isAppend.Name = "isAppend";
+			this.isAppend.Size = new System.Drawing.Size(181, 19);
+			this.isAppend.TabIndex = 10;
+			this.isAppend.Text = "追加值至Path变量末尾";
+			this.isAppend.UseVisualStyleBackColor = true;
 			// 
 			// otherSettingTip
 			// 
@@ -407,7 +422,7 @@ namespace EVTools
 			// 
 			// otherSetButton
 			// 
-			this.otherSetButton.Location = new System.Drawing.Point(366, 133);
+			this.otherSetButton.Location = new System.Drawing.Point(375, 131);
 			this.otherSetButton.Margin = new System.Windows.Forms.Padding(4);
 			this.otherSetButton.Name = "otherSetButton";
 			this.otherSetButton.Size = new System.Drawing.Size(100, 29);
@@ -424,18 +439,15 @@ namespace EVTools
 			this.otherSetValue.Size = new System.Drawing.Size(318, 25);
 			this.otherSetValue.TabIndex = 5;
 			// 
-			// isAppend
+			// managePath
 			// 
-			this.isAppend.AutoSize = true;
-			this.isAppend.Checked = true;
-			this.isAppend.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.isAppend.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-			this.isAppend.Location = new System.Drawing.Point(40, 90);
-			this.isAppend.Name = "isAppend";
-			this.isAppend.Size = new System.Drawing.Size(181, 19);
-			this.isAppend.TabIndex = 10;
-			this.isAppend.Text = "追加值至Path变量末尾";
-			this.isAppend.UseVisualStyleBackColor = true;
+			this.managePath.Location = new System.Drawing.Point(375, 7);
+			this.managePath.Name = "managePath";
+			this.managePath.Size = new System.Drawing.Size(117, 32);
+			this.managePath.TabIndex = 11;
+			this.managePath.Text = "管理Path变量";
+			this.managePath.UseVisualStyleBackColor = true;
+			this.managePath.Click += new System.EventHandler(this.managePath_Click);
 			// 
 			// MainGUI
 			// 
@@ -496,6 +508,7 @@ namespace EVTools
         private System.Windows.Forms.TextBox pyManualSetValue;
 		private System.Windows.Forms.CheckBox isAppend;
 		private System.Windows.Forms.ToolTip appendToolTip;
+		private System.Windows.Forms.Button managePath;
 	}
 }
 
