@@ -29,6 +29,7 @@ namespace EVTools
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ManagePathForm));
 			this.pathContentLabel = new System.Windows.Forms.Label();
 			this.pathContentValue = new System.Windows.Forms.ListBox();
@@ -39,6 +40,8 @@ namespace EVTools
 			this.remove = new System.Windows.Forms.Button();
 			this.add = new System.Windows.Forms.Button();
 			this.edit = new System.Windows.Forms.Button();
+			this.buttonToolTip = new System.Windows.Forms.ToolTip(this.components);
+			this.applyTip = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// pathContentLabel
@@ -72,6 +75,7 @@ namespace EVTools
 			this.save.TabIndex = 2;
 			this.save.Text = "保存";
 			this.save.UseVisualStyleBackColor = true;
+			this.save.Click += new System.EventHandler(this.save_Click);
 			// 
 			// cancel
 			// 
@@ -137,11 +141,23 @@ namespace EVTools
 			this.edit.UseVisualStyleBackColor = true;
 			this.edit.Click += new System.EventHandler(this.edit_Click);
 			// 
+			// applyTip
+			// 
+			this.applyTip.AutoSize = true;
+			this.applyTip.ForeColor = System.Drawing.Color.Red;
+			this.applyTip.Location = new System.Drawing.Point(7, 492);
+			this.applyTip.Name = "applyTip";
+			this.applyTip.Size = new System.Drawing.Size(106, 15);
+			this.applyTip.TabIndex = 4;
+			this.applyTip.Text = "应用更改中...";
+			this.applyTip.Visible = false;
+			// 
 			// ManagePathForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(469, 504);
+			this.ClientSize = new System.Drawing.Size(469, 514);
+			this.Controls.Add(this.applyTip);
 			this.Controls.Add(this.edit);
 			this.Controls.Add(this.add);
 			this.Controls.Add(this.remove);
@@ -168,7 +184,6 @@ namespace EVTools
 		#endregion
 
 		private System.Windows.Forms.Label pathContentLabel;
-		private System.Windows.Forms.ListBox pathContentValue;
 		private System.Windows.Forms.Button save;
 		private System.Windows.Forms.Button cancel;
 		private System.Windows.Forms.Button up;
@@ -176,5 +191,8 @@ namespace EVTools
 		private System.Windows.Forms.Button remove;
 		private System.Windows.Forms.Button add;
 		private System.Windows.Forms.Button edit;
+		public System.Windows.Forms.ListBox pathContentValue;
+		private System.Windows.Forms.ToolTip buttonToolTip;
+		private System.Windows.Forms.Label applyTip;
 	}
 }
