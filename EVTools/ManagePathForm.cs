@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace EVTools
@@ -28,7 +29,7 @@ namespace EVTools
 			buttonToolTip.SetToolTip(down, "下移选定元素");
 			buttonToolTip.SetToolTip(remove, "移除选定元素");
 			buttonToolTip.SetToolTip(add, "在选定元素之后插入路径，若未选择元素则在尾部插入");
-			buttonToolTip.SetToolTip(edit, "编辑所选元素");
+			buttonToolTip.SetToolTip(edit, "编辑所选元素，也可以双击相应的元素进行编辑");
 		}
 
 		private void cancel_Click(object sender, System.EventArgs e)
@@ -116,10 +117,24 @@ namespace EVTools
 			applyTip.Visible = true;
 			save.Enabled = false;
 			cancel.Enabled = false;
-			Application.DoEvents();
-			Utils.RunSetx("Path", totalPathValue, true);
-			Close();
-			MessageBox.Show("修改完成！若发现环境变量并没有成功设定，请退出程序然后右键-以管理员身份运行此程序重试。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			new Thread(() =>
+			{
+				Utils.RunSetx("Path", totalPathValue, true);
+				Close();
+				MessageBox.Show("修改完成！若发现环境变量并没有成功设定，请退出程序然后右键-以管理员身份运行此程序重试。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}).Start();
+		}
+
+		private void pathContentValue_DoubleClick(object sender, System.EventArgs e)
+		{
+			if (pathContentValue.SelectedIndex >= 0)
+			{
+				string value = new EditForm().SetSpecificValue(pathContentValue.SelectedItem.ToString());
+				if (value != null)
+				{
+					pathContentValue.Items[pathContentValue.SelectedIndex] = value;
+				}
+			}
 		}
 	}
 }

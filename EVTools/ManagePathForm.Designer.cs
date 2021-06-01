@@ -65,6 +65,7 @@ namespace EVTools
 			this.pathContentValue.Name = "pathContentValue";
 			this.pathContentValue.Size = new System.Drawing.Size(396, 374);
 			this.pathContentValue.TabIndex = 1;
+			this.pathContentValue.DoubleClick += new System.EventHandler(this.pathContentValue_DoubleClick);
 			// 
 			// save
 			// 

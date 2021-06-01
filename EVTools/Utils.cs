@@ -49,7 +49,7 @@ namespace EVTools
 		/// </summary>
 		/// <param name="key">主键</param>
 		/// <param name="name">项的完整路径</param>
-		/// <returns></returns>
+		/// <returns>是否存在</returns>
 		public static bool IsRegExists(RegistryKey key, string name)
 		{
 			bool isExists = true;
@@ -71,7 +71,7 @@ namespace EVTools
 		/// <param name="key">主键</param>
 		/// <param name="name">项名</param>
 		/// <param name="valueName">值名</param>
-		/// <returns></returns>
+		/// <returns>是否存在</returns>
 		public static bool IsRegValueExists(RegistryKey key, string name, string valueName)
 		{
 			bool isExists = false;
