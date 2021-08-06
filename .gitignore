@@ -1,4 +1,7 @@
 /.vs/
 /EVTools/bin/
 /EVTools/obj/
+/EVTools/*.dll
+/EVTools/FodyWeavers.xml
+/EVTools/FodyWeavers.xsd
 /packages/
