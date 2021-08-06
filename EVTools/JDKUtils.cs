@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using Swsk33.ReadAndWriteSharp;
 
 namespace EVTools
 {
@@ -19,14 +20,13 @@ namespace EVTools
 		private static readonly string ADD_PATH_VALUE = JAVA_HOME_NAME + @"\bin";
 
 		/// <summary>
-		/// 检测已安装jdk版本，信息储存至JDKUtils类的全局静态变量jdkVersions中。
+		/// 检测已安装Oracle JDK版本，信息储存至JDKUtils类的全局静态变量jdkVersions中。
 		/// </summary>
-		public static void GetJDKVersion()
+		public static void GetOracleJDKVersion()
 		{
-			jdkVersions.Clear();
 			RegistryKey key = Registry.LocalMachine;
 			//检测jdk8及其以下版本
-			if (Utils.IsRegExists(key, @"SOFTWARE\JavaSoft\Java Development Kit"))
+			if (RegUtils.IsItemExists(key, @"SOFTWARE\JavaSoft\Java Development Kit"))
 			{
 				RegistryKey jdkOldVersionsKey = key.OpenSubKey(@"SOFTWARE\JavaSoft\Java Development Kit");
 				string[] jdkOldVersions = jdkOldVersionsKey.GetSubKeyNames();
@@ -36,14 +36,14 @@ namespace EVTools
 					{
 						RegistryKey jdkVersionKey = key.OpenSubKey(@"SOFTWARE\JavaSoft\Java Development Kit\" + version);
 						string path = jdkVersionKey.GetValue("JavaHome").ToString();
-						jdkVersions.Add(version, path);
+						jdkVersions.Add(version + " - Oracle JDK", path);
 						jdkVersionKey.Close();
 					}
 				}
 				jdkOldVersionsKey.Close();
 			}
 			//检测jdk9及其以上版本
-			if (Utils.IsRegExists(key, @"SOFTWARE\JavaSoft\JDK"))
+			if (RegUtils.IsItemExists(key, @"SOFTWARE\JavaSoft\JDK"))
 			{
 				RegistryKey jdkNewVersionsKey = key.OpenSubKey(@"SOFTWARE\JavaSoft\JDK");
 				string[] jdkNewVersions = jdkNewVersionsKey.GetSubKeyNames();
@@ -51,11 +51,33 @@ namespace EVTools
 				{
 					RegistryKey jdkVersionKey = key.OpenSubKey(@"SOFTWARE\JavaSoft\JDK\" + version);
 					string path = jdkVersionKey.GetValue("JavaHome").ToString();
-					jdkVersions.Add(version, path);
+					jdkVersions.Add(version + " - Oracle JDK", path);
 					jdkVersionKey.Close();
 				}
 				jdkNewVersionsKey.Close();
 			}
+		}
+
+		/// <summary>
+		/// 检测已安装Microsoft JDK版本，信息储存至JDKUtils类的全局静态变量jdkVersions中。
+		/// </summary>
+		public static void GetMicrosoftJDKVersion()
+		{
+			RegistryKey key = Registry.LocalMachine;
+			if (RegUtils.IsItemExists(key, @"SOFTWARE\Microsoft\JDK"))
+			{
+				RegistryKey msJDKVersionKey = key.OpenSubKey(@"SOFTWARE\Microsoft\JDK");
+				string[] msJDKVersions = msJDKVersionKey.GetSubKeyNames();
+				foreach (string msJDKVersion in msJDKVersions)
+				{
+					RegistryKey jdkInfoKey = msJDKVersionKey.OpenSubKey(msJDKVersion + @"\hotspot\MSI");
+					string path = jdkInfoKey.GetValue("Path").ToString();
+					jdkVersions.Add(msJDKVersion + " - Microsoft JDK", path);
+					jdkInfoKey.Close();
+				}
+				msJDKVersionKey.Close();
+			}
+			key.Close();
 		}
 
 		/// <summary>
@@ -67,24 +89,44 @@ namespace EVTools
 		{
 			RegistryKey key = Registry.LocalMachine;
 			RegistryKey EVKey = key.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", true);
+			if (javaPath.EndsWith("\\"))
+			{
+				javaPath = javaPath.Substring(0, javaPath.Length - 1);
+			}
 			Utils.RunSetx("JAVA_HOME", javaPath, true);
 			if (isJDK9AndAbove)
 			{
-				if (Utils.IsRegValueExists(key, @"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", "classpath"))
+				if (RegUtils.IsValueExists(key, @"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", "classpath"))
 				{
 					EVKey.DeleteValue("classpath");
 				}
 			}
 			else
 			{
-				if (!Utils.IsRegValueExists(key, @"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", "classpath") || !EVKey.GetValue("classpath").Equals(CLASSPATH_VALUE))
+				if (!RegUtils.IsValueExists(key, @"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", "classpath") || !EVKey.GetValue("classpath").Equals(CLASSPATH_VALUE))
 				{
 					Utils.RunSetx("classpath", CLASSPATH_VALUE, true);
 				}
 			}
-			Utils.AddValueToPath(ADD_PATH_VALUE, false, false);
+			bool setPath = Utils.AddValueToPath(ADD_PATH_VALUE, false, false);
 			EVKey.Close();
-			MessageBox.Show("设置完成！若发现环境变量并没有成功设定，请退出程序然后右键-以管理员身份运行此程序重试。", "完成", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			key.Close();
+			if (!RegUtils.IsValueExists(key, @"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", "JAVA_HOME"))
+			{
+				MessageBox.Show("设定JAVA_HOME失败！请退出程序然后右键-以管理员身份运行此程序重试！", "失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+			if (!isJDK9AndAbove && !RegUtils.IsValueExists(key, @"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", "classpath"))
+			{
+				MessageBox.Show("设定classpath失败！请退出程序然后右键-以管理员身份运行此程序重试！", "失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+			if (!setPath)
+			{
+				MessageBox.Show("追加Path值失败！请退出程序然后右键-以管理员身份运行此程序重试！", "失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+			MessageBox.Show("设置完成！", "完成", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 	}
 }

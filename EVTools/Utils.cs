@@ -1,7 +1,8 @@
 ﻿using Microsoft.Win32;
-using System;
-using System.Diagnostics;
 using System.Windows.Forms;
+using Swsk33.ReadAndWriteSharp;
+using System.Collections.Generic;
+using System;
 
 namespace EVTools
 {
@@ -15,81 +16,15 @@ namespace EVTools
 		/// <param name="isSysVar">是否是系统变量</param>
 		public static void RunSetx(string varName, string value, bool isSysVar)
 		{
-			string args = "\"" + varName + "\" " + "\"" + value + "\"";
+			List<string> args = new List<string>();
 			if (isSysVar)
 			{
-				args = args + " /m";
+				args.Add("/m");
 			}
-			Process process = new Process();
-			process.StartInfo.FileName = "setx";
-			process.StartInfo.Arguments = args;
-			process.StartInfo.UseShellExecute = false;
-			process.StartInfo.CreateNoWindow = true;
-			process.StartInfo.RedirectStandardOutput = true;
-			process.StartInfo.RedirectStandardError = true;
-			try
-			{
-				process.Start();
-				_ = process.StandardOutput.ReadToEnd();
-				_ = process.StandardError.ReadToEnd();
-				process.WaitForExit();
-			}
-			catch
-			{
-				// none
-			}
-			finally
-			{
-				process.Close();
-			}
-		}
-
-		/// <summary>
-		/// 判断注册表项是否存在
-		/// </summary>
-		/// <param name="key">主键</param>
-		/// <param name="name">项的完整路径</param>
-		/// <returns>是否存在</returns>
-		public static bool IsRegExists(RegistryKey key, string name)
-		{
-			bool isExists = true;
-			try
-			{
-				RegistryKey registryKey = key.OpenSubKey(name);
-				registryKey.Close();
-			}
-			catch (Exception)
-			{
-				isExists = false;
-			}
-			return isExists;
-		}
-
-		/// <summary>
-		/// 判断注册表某一项下的某个值是否存在
-		/// </summary>
-		/// <param name="key">主键</param>
-		/// <param name="name">项名</param>
-		/// <param name="valueName">值名</param>
-		/// <returns>是否存在</returns>
-		public static bool IsRegValueExists(RegistryKey key, string name, string valueName)
-		{
-			bool isExists = false;
-			if (IsRegExists(key, name))
-			{
-				RegistryKey registryKey = key.OpenSubKey(name);
-				string[] subValues = registryKey.GetValueNames();
-				foreach (string eachValueName in subValues)
-				{
-					Console.WriteLine(eachValueName);
-					if (eachValueName.Equals(valueName))
-					{
-						isExists = true;
-						break;
-					}
-				}
-			}
-			return isExists;
+			args.Add(varName);
+			args.Add(value);
+			Console.WriteLine(value);
+			TerminalUtils.RunCommand("setx", args.ToArray());
 		}
 
 		/// <summary>
@@ -98,8 +33,9 @@ namespace EVTools
 		/// <param name="value">指定值</param>
 		/// <param name="showTip">是否显示提示</param>
 		/// <param name="append">为true时将值追加到Path变量之后，否则插入到最前</param>
-		public static void AddValueToPath(string value, bool showTip, bool append)
+		public static bool AddValueToPath(string value, bool showTip, bool append)
 		{
+			bool result = false;
 			RegistryKey EVKey = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment");
 			string pathValue = EVKey.GetValue("Path", "", RegistryValueOptions.DoNotExpandEnvironmentNames).ToString();
 			if (pathValue.Contains(value + ";") || pathValue.EndsWith(value))
@@ -108,7 +44,7 @@ namespace EVTools
 				{
 					MessageBox.Show("这个值已经存在于Path中！无需重复添加！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				}
-				return;
+				return true;
 			}
 			if (!pathValue.EndsWith(";"))
 			{
@@ -117,16 +53,34 @@ namespace EVTools
 			if (append)
 			{
 				RunSetx("Path", pathValue + value + ";", true);
+				pathValue = EVKey.GetValue("Path", "", RegistryValueOptions.DoNotExpandEnvironmentNames).ToString();
+				if (pathValue.EndsWith(value + ";"))
+				{
+					result = true;
+				}
 			}
 			else
 			{
 				RunSetx("Path", value + ";" + pathValue, true);
+				pathValue = EVKey.GetValue("Path", "", RegistryValueOptions.DoNotExpandEnvironmentNames).ToString();
+				if (pathValue.StartsWith(value + ";"))
+				{
+					result = true;
+				}
 			}
 			EVKey.Close();
 			if (showTip)
 			{
-				MessageBox.Show("设置完成！若发现环境变量并没有成功设定，请退出程序然后右键-以管理员身份运行此程序重试。", "完成", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				if (result)
+				{
+					MessageBox.Show("设置完成！", "完成", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				}
+				else
+				{
+					MessageBox.Show("设定失败！请退出程序然后右键-以管理员身份运行此程序重试！", "失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
 			}
+			return result;
 		}
 	}
 }

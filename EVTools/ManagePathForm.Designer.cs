@@ -48,9 +48,10 @@ namespace EVTools
 			// 
 			this.pathContentLabel.AutoSize = true;
 			this.pathContentLabel.Font = new System.Drawing.Font("宋体", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-			this.pathContentLabel.Location = new System.Drawing.Point(24, 23);
+			this.pathContentLabel.Location = new System.Drawing.Point(18, 18);
+			this.pathContentLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.pathContentLabel.Name = "pathContentLabel";
-			this.pathContentLabel.Size = new System.Drawing.Size(106, 19);
+			this.pathContentLabel.Size = new System.Drawing.Size(84, 15);
 			this.pathContentLabel.TabIndex = 0;
 			this.pathContentLabel.Text = "Path内容：";
 			// 
@@ -60,19 +61,21 @@ namespace EVTools
 			this.pathContentValue.FormattingEnabled = true;
 			this.pathContentValue.HorizontalScrollbar = true;
 			this.pathContentValue.IntegralHeight = false;
-			this.pathContentValue.ItemHeight = 19;
-			this.pathContentValue.Location = new System.Drawing.Point(28, 56);
+			this.pathContentValue.ItemHeight = 14;
+			this.pathContentValue.Location = new System.Drawing.Point(21, 45);
+			this.pathContentValue.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.pathContentValue.Name = "pathContentValue";
-			this.pathContentValue.Size = new System.Drawing.Size(396, 374);
+			this.pathContentValue.Size = new System.Drawing.Size(298, 300);
 			this.pathContentValue.TabIndex = 1;
 			this.pathContentValue.DoubleClick += new System.EventHandler(this.pathContentValue_DoubleClick);
 			// 
 			// save
 			// 
 			this.save.Font = new System.Drawing.Font("宋体", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-			this.save.Location = new System.Drawing.Point(106, 452);
+			this.save.Location = new System.Drawing.Point(80, 362);
+			this.save.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.save.Name = "save";
-			this.save.Size = new System.Drawing.Size(72, 31);
+			this.save.Size = new System.Drawing.Size(54, 25);
 			this.save.TabIndex = 2;
 			this.save.Text = "保存";
 			this.save.UseVisualStyleBackColor = true;
@@ -81,9 +84,10 @@ namespace EVTools
 			// cancel
 			// 
 			this.cancel.Font = new System.Drawing.Font("宋体", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-			this.cancel.Location = new System.Drawing.Point(268, 452);
+			this.cancel.Location = new System.Drawing.Point(206, 362);
+			this.cancel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.cancel.Name = "cancel";
-			this.cancel.Size = new System.Drawing.Size(72, 31);
+			this.cancel.Size = new System.Drawing.Size(54, 25);
 			this.cancel.TabIndex = 2;
 			this.cancel.Text = "取消";
 			this.cancel.UseVisualStyleBackColor = true;
@@ -91,9 +95,10 @@ namespace EVTools
 			// 
 			// up
 			// 
-			this.up.Location = new System.Drawing.Point(430, 60);
+			this.up.Location = new System.Drawing.Point(322, 48);
+			this.up.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.up.Name = "up";
-			this.up.Size = new System.Drawing.Size(30, 30);
+			this.up.Size = new System.Drawing.Size(22, 24);
 			this.up.TabIndex = 3;
 			this.up.Text = "▲";
 			this.up.UseVisualStyleBackColor = true;
@@ -101,9 +106,10 @@ namespace EVTools
 			// 
 			// down
 			// 
-			this.down.Location = new System.Drawing.Point(430, 97);
+			this.down.Location = new System.Drawing.Point(322, 78);
+			this.down.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.down.Name = "down";
-			this.down.Size = new System.Drawing.Size(30, 30);
+			this.down.Size = new System.Drawing.Size(22, 24);
 			this.down.TabIndex = 3;
 			this.down.Text = "▼";
 			this.down.UseVisualStyleBackColor = true;
@@ -112,9 +118,10 @@ namespace EVTools
 			// remove
 			// 
 			this.remove.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.remove.Location = new System.Drawing.Point(430, 133);
+			this.remove.Location = new System.Drawing.Point(322, 106);
+			this.remove.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.remove.Name = "remove";
-			this.remove.Size = new System.Drawing.Size(30, 30);
+			this.remove.Size = new System.Drawing.Size(22, 24);
 			this.remove.TabIndex = 3;
 			this.remove.Text = "x";
 			this.remove.UseVisualStyleBackColor = true;
@@ -123,9 +130,10 @@ namespace EVTools
 			// add
 			// 
 			this.add.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.add.Location = new System.Drawing.Point(430, 169);
+			this.add.Location = new System.Drawing.Point(322, 135);
+			this.add.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.add.Name = "add";
-			this.add.Size = new System.Drawing.Size(30, 30);
+			this.add.Size = new System.Drawing.Size(22, 24);
 			this.add.TabIndex = 3;
 			this.add.Text = "+";
 			this.add.UseVisualStyleBackColor = true;
@@ -134,9 +142,10 @@ namespace EVTools
 			// edit
 			// 
 			this.edit.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.edit.Location = new System.Drawing.Point(430, 205);
+			this.edit.Location = new System.Drawing.Point(322, 164);
+			this.edit.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.edit.Name = "edit";
-			this.edit.Size = new System.Drawing.Size(30, 30);
+			this.edit.Size = new System.Drawing.Size(22, 24);
 			this.edit.TabIndex = 3;
 			this.edit.Text = "✎";
 			this.edit.UseVisualStyleBackColor = true;
@@ -146,18 +155,19 @@ namespace EVTools
 			// 
 			this.applyTip.AutoSize = true;
 			this.applyTip.ForeColor = System.Drawing.Color.Red;
-			this.applyTip.Location = new System.Drawing.Point(7, 492);
+			this.applyTip.Location = new System.Drawing.Point(5, 394);
+			this.applyTip.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.applyTip.Name = "applyTip";
-			this.applyTip.Size = new System.Drawing.Size(106, 15);
+			this.applyTip.Size = new System.Drawing.Size(83, 12);
 			this.applyTip.TabIndex = 4;
 			this.applyTip.Text = "应用更改中...";
 			this.applyTip.Visible = false;
 			// 
 			// ManagePathForm
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(469, 514);
+			this.ClientSize = new System.Drawing.Size(352, 411);
 			this.Controls.Add(this.applyTip);
 			this.Controls.Add(this.edit);
 			this.Controls.Add(this.add);
@@ -170,6 +180,7 @@ namespace EVTools
 			this.Controls.Add(this.pathContentLabel);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "ManagePathForm";

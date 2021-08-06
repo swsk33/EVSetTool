@@ -16,7 +16,7 @@ namespace EVTools
 		/// <summary>
 		/// 调整组件状态
 		/// </summary>
-		private void GetRadioButtonChanged(object sender, System.EventArgs e)
+		private void GetRadioButtonChanged(object sender, EventArgs e)
 		{
 			if (jdkAutoSetOption.Checked)
 			{
@@ -44,9 +44,11 @@ namespace EVTools
 			}
 		}
 
-		private void MainGUI_Load(object sender, System.EventArgs e)
+		private void MainGUI_Load(object sender, EventArgs e)
 		{
-			JDKUtils.GetJDKVersion();
+			JDKUtils.jdkVersions.Clear();
+			JDKUtils.GetOracleJDKVersion();
+			JDKUtils.GetMicrosoftJDKVersion();
 			if (JDKUtils.jdkVersions.Count == 0)
 			{
 				jdkAutoSetOption.Enabled = false;
@@ -83,7 +85,7 @@ namespace EVTools
 			appendToolTip.SetToolTip(isAppend, "勾选此项，指定值会被追加到Path变量最后，优先级最低；反之值会被插入到Path变量最前，优先级最高。");
 		}
 
-		private void jdkManualSetButton_Click(object sender, System.EventArgs e)
+		private void jdkManualSetButton_Click(object sender, EventArgs e)
 		{
 			FolderBrowserDialog dialog = new FolderBrowserDialog();
 			dialog.Description = "请选择jdk所在的文件夹";
@@ -91,7 +93,7 @@ namespace EVTools
 			jdkManualSetValue.Text = dialog.SelectedPath;
 		}
 
-		private void otherSetButton_Click(object sender, System.EventArgs e)
+		private void otherSetButton_Click(object sender, EventArgs e)
 		{
 			FolderBrowserDialog dialog = new FolderBrowserDialog();
 			dialog.Description = "请选择路径";
@@ -136,7 +138,9 @@ namespace EVTools
 
 		private void jdkRecheck_Click(object sender, EventArgs e)
 		{
-			JDKUtils.GetJDKVersion();
+			JDKUtils.jdkVersions.Clear();
+			JDKUtils.GetOracleJDKVersion();
+			JDKUtils.GetMicrosoftJDKVersion();
 			if (JDKUtils.jdkVersions.Count != 0)
 			{
 				jdkAutoSetOption.Enabled = true;

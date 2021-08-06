@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Swsk33.ReadAndWriteSharp;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -11,9 +12,9 @@ namespace EVTools
 		//python home变量名
 		private static readonly string PYHOME_NAME = "PYTHON_HOME";
 		//Path追加变量1
-		private static readonly string PATH_ADDITION_1 = "%PYTHON_HOME%";
+		private static readonly string PATH_ADDITION_1 = "%" + PYHOME_NAME + "%";
 		//Path追加变量2
-		private static readonly string PATH_ADDITION_2 = "%PYTHON_HOME%\\Scripts";
+		private static readonly string PATH_ADDITION_2 = "%" + PYHOME_NAME + "%\\Scripts";
 
 		/// <summary>
 		/// 获取已安装Python版本，存放于PyUtils类的全局静态变量pyVersions中。
@@ -22,14 +23,14 @@ namespace EVTools
 		{
 			pyVersions.Clear();
 			RegistryKey key = Registry.LocalMachine;
-			if (Utils.IsRegExists(key, @"SOFTWARE\Python\PythonCore"))
+			if (RegUtils.IsItemExists(key, @"SOFTWARE\Python\PythonCore"))
 			{
 				RegistryKey pyVersionKey = key.OpenSubKey(@"SOFTWARE\Python\PythonCore");
 				string[] pyVers = pyVersionKey.GetSubKeyNames();
 				foreach (string v in pyVers)
 				{
 					string eachPyVarsionPath = @"SOFTWARE\Python\PythonCore\" + v + @"\InstallPath";
-					if (Utils.IsRegExists(key, eachPyVarsionPath))
+					if (RegUtils.IsItemExists(key, eachPyVarsionPath))
 					{
 						RegistryKey eachPyVerKey = key.OpenSubKey(eachPyVarsionPath);
 						string pyPath = eachPyVerKey.GetValue("").ToString();
@@ -52,9 +53,19 @@ namespace EVTools
 				pyPath = pyPath.Substring(0, pyPath.Length - 1);
 			}
 			Utils.RunSetx(PYHOME_NAME, pyPath, true);
-			Utils.AddValueToPath(PATH_ADDITION_1, false, true);
-			Utils.AddValueToPath(PATH_ADDITION_2, false, true);
-			MessageBox.Show("设置完成！若发现环境变量并没有成功设定，请退出程序然后右键-以管理员身份运行此程序重试。", "完成", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			bool setPath1 = Utils.AddValueToPath(PATH_ADDITION_1, false, true);
+			bool setPath2 = Utils.AddValueToPath(PATH_ADDITION_2, false, true);
+			if (!RegUtils.IsValueExists(Registry.LocalMachine, @"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", PYHOME_NAME))
+			{
+				MessageBox.Show("设定PYTHON_HOME失败！请退出程序然后右键-以管理员身份运行此程序重试！", "失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+			if (!setPath1 || !setPath2)
+			{
+				MessageBox.Show("追加Path失败！请退出程序然后右键-以管理员身份运行此程序重试！", "失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+			MessageBox.Show("设置完成！", "完成", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 	}
 }
