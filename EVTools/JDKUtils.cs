@@ -42,9 +42,31 @@ namespace EVTools
 		}
 
 		/// <summary>
+		/// 清理Path中冗余的JDK路径信息
+		/// </summary>
+		private static void ClearRedundantJDKPath()
+		{
+			string pathValue = Utils.getVariableValue("Path");
+			foreach (string key in jdkVersions.Keys)
+			{
+				string path = jdkVersions[key] + "\\bin";
+				if (pathValue.EndsWith(path))
+				{
+					pathValue = pathValue.Replace(path, "");
+				}
+				string pathVar = path + ";";
+				if (pathValue.Contains(pathVar))
+				{
+					pathValue = pathValue.Replace(pathVar, "");
+				}
+			}
+			Utils.RunSetx("Path", pathValue, true);
+		}
+
+		/// <summary>
 		/// 检测已安装Oracle JDK版本，信息储存至JDKUtils类的全局静态变量jdkVersions中。
 		/// </summary>
-		public static void GetOracleJDKVersion()
+		private static void GetOracleJDKVersion()
 		{
 			RegistryKey key = Registry.LocalMachine;
 			//检测jdk8及其以下版本
@@ -58,6 +80,7 @@ namespace EVTools
 					{
 						RegistryKey jdkVersionKey = key.OpenSubKey(@"SOFTWARE\JavaSoft\Java Development Kit\" + version);
 						string path = jdkVersionKey.GetValue("JavaHome").ToString();
+						path = Utils.RemoveEndBackslash(path);
 						jdkVersions.Add(version + " - Oracle JDK", path);
 						jdkVersionKey.Close();
 					}
@@ -73,6 +96,7 @@ namespace EVTools
 				{
 					RegistryKey jdkVersionKey = key.OpenSubKey(@"SOFTWARE\JavaSoft\JDK\" + version);
 					string path = jdkVersionKey.GetValue("JavaHome").ToString();
+					path = Utils.RemoveEndBackslash(path);
 					jdkVersions.Add(version + " - Oracle JDK", path);
 					jdkVersionKey.Close();
 				}
@@ -83,7 +107,7 @@ namespace EVTools
 		/// <summary>
 		/// 检测已安装Microsoft JDK版本，信息储存至JDKUtils类的全局静态变量jdkVersions中。
 		/// </summary>
-		public static void GetMicrosoftJDKVersion()
+		private static void GetMicrosoftJDKVersion()
 		{
 			RegistryKey key = Registry.LocalMachine;
 			if (RegUtils.IsItemExists(key, @"SOFTWARE\Microsoft\JDK"))
@@ -94,6 +118,7 @@ namespace EVTools
 				{
 					RegistryKey jdkInfoKey = msJDKVersionKey.OpenSubKey(msJDKVersion + @"\hotspot\MSI");
 					string path = jdkInfoKey.GetValue("Path").ToString();
+					path = Utils.RemoveEndBackslash(path);
 					jdkVersions.Add(msJDKVersion + " - Microsoft Build OpenJDK", path);
 					jdkInfoKey.Close();
 				}
@@ -105,7 +130,7 @@ namespace EVTools
 		/// <summary>
 		/// 检测已安装Adopt OpenJDK版本，信息储存至JDKUtils类的全局静态变量jdkVersions中。
 		/// </summary>
-		public static void GetAdpotJDKVersion()
+		private static void GetAdpotJDKVersion()
 		{
 			RegistryKey key = Registry.LocalMachine;
 			// 检测Hotspot VM JDK
@@ -117,6 +142,7 @@ namespace EVTools
 				{
 					RegistryKey infoKey = jdkVersionKey.OpenSubKey(adoptJDKVersion + @"\hotspot\MSI");
 					string path = infoKey.GetValue("Path").ToString();
+					path = Utils.RemoveEndBackslash(path);
 					jdkVersions.Add(adoptJDKVersion + " - Adopt Hotspot OpenJDK", path);
 					infoKey.Close();
 				}
@@ -130,6 +156,7 @@ namespace EVTools
 				{
 					RegistryKey infoKey = jdkVersionKey.OpenSubKey(adoptJDKVersion + @"\hotspot\MSI");
 					string path = infoKey.GetValue("Path").ToString();
+					path = Utils.RemoveEndBackslash(path);
 					jdkVersions.Add(adoptJDKVersion + " - Adopt Hotspot OpenJDK", path);
 					infoKey.Close();
 				}
@@ -144,12 +171,24 @@ namespace EVTools
 				{
 					RegistryKey infoKey = jdkVersionKey.OpenSubKey(adoptJDKVersion + @"\openj9\MSI");
 					string path = infoKey.GetValue("Path").ToString();
+					path = Utils.RemoveEndBackslash(path);
 					jdkVersions.Add(adoptJDKVersion + " - Adopt OpenJ9 OpenJDK", path);
 					infoKey.Close();
 				}
 				jdkVersionKey.Close();
 			}
 			key.Close();
+		}
+
+		/// <summary>
+		/// 探测全部JDK
+		/// </summary>
+		public static void DetectJDKs()
+		{
+			jdkVersions.Clear();
+			GetOracleJDKVersion();
+			GetMicrosoftJDKVersion();
+			GetAdpotJDKVersion();
 		}
 
 		/// <summary>
@@ -177,6 +216,7 @@ namespace EVTools
 				}
 			}
 			removeOracleSetupPath();
+			ClearRedundantJDKPath();
 			bool setPath = Utils.AddValueToPath(ADD_PATH_VALUE, false, true);
 			EVKey.Close();
 			key.Close();

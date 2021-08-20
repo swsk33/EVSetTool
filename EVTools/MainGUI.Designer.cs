@@ -59,6 +59,7 @@ namespace EVTools
 			this.isAppend = new System.Windows.Forms.CheckBox();
 			this.otherSettingTip = new System.Windows.Forms.Label();
 			this.otherSetTip = new System.Windows.Forms.Label();
+			this.replaceSysRoot = new System.Windows.Forms.Button();
 			this.otherOK = new System.Windows.Forms.Button();
 			this.otherSetButton = new System.Windows.Forms.Button();
 			this.otherSetValue = new System.Windows.Forms.TextBox();
@@ -73,10 +74,9 @@ namespace EVTools
 			// 
 			this.jdkAutoSetLabel.AutoSize = true;
 			this.jdkAutoSetLabel.Font = new System.Drawing.Font("新宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-			this.jdkAutoSetLabel.Location = new System.Drawing.Point(45, 94);
-			this.jdkAutoSetLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.jdkAutoSetLabel.Location = new System.Drawing.Point(34, 72);
 			this.jdkAutoSetLabel.Name = "jdkAutoSetLabel";
-			this.jdkAutoSetLabel.Size = new System.Drawing.Size(116, 18);
+			this.jdkAutoSetLabel.Size = new System.Drawing.Size(91, 14);
 			this.jdkAutoSetLabel.TabIndex = 0;
 			this.jdkAutoSetLabel.Text = "已搜寻版本：";
 			// 
@@ -85,10 +85,9 @@ namespace EVTools
 			this.jdkAutoSetOption.AutoSize = true;
 			this.jdkAutoSetOption.Checked = true;
 			this.jdkAutoSetOption.Font = new System.Drawing.Font("新宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-			this.jdkAutoSetOption.Location = new System.Drawing.Point(22, 50);
-			this.jdkAutoSetOption.Margin = new System.Windows.Forms.Padding(4);
+			this.jdkAutoSetOption.Location = new System.Drawing.Point(16, 37);
 			this.jdkAutoSetOption.Name = "jdkAutoSetOption";
-			this.jdkAutoSetOption.Size = new System.Drawing.Size(218, 22);
+			this.jdkAutoSetOption.Size = new System.Drawing.Size(172, 18);
 			this.jdkAutoSetOption.TabIndex = 1;
 			this.jdkAutoSetOption.TabStop = true;
 			this.jdkAutoSetOption.Text = "自动搜寻jdk并一键设定";
@@ -99,20 +98,18 @@ namespace EVTools
 			// 
 			this.jdkAutoSetValue.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.jdkAutoSetValue.FormattingEnabled = true;
-			this.jdkAutoSetValue.Location = new System.Drawing.Point(159, 92);
-			this.jdkAutoSetValue.Margin = new System.Windows.Forms.Padding(4);
+			this.jdkAutoSetValue.Location = new System.Drawing.Point(119, 71);
 			this.jdkAutoSetValue.Name = "jdkAutoSetValue";
-			this.jdkAutoSetValue.Size = new System.Drawing.Size(321, 23);
+			this.jdkAutoSetValue.Size = new System.Drawing.Size(242, 20);
 			this.jdkAutoSetValue.TabIndex = 2;
 			// 
 			// jdkManualSetOption
 			// 
 			this.jdkManualSetOption.AutoSize = true;
 			this.jdkManualSetOption.Font = new System.Drawing.Font("新宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-			this.jdkManualSetOption.Location = new System.Drawing.Point(22, 138);
-			this.jdkManualSetOption.Margin = new System.Windows.Forms.Padding(4);
+			this.jdkManualSetOption.Location = new System.Drawing.Point(16, 105);
 			this.jdkManualSetOption.Name = "jdkManualSetOption";
-			this.jdkManualSetOption.Size = new System.Drawing.Size(200, 22);
+			this.jdkManualSetOption.Size = new System.Drawing.Size(158, 18);
 			this.jdkManualSetOption.TabIndex = 1;
 			this.jdkManualSetOption.Text = "手动指定jdk所在位置\r\n";
 			this.jdkManualSetOption.UseVisualStyleBackColor = true;
@@ -121,19 +118,17 @@ namespace EVTools
 			// jdkManualSetValue
 			// 
 			this.jdkManualSetValue.Enabled = false;
-			this.jdkManualSetValue.Location = new System.Drawing.Point(49, 182);
-			this.jdkManualSetValue.Margin = new System.Windows.Forms.Padding(4);
+			this.jdkManualSetValue.Location = new System.Drawing.Point(37, 141);
 			this.jdkManualSetValue.Name = "jdkManualSetValue";
-			this.jdkManualSetValue.Size = new System.Drawing.Size(321, 25);
+			this.jdkManualSetValue.Size = new System.Drawing.Size(242, 21);
 			this.jdkManualSetValue.TabIndex = 3;
 			// 
 			// jdkManualSetButton
 			// 
 			this.jdkManualSetButton.Enabled = false;
-			this.jdkManualSetButton.Location = new System.Drawing.Point(380, 180);
-			this.jdkManualSetButton.Margin = new System.Windows.Forms.Padding(4);
+			this.jdkManualSetButton.Location = new System.Drawing.Point(285, 139);
 			this.jdkManualSetButton.Name = "jdkManualSetButton";
-			this.jdkManualSetButton.Size = new System.Drawing.Size(100, 29);
+			this.jdkManualSetButton.Size = new System.Drawing.Size(75, 23);
 			this.jdkManualSetButton.TabIndex = 4;
 			this.jdkManualSetButton.Text = "浏览";
 			this.jdkManualSetButton.UseVisualStyleBackColor = true;
@@ -141,10 +136,9 @@ namespace EVTools
 			// 
 			// JDKok
 			// 
-			this.JDKok.Location = new System.Drawing.Point(201, 228);
-			this.JDKok.Margin = new System.Windows.Forms.Padding(4);
+			this.JDKok.Location = new System.Drawing.Point(151, 177);
 			this.JDKok.Name = "JDKok";
-			this.JDKok.Size = new System.Drawing.Size(100, 29);
+			this.JDKok.Size = new System.Drawing.Size(75, 23);
 			this.JDKok.TabIndex = 4;
 			this.JDKok.Text = "设定";
 			this.JDKok.UseVisualStyleBackColor = true;
@@ -157,10 +151,9 @@ namespace EVTools
 			this.mainTabPane.Controls.Add(this.other);
 			this.mainTabPane.Dock = System.Windows.Forms.DockStyle.Top;
 			this.mainTabPane.Location = new System.Drawing.Point(0, 0);
-			this.mainTabPane.Margin = new System.Windows.Forms.Padding(4);
 			this.mainTabPane.Name = "mainTabPane";
 			this.mainTabPane.SelectedIndex = 0;
-			this.mainTabPane.Size = new System.Drawing.Size(508, 320);
+			this.mainTabPane.Size = new System.Drawing.Size(381, 256);
 			this.mainTabPane.TabIndex = 5;
 			// 
 			// jdkSetTab
@@ -175,11 +168,10 @@ namespace EVTools
 			this.jdkSetTab.Controls.Add(this.jdkManualSetButton);
 			this.jdkSetTab.Controls.Add(this.jdkManualSetOption);
 			this.jdkSetTab.Controls.Add(this.jdkManualSetValue);
-			this.jdkSetTab.Location = new System.Drawing.Point(4, 25);
-			this.jdkSetTab.Margin = new System.Windows.Forms.Padding(4);
+			this.jdkSetTab.Location = new System.Drawing.Point(4, 22);
 			this.jdkSetTab.Name = "jdkSetTab";
-			this.jdkSetTab.Padding = new System.Windows.Forms.Padding(4);
-			this.jdkSetTab.Size = new System.Drawing.Size(500, 291);
+			this.jdkSetTab.Padding = new System.Windows.Forms.Padding(3);
+			this.jdkSetTab.Size = new System.Drawing.Size(373, 230);
 			this.jdkSetTab.TabIndex = 0;
 			this.jdkSetTab.Text = "jdk环境变量设置";
 			this.jdkSetTab.UseVisualStyleBackColor = true;
@@ -188,19 +180,19 @@ namespace EVTools
 			// 
 			this.jdkSettingTip.AutoSize = true;
 			this.jdkSettingTip.ForeColor = System.Drawing.Color.Blue;
-			this.jdkSettingTip.Location = new System.Drawing.Point(7, 268);
+			this.jdkSettingTip.Location = new System.Drawing.Point(5, 213);
+			this.jdkSettingTip.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.jdkSettingTip.Name = "jdkSettingTip";
-			this.jdkSettingTip.Size = new System.Drawing.Size(175, 15);
+			this.jdkSettingTip.Size = new System.Drawing.Size(137, 12);
 			this.jdkSettingTip.TabIndex = 5;
 			this.jdkSettingTip.Text = "正在设定jdk环境变量...";
 			this.jdkSettingTip.Visible = false;
 			// 
 			// jdkRecheck
 			// 
-			this.jdkRecheck.Location = new System.Drawing.Point(389, 8);
-			this.jdkRecheck.Margin = new System.Windows.Forms.Padding(4);
+			this.jdkRecheck.Location = new System.Drawing.Point(292, 6);
 			this.jdkRecheck.Name = "jdkRecheck";
-			this.jdkRecheck.Size = new System.Drawing.Size(100, 29);
+			this.jdkRecheck.Size = new System.Drawing.Size(75, 23);
 			this.jdkRecheck.TabIndex = 4;
 			this.jdkRecheck.Text = "重新检测";
 			this.jdkRecheck.UseVisualStyleBackColor = true;
@@ -212,10 +204,9 @@ namespace EVTools
 			this.jdkNotFoundTip.AutoSize = true;
 			this.jdkNotFoundTip.Font = new System.Drawing.Font("新宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
 			this.jdkNotFoundTip.ForeColor = System.Drawing.Color.Red;
-			this.jdkNotFoundTip.Location = new System.Drawing.Point(9, 11);
-			this.jdkNotFoundTip.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.jdkNotFoundTip.Location = new System.Drawing.Point(7, 9);
 			this.jdkNotFoundTip.Name = "jdkNotFoundTip";
-			this.jdkNotFoundTip.Size = new System.Drawing.Size(323, 18);
+			this.jdkNotFoundTip.Size = new System.Drawing.Size(252, 14);
 			this.jdkNotFoundTip.TabIndex = 0;
 			this.jdkNotFoundTip.Text = "找不到此电脑安装了jdk，请手动指定！";
 			this.jdkNotFoundTip.Visible = false;
@@ -232,10 +223,10 @@ namespace EVTools
 			this.pythonTab.Controls.Add(this.pyManualSetButton);
 			this.pythonTab.Controls.Add(this.pyManualSetOption);
 			this.pythonTab.Controls.Add(this.pyManualSetValue);
-			this.pythonTab.Location = new System.Drawing.Point(4, 25);
-			this.pythonTab.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.pythonTab.Location = new System.Drawing.Point(4, 22);
+			this.pythonTab.Margin = new System.Windows.Forms.Padding(2);
 			this.pythonTab.Name = "pythonTab";
-			this.pythonTab.Size = new System.Drawing.Size(500, 291);
+			this.pythonTab.Size = new System.Drawing.Size(373, 230);
 			this.pythonTab.TabIndex = 2;
 			this.pythonTab.Text = "python环境变量设置";
 			this.pythonTab.UseVisualStyleBackColor = true;
@@ -244,18 +235,16 @@ namespace EVTools
 			// 
 			this.pyAutoSetValue.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.pyAutoSetValue.FormattingEnabled = true;
-			this.pyAutoSetValue.Location = new System.Drawing.Point(177, 94);
-			this.pyAutoSetValue.Margin = new System.Windows.Forms.Padding(4);
+			this.pyAutoSetValue.Location = new System.Drawing.Point(133, 75);
 			this.pyAutoSetValue.Name = "pyAutoSetValue";
-			this.pyAutoSetValue.Size = new System.Drawing.Size(115, 23);
+			this.pyAutoSetValue.Size = new System.Drawing.Size(87, 20);
 			this.pyAutoSetValue.TabIndex = 10;
 			// 
 			// pyRecheck
 			// 
-			this.pyRecheck.Location = new System.Drawing.Point(389, 6);
-			this.pyRecheck.Margin = new System.Windows.Forms.Padding(4);
+			this.pyRecheck.Location = new System.Drawing.Point(292, 5);
 			this.pyRecheck.Name = "pyRecheck";
-			this.pyRecheck.Size = new System.Drawing.Size(100, 29);
+			this.pyRecheck.Size = new System.Drawing.Size(75, 23);
 			this.pyRecheck.TabIndex = 12;
 			this.pyRecheck.Text = "重新检测";
 			this.pyRecheck.UseVisualStyleBackColor = true;
@@ -266,9 +255,10 @@ namespace EVTools
 			// 
 			this.pySettingTip.AutoSize = true;
 			this.pySettingTip.ForeColor = System.Drawing.Color.Blue;
-			this.pySettingTip.Location = new System.Drawing.Point(7, 271);
+			this.pySettingTip.Location = new System.Drawing.Point(5, 213);
+			this.pySettingTip.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.pySettingTip.Name = "pySettingTip";
-			this.pySettingTip.Size = new System.Drawing.Size(199, 15);
+			this.pySettingTip.Size = new System.Drawing.Size(155, 12);
 			this.pySettingTip.TabIndex = 15;
 			this.pySettingTip.Text = "正在设定python环境变量...";
 			this.pySettingTip.Visible = false;
@@ -278,10 +268,9 @@ namespace EVTools
 			this.pyAutoSetOption.AutoSize = true;
 			this.pyAutoSetOption.Checked = true;
 			this.pyAutoSetOption.Font = new System.Drawing.Font("新宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-			this.pyAutoSetOption.Location = new System.Drawing.Point(40, 52);
-			this.pyAutoSetOption.Margin = new System.Windows.Forms.Padding(4);
+			this.pyAutoSetOption.Location = new System.Drawing.Point(30, 42);
 			this.pyAutoSetOption.Name = "pyAutoSetOption";
-			this.pyAutoSetOption.Size = new System.Drawing.Size(245, 22);
+			this.pyAutoSetOption.Size = new System.Drawing.Size(193, 18);
 			this.pyAutoSetOption.TabIndex = 8;
 			this.pyAutoSetOption.TabStop = true;
 			this.pyAutoSetOption.Text = "自动搜寻python并一键设定";
@@ -290,10 +279,9 @@ namespace EVTools
 			// 
 			// pyOk
 			// 
-			this.pyOk.Location = new System.Drawing.Point(205, 228);
-			this.pyOk.Margin = new System.Windows.Forms.Padding(4);
+			this.pyOk.Location = new System.Drawing.Point(154, 182);
 			this.pyOk.Name = "pyOk";
-			this.pyOk.Size = new System.Drawing.Size(100, 29);
+			this.pyOk.Size = new System.Drawing.Size(75, 23);
 			this.pyOk.TabIndex = 13;
 			this.pyOk.Text = "设定";
 			this.pyOk.UseVisualStyleBackColor = true;
@@ -304,10 +292,9 @@ namespace EVTools
 			this.pyNotFoundTip.AutoSize = true;
 			this.pyNotFoundTip.Font = new System.Drawing.Font("新宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
 			this.pyNotFoundTip.ForeColor = System.Drawing.Color.Red;
-			this.pyNotFoundTip.Location = new System.Drawing.Point(9, 11);
-			this.pyNotFoundTip.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.pyNotFoundTip.Location = new System.Drawing.Point(7, 9);
 			this.pyNotFoundTip.Name = "pyNotFoundTip";
-			this.pyNotFoundTip.Size = new System.Drawing.Size(350, 18);
+			this.pyNotFoundTip.Size = new System.Drawing.Size(273, 14);
 			this.pyNotFoundTip.TabIndex = 6;
 			this.pyNotFoundTip.Text = "找不到此电脑安装了python，请手动指定！";
 			this.pyNotFoundTip.Visible = false;
@@ -316,20 +303,18 @@ namespace EVTools
 			// 
 			this.pyAutoSetLabel.AutoSize = true;
 			this.pyAutoSetLabel.Font = new System.Drawing.Font("新宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-			this.pyAutoSetLabel.Location = new System.Drawing.Point(63, 96);
-			this.pyAutoSetLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.pyAutoSetLabel.Location = new System.Drawing.Point(47, 77);
 			this.pyAutoSetLabel.Name = "pyAutoSetLabel";
-			this.pyAutoSetLabel.Size = new System.Drawing.Size(116, 18);
+			this.pyAutoSetLabel.Size = new System.Drawing.Size(91, 14);
 			this.pyAutoSetLabel.TabIndex = 7;
 			this.pyAutoSetLabel.Text = "已搜寻版本：";
 			// 
 			// pyManualSetButton
 			// 
 			this.pyManualSetButton.Enabled = false;
-			this.pyManualSetButton.Location = new System.Drawing.Point(363, 182);
-			this.pyManualSetButton.Margin = new System.Windows.Forms.Padding(4);
+			this.pyManualSetButton.Location = new System.Drawing.Point(272, 146);
 			this.pyManualSetButton.Name = "pyManualSetButton";
-			this.pyManualSetButton.Size = new System.Drawing.Size(100, 29);
+			this.pyManualSetButton.Size = new System.Drawing.Size(75, 23);
 			this.pyManualSetButton.TabIndex = 14;
 			this.pyManualSetButton.Text = "浏览";
 			this.pyManualSetButton.UseVisualStyleBackColor = true;
@@ -339,10 +324,9 @@ namespace EVTools
 			// 
 			this.pyManualSetOption.AutoSize = true;
 			this.pyManualSetOption.Font = new System.Drawing.Font("新宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-			this.pyManualSetOption.Location = new System.Drawing.Point(40, 140);
-			this.pyManualSetOption.Margin = new System.Windows.Forms.Padding(4);
+			this.pyManualSetOption.Location = new System.Drawing.Point(30, 112);
 			this.pyManualSetOption.Name = "pyManualSetOption";
-			this.pyManualSetOption.Size = new System.Drawing.Size(227, 22);
+			this.pyManualSetOption.Size = new System.Drawing.Size(179, 18);
 			this.pyManualSetOption.TabIndex = 9;
 			this.pyManualSetOption.Text = "手动指定python所在位置\r\n";
 			this.pyManualSetOption.UseVisualStyleBackColor = true;
@@ -351,10 +335,9 @@ namespace EVTools
 			// pyManualSetValue
 			// 
 			this.pyManualSetValue.Enabled = false;
-			this.pyManualSetValue.Location = new System.Drawing.Point(67, 184);
-			this.pyManualSetValue.Margin = new System.Windows.Forms.Padding(4);
+			this.pyManualSetValue.Location = new System.Drawing.Point(50, 147);
 			this.pyManualSetValue.Name = "pyManualSetValue";
-			this.pyManualSetValue.Size = new System.Drawing.Size(288, 25);
+			this.pyManualSetValue.Size = new System.Drawing.Size(217, 21);
 			this.pyManualSetValue.TabIndex = 11;
 			// 
 			// other
@@ -363,24 +346,24 @@ namespace EVTools
 			this.other.Controls.Add(this.isAppend);
 			this.other.Controls.Add(this.otherSettingTip);
 			this.other.Controls.Add(this.otherSetTip);
+			this.other.Controls.Add(this.replaceSysRoot);
 			this.other.Controls.Add(this.otherOK);
 			this.other.Controls.Add(this.otherSetButton);
 			this.other.Controls.Add(this.otherSetValue);
-			this.other.Location = new System.Drawing.Point(4, 25);
-			this.other.Margin = new System.Windows.Forms.Padding(4);
+			this.other.Location = new System.Drawing.Point(4, 22);
 			this.other.Name = "other";
-			this.other.Padding = new System.Windows.Forms.Padding(4);
-			this.other.Size = new System.Drawing.Size(500, 291);
+			this.other.Padding = new System.Windows.Forms.Padding(3);
+			this.other.Size = new System.Drawing.Size(373, 230);
 			this.other.TabIndex = 1;
 			this.other.Text = "加入路径至Path环境变量";
 			this.other.UseVisualStyleBackColor = true;
 			// 
 			// managePath
 			// 
-			this.managePath.Location = new System.Drawing.Point(375, 8);
-			this.managePath.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.managePath.Location = new System.Drawing.Point(282, 4);
+			this.managePath.Margin = new System.Windows.Forms.Padding(2);
 			this.managePath.Name = "managePath";
-			this.managePath.Size = new System.Drawing.Size(117, 32);
+			this.managePath.Size = new System.Drawing.Size(88, 26);
 			this.managePath.TabIndex = 11;
 			this.managePath.Text = "管理Path变量";
 			this.managePath.UseVisualStyleBackColor = true;
@@ -392,10 +375,10 @@ namespace EVTools
 			this.isAppend.Checked = true;
 			this.isAppend.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.isAppend.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-			this.isAppend.Location = new System.Drawing.Point(40, 90);
-			this.isAppend.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.isAppend.Location = new System.Drawing.Point(30, 75);
+			this.isAppend.Margin = new System.Windows.Forms.Padding(2);
 			this.isAppend.Name = "isAppend";
-			this.isAppend.Size = new System.Drawing.Size(181, 19);
+			this.isAppend.Size = new System.Drawing.Size(144, 16);
 			this.isAppend.TabIndex = 10;
 			this.isAppend.Text = "追加值至Path变量末尾";
 			this.isAppend.UseVisualStyleBackColor = true;
@@ -404,9 +387,10 @@ namespace EVTools
 			// 
 			this.otherSettingTip.AutoSize = true;
 			this.otherSettingTip.ForeColor = System.Drawing.Color.Blue;
-			this.otherSettingTip.Location = new System.Drawing.Point(7, 261);
+			this.otherSettingTip.Location = new System.Drawing.Point(5, 212);
+			this.otherSettingTip.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.otherSettingTip.Name = "otherSettingTip";
-			this.otherSettingTip.Size = new System.Drawing.Size(183, 15);
+			this.otherSettingTip.Size = new System.Drawing.Size(143, 12);
 			this.otherSettingTip.TabIndex = 9;
 			this.otherSettingTip.Text = "正在追加Path环境变量...";
 			this.otherSettingTip.Visible = false;
@@ -415,30 +399,38 @@ namespace EVTools
 			// 
 			this.otherSetTip.AutoSize = true;
 			this.otherSetTip.Font = new System.Drawing.Font("新宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-			this.otherSetTip.Location = new System.Drawing.Point(37, 52);
-			this.otherSetTip.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.otherSetTip.Location = new System.Drawing.Point(28, 47);
 			this.otherSetTip.Name = "otherSetTip";
-			this.otherSetTip.Size = new System.Drawing.Size(242, 18);
+			this.otherSetTip.Size = new System.Drawing.Size(189, 14);
 			this.otherSetTip.TabIndex = 8;
 			this.otherSetTip.Text = "请指定目录并加至Path变量：";
 			// 
+			// replaceSysRoot
+			// 
+			this.replaceSysRoot.Font = new System.Drawing.Font("宋体", 8.5F);
+			this.replaceSysRoot.Location = new System.Drawing.Point(2, 3);
+			this.replaceSysRoot.Name = "replaceSysRoot";
+			this.replaceSysRoot.Size = new System.Drawing.Size(193, 24);
+			this.replaceSysRoot.TabIndex = 7;
+			this.replaceSysRoot.Text = "替换C:\\Windows为%SystemRoot%";
+			this.replaceSysRoot.UseVisualStyleBackColor = true;
+			this.replaceSysRoot.Click += new System.EventHandler(this.otherOK_Click);
+			// 
 			// otherOK
 			// 
-			this.otherOK.Location = new System.Drawing.Point(196, 203);
-			this.otherOK.Margin = new System.Windows.Forms.Padding(4);
+			this.otherOK.Location = new System.Drawing.Point(148, 155);
 			this.otherOK.Name = "otherOK";
-			this.otherOK.Size = new System.Drawing.Size(100, 29);
+			this.otherOK.Size = new System.Drawing.Size(75, 26);
 			this.otherOK.TabIndex = 7;
-			this.otherOK.Text = "设定";
+			this.otherOK.Text = "添加";
 			this.otherOK.UseVisualStyleBackColor = true;
 			this.otherOK.Click += new System.EventHandler(this.otherOK_Click);
 			// 
 			// otherSetButton
 			// 
-			this.otherSetButton.Location = new System.Drawing.Point(375, 131);
-			this.otherSetButton.Margin = new System.Windows.Forms.Padding(4);
+			this.otherSetButton.Location = new System.Drawing.Point(281, 105);
 			this.otherSetButton.Name = "otherSetButton";
-			this.otherSetButton.Size = new System.Drawing.Size(100, 29);
+			this.otherSetButton.Size = new System.Drawing.Size(75, 23);
 			this.otherSetButton.TabIndex = 6;
 			this.otherSetButton.Text = "浏览";
 			this.otherSetButton.UseVisualStyleBackColor = true;
@@ -446,21 +438,19 @@ namespace EVTools
 			// 
 			// otherSetValue
 			// 
-			this.otherSetValue.Location = new System.Drawing.Point(40, 132);
-			this.otherSetValue.Margin = new System.Windows.Forms.Padding(4);
+			this.otherSetValue.Location = new System.Drawing.Point(30, 106);
 			this.otherSetValue.Name = "otherSetValue";
-			this.otherSetValue.Size = new System.Drawing.Size(319, 25);
+			this.otherSetValue.Size = new System.Drawing.Size(240, 21);
 			this.otherSetValue.TabIndex = 5;
 			// 
 			// MainGUI
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(508, 321);
+			this.ClientSize = new System.Drawing.Size(381, 257);
 			this.Controls.Add(this.mainTabPane);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-			this.Margin = new System.Windows.Forms.Padding(4);
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "MainGUI";
@@ -512,6 +502,7 @@ namespace EVTools
 		private System.Windows.Forms.CheckBox isAppend;
 		private System.Windows.Forms.ToolTip appendToolTip;
 		private System.Windows.Forms.Button managePath;
+		private System.Windows.Forms.Button replaceSysRoot;
 	}
 }
 

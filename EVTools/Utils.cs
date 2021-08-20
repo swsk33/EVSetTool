@@ -2,11 +2,29 @@
 using System.Windows.Forms;
 using Swsk33.ReadAndWriteSharp;
 using System.Collections.Generic;
+using System;
 
 namespace EVTools
 {
 	class Utils
 	{
+		//SystemRoot的值
+		public static readonly string SYSTEM_ROOT_VALUE = Environment.GetFolderPath(Environment.SpecialFolder.Windows);
+
+		/// <summary>
+		/// 去掉原字符串最末尾的反斜杠(\)
+		/// </summary>
+		/// <param name="origin">原字符串</param>
+		/// <returns>去掉末尾反斜杠后的字符串，若原字符串不以反斜杠结尾则返回原字符串</returns>
+		public static string RemoveEndBackslash(string origin)
+		{
+			if (origin.EndsWith("\\"))
+			{
+				origin = origin.Substring(0, origin.LastIndexOf("\\"));
+			}
+			return origin;
+		}
+
 		/// <summary>
 		/// 运行setx命令设定环境变量
 		/// </summary>
@@ -21,10 +39,7 @@ namespace EVTools
 				args.Add("/m");
 			}
 			args.Add(varName);
-			if (value.EndsWith("\\"))
-			{
-				value = value.Substring(0, value.LastIndexOf("\\"));
-			}
+			value = RemoveEndBackslash(value);
 			args.Add(value);
 			TerminalUtils.RunCommand("setx", args.ToArray());
 		}
