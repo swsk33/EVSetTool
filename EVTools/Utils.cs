@@ -8,9 +8,6 @@ namespace EVTools
 {
 	class Utils
 	{
-		//SystemRoot的值
-		public static readonly string SYSTEM_ROOT_VALUE = Environment.GetFolderPath(Environment.SpecialFolder.Windows);
-
 		/// <summary>
 		/// 去掉原字符串最末尾的反斜杠(\)
 		/// </summary>
@@ -49,7 +46,7 @@ namespace EVTools
 		/// </summary>
 		/// <param name="variableName">环境变量名</param>
 		/// <returns>环境变量值</returns>
-		public static string getVariableValue(string variableName)
+		public static string GetVariableValue(string variableName)
 		{
 			RegistryKey EVKey = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment");
 			string pathValue = EVKey.GetValue(variableName, "", RegistryValueOptions.DoNotExpandEnvironmentNames).ToString();
@@ -66,7 +63,7 @@ namespace EVTools
 		public static bool AddValueToPath(string value, bool showTip, bool append)
 		{
 			bool result = false;
-			string pathValue = getVariableValue("Path");
+			string pathValue = GetVariableValue("Path");
 			if (pathValue.Contains(value + ";") || pathValue.EndsWith(value))
 			{
 				if (showTip)
@@ -82,7 +79,7 @@ namespace EVTools
 			if (append)
 			{
 				RunSetx("Path", pathValue + value + ";", true);
-				pathValue = getVariableValue("Path");
+				pathValue = GetVariableValue("Path");
 				if (pathValue.EndsWith(value + ";"))
 				{
 					result = true;
@@ -91,7 +88,7 @@ namespace EVTools
 			else
 			{
 				RunSetx("Path", value + ";" + pathValue, true);
-				pathValue = getVariableValue("Path");
+				pathValue = GetVariableValue("Path");
 				if (pathValue.StartsWith(value + ";"))
 				{
 					result = true;
@@ -107,6 +104,53 @@ namespace EVTools
 				{
 					MessageBox.Show("设定失败！请退出程序然后右键-以管理员身份运行此程序重试！", "失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
+			}
+			return result;
+		}
+
+		/// <summary>
+		/// 把Path变量中的C:\Windows替换为%SystemRoot%的引用形式
+		/// </summary>
+		/// <returns>是否替换成功</returns>
+		public static bool SetSystemRootRefer()
+		{
+			bool result = false;
+			string pathValue = GetVariableValue("Path");
+			string systemRootRefer = "%SystemRoot%";
+			string systemRootValue = Environment.GetFolderPath(Environment.SpecialFolder.Windows);
+			pathValue = pathValue.Replace(systemRootValue, systemRootRefer);
+			pathValue = pathValue.Replace(systemRootRefer.ToUpper(), systemRootRefer);
+			pathValue = pathValue.Replace(systemRootRefer.ToLower(), systemRootRefer);
+			RunSetx("Path", pathValue, true);
+			if (!GetVariableValue("Path").Contains(systemRootValue))
+			{
+				result = true;
+			}
+			return result;
+		}
+
+		/// <summary>
+		/// 移除Path变量中，以反斜杠结尾的路径的末尾的反斜杠
+		/// </summary>
+		/// <returns>是否移除成功</returns>
+		public static bool RemovePathSeparatorAtTheEnd()
+		{
+			bool result = false;
+			string pathValue = GetVariableValue("Path");
+			if (pathValue.EndsWith(";"))
+			{
+				pathValue = pathValue.Substring(0, pathValue.LastIndexOf(";"));
+			}
+			string[] paths = pathValue.Split(';');
+			string resultPathValue = "";
+			foreach (string path in paths)
+			{
+				resultPathValue = resultPathValue + RemoveEndBackslash(path) + ";";
+			}
+			RunSetx("Path", resultPathValue, true);
+			if (resultPathValue.Equals(GetVariableValue("Path")))
+			{
+				result = true;
 			}
 			return result;
 		}

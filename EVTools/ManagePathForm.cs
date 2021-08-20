@@ -14,12 +14,10 @@ namespace EVTools
 
 		private void ManagePathForm_Load(object sender, EventArgs e)
 		{
-			RegistryKey EVKey = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment");
-			string pathValue = EVKey.GetValue("Path", "", RegistryValueOptions.DoNotExpandEnvironmentNames).ToString();
-			EVKey.Close();
+			string pathValue = Utils.GetVariableValue("Path");
 			if (pathValue.EndsWith(";"))
 			{
-				pathValue = pathValue.Substring(0, pathValue.Length - 1);
+				pathValue = pathValue.Substring(0, pathValue.LastIndexOf(";"));
 			}
 			string[] pathValues = pathValue.Split(';');
 			foreach (string value in pathValues)

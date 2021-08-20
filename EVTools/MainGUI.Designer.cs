@@ -57,6 +57,7 @@ namespace EVTools
 			this.other = new System.Windows.Forms.TabPage();
 			this.managePath = new System.Windows.Forms.Button();
 			this.isAppend = new System.Windows.Forms.CheckBox();
+			this.replaceTip = new System.Windows.Forms.Label();
 			this.otherSettingTip = new System.Windows.Forms.Label();
 			this.otherSetTip = new System.Windows.Forms.Label();
 			this.replaceSysRoot = new System.Windows.Forms.Button();
@@ -64,6 +65,8 @@ namespace EVTools
 			this.otherSetButton = new System.Windows.Forms.Button();
 			this.otherSetValue = new System.Windows.Forms.TextBox();
 			this.appendToolTip = new System.Windows.Forms.ToolTip(this.components);
+			this.removeEndSep = new System.Windows.Forms.Button();
+			this.removeTip = new System.Windows.Forms.Label();
 			this.mainTabPane.SuspendLayout();
 			this.jdkSetTab.SuspendLayout();
 			this.pythonTab.SuspendLayout();
@@ -136,7 +139,7 @@ namespace EVTools
 			// 
 			// JDKok
 			// 
-			this.JDKok.Location = new System.Drawing.Point(151, 177);
+			this.JDKok.Location = new System.Drawing.Point(151, 180);
 			this.JDKok.Name = "JDKok";
 			this.JDKok.Size = new System.Drawing.Size(75, 23);
 			this.JDKok.TabIndex = 4;
@@ -344,8 +347,11 @@ namespace EVTools
 			// 
 			this.other.Controls.Add(this.managePath);
 			this.other.Controls.Add(this.isAppend);
+			this.other.Controls.Add(this.removeTip);
+			this.other.Controls.Add(this.replaceTip);
 			this.other.Controls.Add(this.otherSettingTip);
 			this.other.Controls.Add(this.otherSetTip);
+			this.other.Controls.Add(this.removeEndSep);
 			this.other.Controls.Add(this.replaceSysRoot);
 			this.other.Controls.Add(this.otherOK);
 			this.other.Controls.Add(this.otherSetButton);
@@ -375,13 +381,25 @@ namespace EVTools
 			this.isAppend.Checked = true;
 			this.isAppend.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.isAppend.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-			this.isAppend.Location = new System.Drawing.Point(30, 75);
+			this.isAppend.Location = new System.Drawing.Point(28, 80);
 			this.isAppend.Margin = new System.Windows.Forms.Padding(2);
 			this.isAppend.Name = "isAppend";
 			this.isAppend.Size = new System.Drawing.Size(144, 16);
 			this.isAppend.TabIndex = 10;
 			this.isAppend.Text = "追加值至Path变量末尾";
 			this.isAppend.UseVisualStyleBackColor = true;
+			// 
+			// replaceTip
+			// 
+			this.replaceTip.AutoSize = true;
+			this.replaceTip.ForeColor = System.Drawing.Color.Fuchsia;
+			this.replaceTip.Location = new System.Drawing.Point(5, 197);
+			this.replaceTip.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.replaceTip.Name = "replaceTip";
+			this.replaceTip.Size = new System.Drawing.Size(95, 12);
+			this.replaceTip.TabIndex = 9;
+			this.replaceTip.Text = "正在执行替换...";
+			this.replaceTip.Visible = false;
 			// 
 			// otherSettingTip
 			// 
@@ -399,7 +417,7 @@ namespace EVTools
 			// 
 			this.otherSetTip.AutoSize = true;
 			this.otherSetTip.Font = new System.Drawing.Font("新宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-			this.otherSetTip.Location = new System.Drawing.Point(28, 47);
+			this.otherSetTip.Location = new System.Drawing.Point(24, 55);
 			this.otherSetTip.Name = "otherSetTip";
 			this.otherSetTip.Size = new System.Drawing.Size(189, 14);
 			this.otherSetTip.TabIndex = 8;
@@ -414,11 +432,11 @@ namespace EVTools
 			this.replaceSysRoot.TabIndex = 7;
 			this.replaceSysRoot.Text = "替换C:\\Windows为%SystemRoot%";
 			this.replaceSysRoot.UseVisualStyleBackColor = true;
-			this.replaceSysRoot.Click += new System.EventHandler(this.otherOK_Click);
+			this.replaceSysRoot.Click += new System.EventHandler(this.replaceSysRoot_Click);
 			// 
 			// otherOK
 			// 
-			this.otherOK.Location = new System.Drawing.Point(148, 155);
+			this.otherOK.Location = new System.Drawing.Point(144, 149);
 			this.otherOK.Name = "otherOK";
 			this.otherOK.Size = new System.Drawing.Size(75, 26);
 			this.otherOK.TabIndex = 7;
@@ -428,7 +446,7 @@ namespace EVTools
 			// 
 			// otherSetButton
 			// 
-			this.otherSetButton.Location = new System.Drawing.Point(281, 105);
+			this.otherSetButton.Location = new System.Drawing.Point(277, 103);
 			this.otherSetButton.Name = "otherSetButton";
 			this.otherSetButton.Size = new System.Drawing.Size(75, 23);
 			this.otherSetButton.TabIndex = 6;
@@ -438,10 +456,33 @@ namespace EVTools
 			// 
 			// otherSetValue
 			// 
-			this.otherSetValue.Location = new System.Drawing.Point(30, 106);
+			this.otherSetValue.Location = new System.Drawing.Point(26, 104);
 			this.otherSetValue.Name = "otherSetValue";
 			this.otherSetValue.Size = new System.Drawing.Size(240, 21);
 			this.otherSetValue.TabIndex = 5;
+			// 
+			// removeEndSep
+			// 
+			this.removeEndSep.Font = new System.Drawing.Font("宋体", 8.5F);
+			this.removeEndSep.Location = new System.Drawing.Point(240, 203);
+			this.removeEndSep.Name = "removeEndSep";
+			this.removeEndSep.Size = new System.Drawing.Size(130, 24);
+			this.removeEndSep.TabIndex = 7;
+			this.removeEndSep.Text = "移除每个路径末尾的\\";
+			this.removeEndSep.UseVisualStyleBackColor = true;
+			this.removeEndSep.Click += new System.EventHandler(this.removeEndSep_Click);
+			// 
+			// removeTip
+			// 
+			this.removeTip.AutoSize = true;
+			this.removeTip.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+			this.removeTip.Location = new System.Drawing.Point(272, 186);
+			this.removeTip.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.removeTip.Name = "removeTip";
+			this.removeTip.Size = new System.Drawing.Size(95, 12);
+			this.removeTip.TabIndex = 9;
+			this.removeTip.Text = "正在执行移除...";
+			this.removeTip.Visible = false;
 			// 
 			// MainGUI
 			// 
@@ -503,6 +544,9 @@ namespace EVTools
 		private System.Windows.Forms.ToolTip appendToolTip;
 		private System.Windows.Forms.Button managePath;
 		private System.Windows.Forms.Button replaceSysRoot;
+		private System.Windows.Forms.Label replaceTip;
+		private System.Windows.Forms.Button removeEndSep;
+		private System.Windows.Forms.Label removeTip;
 	}
 }
 

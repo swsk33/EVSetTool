@@ -25,7 +25,7 @@ namespace EVTools
 		private static void removeOracleSetupPath()
 		{
 			string[] setupPaths = { @"C:\Program Files (x86)\Common Files\Oracle\Java\javapath", @"C:\Program Files\Common Files\Oracle\Java\javapath" };
-			string pathValue = Utils.getVariableValue("Path");
+			string pathValue = Utils.GetVariableValue("Path");
 			foreach (string path in setupPaths)
 			{
 				if (pathValue.EndsWith(path))
@@ -46,7 +46,7 @@ namespace EVTools
 		/// </summary>
 		private static void ClearRedundantJDKPath()
 		{
-			string pathValue = Utils.getVariableValue("Path");
+			string pathValue = Utils.GetVariableValue("Path");
 			foreach (string key in jdkVersions.Keys)
 			{
 				string path = jdkVersions[key] + "\\bin";
