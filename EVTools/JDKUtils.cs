@@ -20,6 +20,28 @@ namespace EVTools
 		private static readonly string ADD_PATH_VALUE = JAVA_HOME_NAME + @"\bin";
 
 		/// <summary>
+		/// 移除Oracle安装时的附带路径变量
+		/// </summary>
+		private static void removeOracleSetupPath()
+		{
+			string[] setupPaths = { @"C:\Program Files (x86)\Common Files\Oracle\Java\javapath", @"C:\Program Files\Common Files\Oracle\Java\javapath" };
+			string pathValue = Utils.getVariableValue("Path");
+			foreach (string path in setupPaths)
+			{
+				if (pathValue.EndsWith(path))
+				{
+					pathValue = pathValue.Replace(path, "");
+				}
+				string path1 = path + ";";
+				if (pathValue.Contains(path1))
+				{
+					pathValue = pathValue.Replace(path1, "");
+				}
+			}
+			Utils.RunSetx("Path", pathValue, true);
+		}
+
+		/// <summary>
 		/// 检测已安装Oracle JDK版本，信息储存至JDKUtils类的全局静态变量jdkVersions中。
 		/// </summary>
 		public static void GetOracleJDKVersion()
@@ -72,10 +94,60 @@ namespace EVTools
 				{
 					RegistryKey jdkInfoKey = msJDKVersionKey.OpenSubKey(msJDKVersion + @"\hotspot\MSI");
 					string path = jdkInfoKey.GetValue("Path").ToString();
-					jdkVersions.Add(msJDKVersion + " - Microsoft JDK", path);
+					jdkVersions.Add(msJDKVersion + " - Microsoft Build OpenJDK", path);
 					jdkInfoKey.Close();
 				}
 				msJDKVersionKey.Close();
+			}
+			key.Close();
+		}
+
+		/// <summary>
+		/// 检测已安装Adopt OpenJDK版本，信息储存至JDKUtils类的全局静态变量jdkVersions中。
+		/// </summary>
+		public static void GetAdpotJDKVersion()
+		{
+			RegistryKey key = Registry.LocalMachine;
+			// 检测Hotspot VM JDK
+			if (RegUtils.IsItemExists(key, @"SOFTWARE\Temurin\JDK"))
+			{
+				RegistryKey jdkVersionKey = key.OpenSubKey(@"SOFTWARE\Temurin\JDK");
+				string[] adoptJDKVersions = jdkVersionKey.GetSubKeyNames();
+				foreach (string adoptJDKVersion in adoptJDKVersions)
+				{
+					RegistryKey infoKey = jdkVersionKey.OpenSubKey(adoptJDKVersion + @"\hotspot\MSI");
+					string path = infoKey.GetValue("Path").ToString();
+					jdkVersions.Add(adoptJDKVersion + " - Adopt Hotspot OpenJDK", path);
+					infoKey.Close();
+				}
+				jdkVersionKey.Close();
+			}
+			if (RegUtils.IsItemExists(key, @"SOFTWARE\Eclipse Foundation\JDK"))
+			{
+				RegistryKey jdkVersionKey = key.OpenSubKey(@"SOFTWARE\Eclipse Foundation\JDK");
+				string[] adoptJDKVersions = jdkVersionKey.GetSubKeyNames();
+				foreach (string adoptJDKVersion in adoptJDKVersions)
+				{
+					RegistryKey infoKey = jdkVersionKey.OpenSubKey(adoptJDKVersion + @"\hotspot\MSI");
+					string path = infoKey.GetValue("Path").ToString();
+					jdkVersions.Add(adoptJDKVersion + " - Adopt Hotspot OpenJDK", path);
+					infoKey.Close();
+				}
+				jdkVersionKey.Close();
+			}
+			// 检测OpenJ9 VM JDK
+			if (RegUtils.IsItemExists(key, @"SOFTWARE\Semeru\JDK"))
+			{
+				RegistryKey jdkVersionKey = key.OpenSubKey(@"SOFTWARE\Semeru\JDK");
+				string[] adoptJDKVersions = jdkVersionKey.GetSubKeyNames();
+				foreach (string adoptJDKVersion in adoptJDKVersions)
+				{
+					RegistryKey infoKey = jdkVersionKey.OpenSubKey(adoptJDKVersion + @"\openj9\MSI");
+					string path = infoKey.GetValue("Path").ToString();
+					jdkVersions.Add(adoptJDKVersion + " - Adopt OpenJ9 OpenJDK", path);
+					infoKey.Close();
+				}
+				jdkVersionKey.Close();
 			}
 			key.Close();
 		}
@@ -89,10 +161,6 @@ namespace EVTools
 		{
 			RegistryKey key = Registry.LocalMachine;
 			RegistryKey EVKey = key.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", true);
-			if (javaPath.EndsWith("\\"))
-			{
-				javaPath = javaPath.Substring(0, javaPath.Length - 1);
-			}
 			Utils.RunSetx("JAVA_HOME", javaPath, true);
 			if (isJDK9AndAbove)
 			{
@@ -108,7 +176,8 @@ namespace EVTools
 					Utils.RunSetx("classpath", CLASSPATH_VALUE, true);
 				}
 			}
-			bool setPath = Utils.AddValueToPath(ADD_PATH_VALUE, false, false);
+			removeOracleSetupPath();
+			bool setPath = Utils.AddValueToPath(ADD_PATH_VALUE, false, true);
 			EVKey.Close();
 			key.Close();
 			if (!RegUtils.IsValueExists(key, @"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", "JAVA_HOME"))

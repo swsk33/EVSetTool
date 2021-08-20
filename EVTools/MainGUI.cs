@@ -49,6 +49,7 @@ namespace EVTools
 			JDKUtils.jdkVersions.Clear();
 			JDKUtils.GetOracleJDKVersion();
 			JDKUtils.GetMicrosoftJDKVersion();
+			JDKUtils.GetAdpotJDKVersion();
 			if (JDKUtils.jdkVersions.Count == 0)
 			{
 				jdkAutoSetOption.Enabled = false;
@@ -83,6 +84,8 @@ namespace EVTools
 				pyAutoSetValue.SelectedIndex = 0;
 			}
 			appendToolTip.SetToolTip(isAppend, "勾选此项，指定值会被追加到Path变量最后，优先级最低；反之值会被插入到Path变量最前，优先级最高。");
+			appendToolTip.SetToolTip(JDKok, "点击以设定JDK环境变量。若已经设置JDK环境变量，还可以选择列表中其它版本JDK然后点击设定按钮以切换至指定JDK版本。");
+			appendToolTip.SetToolTip(pyOk, "点击以设定Python环境变量。若已经设置Python环境变量，还可以选择列表中其它版本Python然后点击设定按钮以切换至指定Python版本。");
 		}
 
 		private void jdkManualSetButton_Click(object sender, EventArgs e)
@@ -108,11 +111,6 @@ namespace EVTools
 			if (jdkAutoSetOption.Checked)
 			{
 				javaPath = JDKUtils.jdkVersions[jdkAutoSetValue.SelectedItem.ToString()];
-				isJDK9Above = false;
-				if (!jdkAutoSetValue.SelectedItem.ToString().StartsWith("1."))
-				{
-					isJDK9Above = true;
-				}
 			}
 			else if (jdkManualSetOption.Checked)
 			{
@@ -122,11 +120,10 @@ namespace EVTools
 					MessageBox.Show("请先指定jdk所在路径！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
 					return;
 				}
-				isJDK9Above = false;
-				if (!Directory.Exists(javaPath + "\\jre"))
-				{
-					isJDK9Above = true;
-				}
+			}
+			if (!Directory.Exists(javaPath + "\\jre"))
+			{
+				isJDK9Above = true;
 			}
 			jdkSettingTip.Visible = true;
 			new Thread(() =>
@@ -141,6 +138,7 @@ namespace EVTools
 			JDKUtils.jdkVersions.Clear();
 			JDKUtils.GetOracleJDKVersion();
 			JDKUtils.GetMicrosoftJDKVersion();
+			JDKUtils.GetAdpotJDKVersion();
 			if (JDKUtils.jdkVersions.Count != 0)
 			{
 				jdkAutoSetOption.Enabled = true;

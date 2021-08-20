@@ -2,7 +2,6 @@
 using System.Windows.Forms;
 using Swsk33.ReadAndWriteSharp;
 using System.Collections.Generic;
-using System;
 
 namespace EVTools
 {
@@ -22,9 +21,25 @@ namespace EVTools
 				args.Add("/m");
 			}
 			args.Add(varName);
+			if (value.EndsWith("\\"))
+			{
+				value = value.Substring(0, value.LastIndexOf("\\"));
+			}
 			args.Add(value);
-			Console.WriteLine(value);
 			TerminalUtils.RunCommand("setx", args.ToArray());
+		}
+
+		/// <summary>
+		/// 获取指定环境变量的值
+		/// </summary>
+		/// <param name="variableName">环境变量名</param>
+		/// <returns>环境变量值</returns>
+		public static string getVariableValue(string variableName)
+		{
+			RegistryKey EVKey = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment");
+			string pathValue = EVKey.GetValue(variableName, "", RegistryValueOptions.DoNotExpandEnvironmentNames).ToString();
+			EVKey.Close();
+			return pathValue;
 		}
 
 		/// <summary>
@@ -36,8 +51,7 @@ namespace EVTools
 		public static bool AddValueToPath(string value, bool showTip, bool append)
 		{
 			bool result = false;
-			RegistryKey EVKey = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment");
-			string pathValue = EVKey.GetValue("Path", "", RegistryValueOptions.DoNotExpandEnvironmentNames).ToString();
+			string pathValue = getVariableValue("Path");
 			if (pathValue.Contains(value + ";") || pathValue.EndsWith(value))
 			{
 				if (showTip)
@@ -53,7 +67,7 @@ namespace EVTools
 			if (append)
 			{
 				RunSetx("Path", pathValue + value + ";", true);
-				pathValue = EVKey.GetValue("Path", "", RegistryValueOptions.DoNotExpandEnvironmentNames).ToString();
+				pathValue = getVariableValue("Path");
 				if (pathValue.EndsWith(value + ";"))
 				{
 					result = true;
@@ -62,13 +76,12 @@ namespace EVTools
 			else
 			{
 				RunSetx("Path", value + ";" + pathValue, true);
-				pathValue = EVKey.GetValue("Path", "", RegistryValueOptions.DoNotExpandEnvironmentNames).ToString();
+				pathValue = getVariableValue("Path");
 				if (pathValue.StartsWith(value + ";"))
 				{
 					result = true;
 				}
 			}
-			EVKey.Close();
 			if (showTip)
 			{
 				if (result)

@@ -48,10 +48,6 @@ namespace EVTools
 		/// <param name="pyPath">python所在位置</param>
 		public static void SetPythonValue(string pyPath)
 		{
-			if (pyPath.EndsWith("\\"))
-			{
-				pyPath = pyPath.Substring(0, pyPath.Length - 1);
-			}
 			Utils.RunSetx(PYHOME_NAME, pyPath, true);
 			bool setPath1 = Utils.AddValueToPath(PATH_ADDITION_1, false, true);
 			bool setPath2 = Utils.AddValueToPath(PATH_ADDITION_2, false, true);
