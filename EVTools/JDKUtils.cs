@@ -1,8 +1,8 @@
 ﻿using Microsoft.Win32;
+using Swsk33.ReadAndWriteSharp;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using Swsk33.ReadAndWriteSharp;
 
 namespace EVTools
 {
@@ -32,10 +32,20 @@ namespace EVTools
 				{
 					pathValue = pathValue.Replace(path, "");
 				}
-				string path1 = path + ";";
-				if (pathValue.Contains(path1))
+				string pathVar = path + ";";
+				if (pathValue.Contains(pathVar))
+				{
+					pathValue = pathValue.Replace(pathVar, "");
+				}
+				string path1 = path + "\\";
+				if (pathValue.EndsWith(path1))
 				{
 					pathValue = pathValue.Replace(path1, "");
+				}
+				string path1Var = path1 + ";";
+				if (pathValue.Contains(path1Var))
+				{
+					pathValue = pathValue.Replace(path1Var, "");
 				}
 			}
 			Utils.RunSetx("Path", pathValue, true);
@@ -44,7 +54,7 @@ namespace EVTools
 		/// <summary>
 		/// 清理Path中冗余的JDK路径信息
 		/// </summary>
-		private static void ClearRedundantJDKPath()
+		private static void clearRedundantJDKPath()
 		{
 			string pathValue = Utils.GetVariableValue("Path");
 			foreach (string key in jdkVersions.Keys)
@@ -59,6 +69,16 @@ namespace EVTools
 				{
 					pathValue = pathValue.Replace(pathVar, "");
 				}
+				string path1 = path + "\\";
+				if (pathValue.EndsWith(path1))
+				{
+					pathValue = pathValue.Replace(path1, "");
+				}
+				string path1Var = path1 + ";";
+				if (pathValue.Contains(path1Var))
+				{
+					pathValue = pathValue.Replace(path1Var, "");
+				}
 			}
 			Utils.RunSetx("Path", pathValue, true);
 		}
@@ -66,7 +86,7 @@ namespace EVTools
 		/// <summary>
 		/// 检测已安装Oracle JDK版本，信息储存至JDKUtils类的全局静态变量jdkVersions中。
 		/// </summary>
-		private static void GetOracleJDKVersion()
+		private static void getOracleJDKVersion()
 		{
 			RegistryKey key = Registry.LocalMachine;
 			//检测jdk8及其以下版本
@@ -107,7 +127,7 @@ namespace EVTools
 		/// <summary>
 		/// 检测已安装Microsoft JDK版本，信息储存至JDKUtils类的全局静态变量jdkVersions中。
 		/// </summary>
-		private static void GetMicrosoftJDKVersion()
+		private static void getMicrosoftJDKVersion()
 		{
 			RegistryKey key = Registry.LocalMachine;
 			if (RegUtils.IsItemExists(key, @"SOFTWARE\Microsoft\JDK"))
@@ -130,7 +150,7 @@ namespace EVTools
 		/// <summary>
 		/// 检测已安装Adopt OpenJDK版本，信息储存至JDKUtils类的全局静态变量jdkVersions中。
 		/// </summary>
-		private static void GetAdpotJDKVersion()
+		private static void getAdpotJDKVersion()
 		{
 			RegistryKey key = Registry.LocalMachine;
 			// 检测Hotspot VM JDK
@@ -181,14 +201,37 @@ namespace EVTools
 		}
 
 		/// <summary>
+		/// 检测已安装Azul Zulu OpenJDK版本，信息储存至JDKUtils类的全局静态变量jdkVersions中。
+		/// </summary>
+		private static void getAzulZuluJDKVersion()
+		{
+			RegistryKey key = Registry.LocalMachine;
+			if (RegUtils.IsItemExists(key, @"SOFTWARE\Azul Systems\Zulu"))
+			{
+				RegistryKey jdkVersionKey = key.OpenSubKey(@"SOFTWARE\Azul Systems\Zulu");
+				string[] zuluJDKVersions = jdkVersionKey.GetSubKeyNames();
+				foreach (string zuluJDKVersion in zuluJDKVersions)
+				{
+					RegistryKey infoKey = jdkVersionKey.OpenSubKey(zuluJDKVersion);
+					string path = infoKey.GetValue("InstallationPath").ToString();
+					path = Utils.RemoveEndBackslash(path);
+					jdkVersions.Add(zuluJDKVersion + " - Azul Zulu OpenJDK", path);
+					infoKey.Close();
+				}
+				jdkVersionKey.Close();
+			}
+		}
+
+		/// <summary>
 		/// 探测全部JDK
 		/// </summary>
 		public static void DetectJDKs()
 		{
 			jdkVersions.Clear();
-			GetOracleJDKVersion();
-			GetMicrosoftJDKVersion();
-			GetAdpotJDKVersion();
+			getOracleJDKVersion();
+			getMicrosoftJDKVersion();
+			getAdpotJDKVersion();
+			getAzulZuluJDKVersion();
 		}
 
 		/// <summary>
@@ -216,7 +259,7 @@ namespace EVTools
 				}
 			}
 			removeOracleSetupPath();
-			ClearRedundantJDKPath();
+			clearRedundantJDKPath();
 			bool setPath = Utils.AddValueToPath(ADD_PATH_VALUE, false, true);
 			EVKey.Close();
 			key.Close();

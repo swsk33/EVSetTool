@@ -17,6 +17,38 @@ namespace EVTools
 		private static readonly string PATH_ADDITION_2 = "%" + PYHOME_NAME + "%\\Scripts";
 
 		/// <summary>
+		/// 清理Path中冗余的python路径
+		/// </summary>
+		private static void clearRedundantPyPath()
+		{
+			string pathValue = Utils.GetVariableValue("Path");
+			foreach (string key in pyVersions.Keys)
+			{
+				string path = pyVersions[key];
+				if (pathValue.EndsWith(path))
+				{
+					pathValue = pathValue.Replace(path, "");
+				}
+				string pathVar = path + ";";
+				if (pathValue.Contains(pathVar))
+				{
+					pathValue = pathValue.Replace(pathVar, "");
+				}
+				string path1 = path + "\\";
+				if (pathValue.EndsWith(path1))
+				{
+					pathValue = pathValue.Replace(path1, "");
+				}
+				string path1Var = path1 + ";";
+				if (pathValue.Contains(path1Var))
+				{
+					pathValue = pathValue.Replace(path1Var, "");
+				}
+			}
+			Utils.RunSetx("Path", pathValue, true);
+		}
+
+		/// <summary>
 		/// 获取已安装Python版本，存放于PyUtils类的全局静态变量pyVersions中。
 		/// </summary>
 		public static void GetPyVersions()
@@ -34,6 +66,7 @@ namespace EVTools
 					{
 						RegistryKey eachPyVerKey = key.OpenSubKey(eachPyVarsionPath);
 						string pyPath = eachPyVerKey.GetValue("").ToString();
+						pyPath = Utils.RemoveEndBackslash(pyPath);
 						pyVersions.Add(v, pyPath);
 						eachPyVerKey.Close();
 					}
@@ -48,6 +81,7 @@ namespace EVTools
 		/// <param name="pyPath">python所在位置</param>
 		public static void SetPythonValue(string pyPath)
 		{
+			clearRedundantPyPath();
 			Utils.RunSetx(PYHOME_NAME, pyPath, true);
 			bool setPath1 = Utils.AddValueToPath(PATH_ADDITION_1, false, true);
 			bool setPath2 = Utils.AddValueToPath(PATH_ADDITION_2, false, true);
