@@ -1,8 +1,8 @@
 ﻿using Microsoft.Win32;
-using System.Windows.Forms;
 using Swsk33.ReadAndWriteSharp;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace EVTools
 {
@@ -20,6 +20,36 @@ namespace EVTools
 				origin = origin.Substring(0, origin.LastIndexOf("\\"));
 			}
 			return origin;
+		}
+
+		/// <summary>
+		/// 去除一个变量值中冗余值（例如Path中已经包含了java路径：C:\Program Files\Java\jdk_x.x.x\bin和%JAVA_HOME%\bin，这两个值实质上一样，因此需要从Path去掉前者重复值，传入Path或者其它变量值和重复值，即可从中去除重复值并返回新值）
+		/// </summary>
+		/// <param name="originValue">原值</param>
+		/// <param name="removeValue">带去除值</param>
+		/// <returns>去除冗余后的新值</returns>
+		public static string removeRedundantValue(string originValue, string removeValue)
+		{
+			if (originValue.EndsWith(removeValue))
+			{
+				originValue = originValue.Replace(removeValue, "");
+			}
+			string removeValueVar = removeValue + ";";
+			if (originValue.Contains(removeValueVar))
+			{
+				originValue = originValue.Replace(removeValueVar, "");
+			}
+			string removeValueSep = removeValue + "\\";
+			if (originValue.EndsWith(removeValueSep))
+			{
+				originValue = originValue.Replace(removeValueSep, "");
+			}
+			string removeValueSepVar = removeValueSep + ";";
+			if (originValue.Contains(removeValueSepVar))
+			{
+				originValue = originValue.Replace(removeValueSepVar, "");
+			}
+			return originValue;
 		}
 
 		/// <summary>

@@ -18,35 +18,18 @@ namespace EVTools
 		private static readonly string CLASSPATH_VALUE = ".;" + JAVA_HOME_NAME + @"\lib\dt.jar;" + JAVA_HOME_NAME + @"\lib\tools.jar";
 		//jdk追加Path变量值
 		private static readonly string ADD_PATH_VALUE = JAVA_HOME_NAME + @"\bin";
+		//Oracle JDK安装附加值
+		private static readonly string[] SETUP_PATHS = { @"C:\Program Files (x86)\Common Files\Oracle\Java\javapath", @"C:\Program Files\Common Files\Oracle\Java\javapath" };
 
 		/// <summary>
 		/// 移除Oracle安装时的附带路径变量
 		/// </summary>
 		private static void removeOracleSetupPath()
 		{
-			string[] setupPaths = { @"C:\Program Files (x86)\Common Files\Oracle\Java\javapath", @"C:\Program Files\Common Files\Oracle\Java\javapath" };
 			string pathValue = Utils.GetVariableValue("Path");
-			foreach (string path in setupPaths)
+			foreach (string path in SETUP_PATHS)
 			{
-				if (pathValue.EndsWith(path))
-				{
-					pathValue = pathValue.Replace(path, "");
-				}
-				string pathVar = path + ";";
-				if (pathValue.Contains(pathVar))
-				{
-					pathValue = pathValue.Replace(pathVar, "");
-				}
-				string path1 = path + "\\";
-				if (pathValue.EndsWith(path1))
-				{
-					pathValue = pathValue.Replace(path1, "");
-				}
-				string path1Var = path1 + ";";
-				if (pathValue.Contains(path1Var))
-				{
-					pathValue = pathValue.Replace(path1Var, "");
-				}
+				pathValue = Utils.removeRedundantValue(pathValue, path);
 			}
 			Utils.RunSetx("Path", pathValue, true);
 		}
@@ -60,25 +43,7 @@ namespace EVTools
 			foreach (string key in jdkVersions.Keys)
 			{
 				string path = jdkVersions[key] + "\\bin";
-				if (pathValue.EndsWith(path))
-				{
-					pathValue = pathValue.Replace(path, "");
-				}
-				string pathVar = path + ";";
-				if (pathValue.Contains(pathVar))
-				{
-					pathValue = pathValue.Replace(pathVar, "");
-				}
-				string path1 = path + "\\";
-				if (pathValue.EndsWith(path1))
-				{
-					pathValue = pathValue.Replace(path1, "");
-				}
-				string path1Var = path1 + ";";
-				if (pathValue.Contains(path1Var))
-				{
-					pathValue = pathValue.Replace(path1Var, "");
-				}
+				pathValue = Utils.removeRedundantValue(pathValue, path);
 			}
 			Utils.RunSetx("Path", pathValue, true);
 		}

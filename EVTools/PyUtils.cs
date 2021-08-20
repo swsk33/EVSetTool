@@ -25,25 +25,9 @@ namespace EVTools
 			foreach (string key in pyVersions.Keys)
 			{
 				string path = pyVersions[key];
-				if (pathValue.EndsWith(path))
-				{
-					pathValue = pathValue.Replace(path, "");
-				}
-				string pathVar = path + ";";
-				if (pathValue.Contains(pathVar))
-				{
-					pathValue = pathValue.Replace(pathVar, "");
-				}
-				string path1 = path + "\\";
-				if (pathValue.EndsWith(path1))
-				{
-					pathValue = pathValue.Replace(path1, "");
-				}
-				string path1Var = path1 + ";";
-				if (pathValue.Contains(path1Var))
-				{
-					pathValue = pathValue.Replace(path1Var, "");
-				}
+				string scriptPath = path + "\\Scripts";
+				pathValue = Utils.removeRedundantValue(pathValue, path);
+				pathValue = Utils.removeRedundantValue(pathValue, scriptPath);
 			}
 			Utils.RunSetx("Path", pathValue, true);
 		}
