@@ -1,7 +1,7 @@
 ﻿
 namespace Swsk33.EVTools.Dialog
 {
-	partial class EditForm
+	partial class EditDialog
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -29,7 +29,7 @@ namespace Swsk33.EVTools.Dialog
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditForm));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditDialog));
 			this.editValue = new System.Windows.Forms.TextBox();
 			this.ok = new System.Windows.Forms.Button();
 			this.cancel = new System.Windows.Forms.Button();

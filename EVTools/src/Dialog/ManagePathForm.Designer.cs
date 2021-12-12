@@ -1,7 +1,7 @@
 ﻿
 namespace Swsk33.EVTools.Dialog
 {
-	partial class ManagePathForm
+	partial class ManagePathDialog
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -30,7 +30,7 @@ namespace Swsk33.EVTools.Dialog
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ManagePathForm));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ManagePathDialog));
 			this.pathContentLabel = new System.Windows.Forms.Label();
 			this.pathContentValue = new System.Windows.Forms.ListBox();
 			this.save = new System.Windows.Forms.Button();

@@ -6,9 +6,9 @@ using System.Windows.Forms;
 
 namespace Swsk33.EVTools.Dialog
 {
-	public partial class ManagePathForm : Form
+	public partial class ManagePathDialog : Form
 	{
-		public ManagePathForm()
+		public ManagePathDialog()
 		{
 			InitializeComponent();
 		}
@@ -95,7 +95,7 @@ namespace Swsk33.EVTools.Dialog
 		{
 			if (pathContentValue.SelectedIndex >= 0)
 			{
-				string value = new EditForm().SetSpecificValue(pathContentValue.SelectedItem.ToString());
+				string value = new EditDialog().SetSpecificValue(pathContentValue.SelectedItem.ToString());
 				if (value != null)
 				{
 					pathContentValue.Items[pathContentValue.SelectedIndex] = value;
@@ -139,7 +139,7 @@ namespace Swsk33.EVTools.Dialog
 		{
 			if (pathContentValue.SelectedIndex >= 0)
 			{
-				string value = new EditForm().SetSpecificValue(pathContentValue.SelectedItem.ToString());
+				string value = new EditDialog().SetSpecificValue(pathContentValue.SelectedItem.ToString());
 				if (value != null)
 				{
 					pathContentValue.Items[pathContentValue.SelectedIndex] = value;

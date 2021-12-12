@@ -225,7 +225,7 @@ namespace Swsk33.EVTools
 
 		private void managePath_Click(object sender, EventArgs e)
 		{
-			new ManagePathForm().ShowDialog();
+			new ManagePathDialog().ShowDialog();
 		}
 
 		private void replaceSysRoot_Click(object sender, EventArgs e)

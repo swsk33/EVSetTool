@@ -66,11 +66,11 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\Dialog\EditForm.cs">
+    <Compile Include="src\Dialog\EditDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="src\Dialog\EditForm.Designer.cs">
-      <DependentUpon>EditForm.cs</DependentUpon>
+    <Compile Include="src\Dialog\EditDialog.Designer.cs">
+      <DependentUpon>EditDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="src\Util\JDKUtils.cs" />
     <Compile Include="src\MainGUI.cs">
@@ -89,8 +89,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\Util\PyUtils.cs" />
     <Compile Include="src\Util\Utils.cs" />
-    <EmbeddedResource Include="src\Dialog\EditForm.resx">
-      <DependentUpon>EditForm.cs</DependentUpon>
+    <EmbeddedResource Include="src\Dialog\EditDialog.resx">
+      <DependentUpon>EditDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="src\MainGUI.resx">
       <DependentUpon>MainGUI.cs</DependentUpon>

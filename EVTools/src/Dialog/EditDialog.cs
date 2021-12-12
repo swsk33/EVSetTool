@@ -3,11 +3,11 @@ using System.Windows.Forms;
 
 namespace Swsk33.EVTools.Dialog
 {
-	public partial class EditForm : Form
+	public partial class EditDialog : Form
 	{
 		private string resultValue = null;
 
-		public EditForm()
+		public EditDialog()
 		{
 			InitializeComponent();
 		}
