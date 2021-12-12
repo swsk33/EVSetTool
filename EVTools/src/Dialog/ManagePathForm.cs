@@ -1,9 +1,10 @@
 ﻿using Microsoft.Win32;
+using Swsk33.EVTools.Util;
 using System;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace EVTools
+namespace Swsk33.EVTools.Dialog
 {
 	public partial class ManagePathForm : Form
 	{

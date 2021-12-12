@@ -1,5 +1,5 @@
 ﻿
-namespace EVTools
+namespace Swsk33.EVTools.Dialog
 {
 	partial class ManagePathForm
 	{

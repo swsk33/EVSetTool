@@ -1,11 +1,12 @@
 ﻿using Microsoft.Win32;
-using Swsk33.ReadAndWriteSharp;
+using Swsk33.ReadAndWriteSharp.System;
+using Swsk33.ReadAndWriteSharp.Util;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace EVTools
+namespace Swsk33.EVTools.Util
 {
-	class PyUtils
+	public class PyUtils
 	{
 		//python版本列表
 		public static Dictionary<string, string> pyVersions = new Dictionary<string, string>();
@@ -50,7 +51,7 @@ namespace EVTools
 					{
 						RegistryKey eachPyVerKey = key.OpenSubKey(eachPyVarsionPath);
 						string pyPath = eachPyVerKey.GetValue("").ToString();
-						pyPath = Utils.RemoveEndBackslash(pyPath);
+						pyPath = FilePathUtils.RemovePathEndBackslash(pyPath);
 						pyVersions.Add(v, pyPath);
 						eachPyVerKey.Close();
 					}

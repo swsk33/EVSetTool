@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Swsk33.EVTools.Dialog;
+using Swsk33.EVTools.Util;
+using System;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace EVTools
+namespace Swsk33.EVTools
 {
 	public partial class MainGUI : Form
 	{

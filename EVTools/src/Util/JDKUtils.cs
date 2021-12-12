@@ -1,12 +1,13 @@
 ﻿using Microsoft.Win32;
-using Swsk33.ReadAndWriteSharp;
+using Swsk33.ReadAndWriteSharp.System;
+using Swsk33.ReadAndWriteSharp.Util;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace EVTools
+namespace Swsk33.EVTools.Util
 {
-	class JDKUtils
+	public class JDKUtils
 	{
 		//冗余版本信息
 		private static readonly string[] NOT_ADD_VERSION_VALUE = { "1.1", "1.2", "1.3", "1.4", "1.5", "1.6", "1.7", "1.8" };
@@ -65,7 +66,7 @@ namespace EVTools
 					{
 						RegistryKey jdkVersionKey = key.OpenSubKey(@"SOFTWARE\JavaSoft\Java Development Kit\" + version);
 						string path = jdkVersionKey.GetValue("JavaHome").ToString();
-						path = Utils.RemoveEndBackslash(path);
+						path = FilePathUtils.RemovePathEndBackslash(path);
 						jdkVersions.Add(version + " - Oracle JDK", path);
 						jdkVersionKey.Close();
 					}
@@ -81,7 +82,7 @@ namespace EVTools
 				{
 					RegistryKey jdkVersionKey = key.OpenSubKey(@"SOFTWARE\JavaSoft\JDK\" + version);
 					string path = jdkVersionKey.GetValue("JavaHome").ToString();
-					path = Utils.RemoveEndBackslash(path);
+					path = FilePathUtils.RemovePathEndBackslash(path);
 					jdkVersions.Add(version + " - Oracle JDK", path);
 					jdkVersionKey.Close();
 				}
@@ -103,7 +104,7 @@ namespace EVTools
 				{
 					RegistryKey jdkInfoKey = msJDKVersionKey.OpenSubKey(msJDKVersion + @"\hotspot\MSI");
 					string path = jdkInfoKey.GetValue("Path").ToString();
-					path = Utils.RemoveEndBackslash(path);
+					path = FilePathUtils.RemovePathEndBackslash(path);
 					jdkVersions.Add(msJDKVersion + " - Microsoft Build OpenJDK", path);
 					jdkInfoKey.Close();
 				}
@@ -127,7 +128,7 @@ namespace EVTools
 				{
 					RegistryKey infoKey = jdkVersionKey.OpenSubKey(adoptJDKVersion + @"\hotspot\MSI");
 					string path = infoKey.GetValue("Path").ToString();
-					path = Utils.RemoveEndBackslash(path);
+					path = FilePathUtils.RemovePathEndBackslash(path);
 					jdkVersions.Add(adoptJDKVersion + " - Adopt Hotspot OpenJDK", path);
 					infoKey.Close();
 				}
@@ -141,7 +142,7 @@ namespace EVTools
 				{
 					RegistryKey infoKey = jdkVersionKey.OpenSubKey(adoptJDKVersion + @"\hotspot\MSI");
 					string path = infoKey.GetValue("Path").ToString();
-					path = Utils.RemoveEndBackslash(path);
+					path = FilePathUtils.RemovePathEndBackslash(path);
 					jdkVersions.Add(adoptJDKVersion + " - Adopt Hotspot OpenJDK", path);
 					infoKey.Close();
 				}
@@ -156,7 +157,7 @@ namespace EVTools
 				{
 					RegistryKey infoKey = jdkVersionKey.OpenSubKey(adoptJDKVersion + @"\openj9\MSI");
 					string path = infoKey.GetValue("Path").ToString();
-					path = Utils.RemoveEndBackslash(path);
+					path = FilePathUtils.RemovePathEndBackslash(path);
 					jdkVersions.Add(adoptJDKVersion + " - Adopt OpenJ9 OpenJDK", path);
 					infoKey.Close();
 				}
@@ -179,7 +180,7 @@ namespace EVTools
 				{
 					RegistryKey infoKey = jdkVersionKey.OpenSubKey(zuluJDKVersion);
 					string path = infoKey.GetValue("InstallationPath").ToString();
-					path = Utils.RemoveEndBackslash(path);
+					path = FilePathUtils.RemovePathEndBackslash(path);
 					jdkVersions.Add(zuluJDKVersion + " - Azul Zulu OpenJDK", path);
 					infoKey.Close();
 				}

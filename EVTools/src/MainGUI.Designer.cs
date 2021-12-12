@@ -1,5 +1,5 @@
 ﻿
-namespace EVTools
+namespace Swsk33.EVTools
 {
     partial class MainGUI
     {
@@ -57,16 +57,16 @@ namespace EVTools
 			this.other = new System.Windows.Forms.TabPage();
 			this.managePath = new System.Windows.Forms.Button();
 			this.isAppend = new System.Windows.Forms.CheckBox();
+			this.removeTip = new System.Windows.Forms.Label();
 			this.replaceTip = new System.Windows.Forms.Label();
 			this.otherSettingTip = new System.Windows.Forms.Label();
 			this.otherSetTip = new System.Windows.Forms.Label();
+			this.removeEndSep = new System.Windows.Forms.Button();
 			this.replaceSysRoot = new System.Windows.Forms.Button();
 			this.otherOK = new System.Windows.Forms.Button();
 			this.otherSetButton = new System.Windows.Forms.Button();
 			this.otherSetValue = new System.Windows.Forms.TextBox();
 			this.appendToolTip = new System.Windows.Forms.ToolTip(this.components);
-			this.removeEndSep = new System.Windows.Forms.Button();
-			this.removeTip = new System.Windows.Forms.Label();
 			this.mainTabPane.SuspendLayout();
 			this.jdkSetTab.SuspendLayout();
 			this.pythonTab.SuspendLayout();
@@ -139,7 +139,7 @@ namespace EVTools
 			// 
 			// JDKok
 			// 
-			this.JDKok.Location = new System.Drawing.Point(151, 180);
+			this.JDKok.Location = new System.Drawing.Point(150, 179);
 			this.JDKok.Name = "JDKok";
 			this.JDKok.Size = new System.Drawing.Size(75, 23);
 			this.JDKok.TabIndex = 4;
@@ -282,7 +282,7 @@ namespace EVTools
 			// 
 			// pyOk
 			// 
-			this.pyOk.Location = new System.Drawing.Point(154, 182);
+			this.pyOk.Location = new System.Drawing.Point(155, 181);
 			this.pyOk.Name = "pyOk";
 			this.pyOk.Size = new System.Drawing.Size(75, 23);
 			this.pyOk.TabIndex = 13;
@@ -315,7 +315,7 @@ namespace EVTools
 			// pyManualSetButton
 			// 
 			this.pyManualSetButton.Enabled = false;
-			this.pyManualSetButton.Location = new System.Drawing.Point(272, 146);
+			this.pyManualSetButton.Location = new System.Drawing.Point(272, 144);
 			this.pyManualSetButton.Name = "pyManualSetButton";
 			this.pyManualSetButton.Size = new System.Drawing.Size(75, 23);
 			this.pyManualSetButton.TabIndex = 14;
@@ -338,7 +338,7 @@ namespace EVTools
 			// pyManualSetValue
 			// 
 			this.pyManualSetValue.Enabled = false;
-			this.pyManualSetValue.Location = new System.Drawing.Point(50, 147);
+			this.pyManualSetValue.Location = new System.Drawing.Point(50, 145);
 			this.pyManualSetValue.Name = "pyManualSetValue";
 			this.pyManualSetValue.Size = new System.Drawing.Size(217, 21);
 			this.pyManualSetValue.TabIndex = 11;
@@ -389,6 +389,18 @@ namespace EVTools
 			this.isAppend.Text = "追加值至Path变量末尾";
 			this.isAppend.UseVisualStyleBackColor = true;
 			// 
+			// removeTip
+			// 
+			this.removeTip.AutoSize = true;
+			this.removeTip.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+			this.removeTip.Location = new System.Drawing.Point(272, 186);
+			this.removeTip.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.removeTip.Name = "removeTip";
+			this.removeTip.Size = new System.Drawing.Size(95, 12);
+			this.removeTip.TabIndex = 9;
+			this.removeTip.Text = "正在执行移除...";
+			this.removeTip.Visible = false;
+			// 
 			// replaceTip
 			// 
 			this.replaceTip.AutoSize = true;
@@ -422,6 +434,17 @@ namespace EVTools
 			this.otherSetTip.Size = new System.Drawing.Size(189, 14);
 			this.otherSetTip.TabIndex = 8;
 			this.otherSetTip.Text = "请指定目录并加至Path变量：";
+			// 
+			// removeEndSep
+			// 
+			this.removeEndSep.Font = new System.Drawing.Font("宋体", 8.5F);
+			this.removeEndSep.Location = new System.Drawing.Point(240, 203);
+			this.removeEndSep.Name = "removeEndSep";
+			this.removeEndSep.Size = new System.Drawing.Size(130, 24);
+			this.removeEndSep.TabIndex = 7;
+			this.removeEndSep.Text = "移除每个路径末尾的\\";
+			this.removeEndSep.UseVisualStyleBackColor = true;
+			this.removeEndSep.Click += new System.EventHandler(this.removeEndSep_Click);
 			// 
 			// replaceSysRoot
 			// 
@@ -460,29 +483,6 @@ namespace EVTools
 			this.otherSetValue.Name = "otherSetValue";
 			this.otherSetValue.Size = new System.Drawing.Size(240, 21);
 			this.otherSetValue.TabIndex = 5;
-			// 
-			// removeEndSep
-			// 
-			this.removeEndSep.Font = new System.Drawing.Font("宋体", 8.5F);
-			this.removeEndSep.Location = new System.Drawing.Point(240, 203);
-			this.removeEndSep.Name = "removeEndSep";
-			this.removeEndSep.Size = new System.Drawing.Size(130, 24);
-			this.removeEndSep.TabIndex = 7;
-			this.removeEndSep.Text = "移除每个路径末尾的\\";
-			this.removeEndSep.UseVisualStyleBackColor = true;
-			this.removeEndSep.Click += new System.EventHandler(this.removeEndSep_Click);
-			// 
-			// removeTip
-			// 
-			this.removeTip.AutoSize = true;
-			this.removeTip.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-			this.removeTip.Location = new System.Drawing.Point(272, 186);
-			this.removeTip.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.removeTip.Name = "removeTip";
-			this.removeTip.Size = new System.Drawing.Size(95, 12);
-			this.removeTip.TabIndex = 9;
-			this.removeTip.Text = "正在执行移除...";
-			this.removeTip.Visible = false;
 			// 
 			// MainGUI
 			// 

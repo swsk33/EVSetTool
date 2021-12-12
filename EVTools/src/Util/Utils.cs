@@ -1,27 +1,14 @@
 ﻿using Microsoft.Win32;
-using Swsk33.ReadAndWriteSharp;
+using Swsk33.ReadAndWriteSharp.System;
+using Swsk33.ReadAndWriteSharp.Util;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace EVTools
+namespace Swsk33.EVTools.Util
 {
-	class Utils
+	public class Utils
 	{
-		/// <summary>
-		/// 去掉原字符串最末尾的反斜杠(\)
-		/// </summary>
-		/// <param name="origin">原字符串</param>
-		/// <returns>去掉末尾反斜杠后的字符串，若原字符串不以反斜杠结尾则返回原字符串</returns>
-		public static string RemoveEndBackslash(string origin)
-		{
-			if (origin.EndsWith("\\"))
-			{
-				origin = origin.Substring(0, origin.LastIndexOf("\\"));
-			}
-			return origin;
-		}
-
 		/// <summary>
 		/// 去除一个变量值中冗余值（例如Path中已经包含了java路径：C:\Program Files\Java\jdk_x.x.x\bin和%JAVA_HOME%\bin，这两个值实质上一样，因此需要从Path去掉前者重复值，传入Path或者其它变量值和重复值，即可从中去除重复值并返回新值）
 		/// </summary>
@@ -66,7 +53,7 @@ namespace EVTools
 				args.Add("/m");
 			}
 			args.Add(varName);
-			value = RemoveEndBackslash(value);
+			value = FilePathUtils.RemovePathEndBackslash(value);
 			args.Add(value);
 			TerminalUtils.RunCommand("setx", args.ToArray());
 		}
@@ -175,7 +162,7 @@ namespace EVTools
 			string resultPathValue = "";
 			foreach (string path in paths)
 			{
-				resultPathValue = resultPathValue + RemoveEndBackslash(path) + ";";
+				resultPathValue = resultPathValue + FilePathUtils.RemovePathEndBackslash(path) + ";";
 			}
 			RunSetx("Path", resultPathValue, true);
 			if (resultPathValue.Equals(GetVariableValue("Path")))

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace EVTools
+namespace Swsk33.EVTools.Dialog
 {
 	public partial class EditForm : Form
 	{
