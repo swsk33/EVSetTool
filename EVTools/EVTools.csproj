@@ -79,11 +79,11 @@
     <Compile Include="src\MainGUI.Designer.cs">
       <DependentUpon>MainGUI.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\Dialog\ManagePathForm.cs">
+    <Compile Include="src\Dialog\ManagePathDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="src\Dialog\ManagePathForm.Designer.cs">
-      <DependentUpon>ManagePathForm.cs</DependentUpon>
+    <Compile Include="src\Dialog\ManagePathDialog.Designer.cs">
+      <DependentUpon>ManagePathDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="src\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -95,8 +95,8 @@
     <EmbeddedResource Include="src\MainGUI.resx">
       <DependentUpon>MainGUI.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="src\Dialog\ManagePathForm.resx">
-      <DependentUpon>ManagePathForm.cs</DependentUpon>
+    <EmbeddedResource Include="src\Dialog\ManagePathDialog.resx">
+      <DependentUpon>ManagePathDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
