@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using Swsk33.EVTools.Util;
+using Swsk33.ReadAndWriteSharp.System;
 using System;
 using System.Threading;
 using System.Windows.Forms;
@@ -15,12 +16,7 @@ namespace Swsk33.EVTools.Dialog
 
 		private void ManagePathForm_Load(object sender, EventArgs e)
 		{
-			string pathValue = Utils.GetVariableValue("Path");
-			if (pathValue.EndsWith(";"))
-			{
-				pathValue = pathValue.Substring(0, pathValue.LastIndexOf(";"));
-			}
-			string[] pathValues = pathValue.Split(';');
+			string[] pathValues = RegUtils.GetPathVariable();
 			foreach (string value in pathValues)
 			{
 				pathContentValue.Items.Add(value);

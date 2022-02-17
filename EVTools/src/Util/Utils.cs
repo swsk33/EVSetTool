@@ -59,6 +59,59 @@ namespace Swsk33.EVTools.Util
 		}
 
 		/// <summary>
+		/// 获取环境变量Path中的变量形式
+		/// </summary>
+		/// <returns>一个字典，字典的键是Path中变量形式的值（例如%JAVA_HOME%\bin），其值则为这个变量的值（例如C:\Program Files\Zulu\zulu-17）</returns>
+		public static Dictionary<string, string> GetVariablesInPath()
+		{
+			Dictionary<string, string> result = new Dictionary<string, string>();
+			// 先获取展开值后的环境变量Path
+			RegistryKey key = Registry.LocalMachine.OpenSubKey("SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Environment");
+			string value = key.GetValue("Path", "").ToString();
+			key.Close();
+			if (value.EndsWith(";"))
+			{
+				value = value.Substring(0, value.LastIndexOf(";"));
+			}
+			string[] valuesExpanded = value.Split(';');
+			// 再获取没有展开值的环境变量
+			string[] valuesNotExpanded = RegUtils.GetPathVariable();
+			// 进行对比，不一样的则为变量形式
+			for (int i = 0; i < valuesExpanded.Length; i++)
+			{
+				if (!valuesNotExpanded[i].Equals(valuesExpanded[i]))
+				{
+					result.Add(valuesNotExpanded[i], valuesExpanded[i]);
+				}
+			}
+			return result;
+		}
+
+		/// <summary>
+		/// Path值去重
+		/// <para>下列情况视为重复：</para>
+		/// <list type="bullet">Path中同时存在一个路径和一个路径带末尾斜杠，例如"C:\a"和"C:\a\"，两者视为重复</list>
+		/// <list type="bullet">Path中同时存在一个变量形式路径和这个变量的值，例如"%JAVA_HOME%\bin"和"C:\Program Files\Zulu\zulu-17"，两者重复</list>
+		/// <list type="bullet">Path中同时存在两个实质相同的路径，但是大小写不一样，例如"C:\abc"和"C:\Abc"，两者重复</list>
+		/// </summary>
+		/// <returns>去重后的Path环境变量，数组形式</returns>
+		public static string[] RemoveRedundantValueInPath()
+		{
+			// 获取Path变量值
+			string[] origin = RegUtils.GetPathVariable();
+			// 获取Path中变量形式值
+			Dictionary<string, string> variables = GetVariablesInPath();
+			// 用于存放结果的数组
+			List<string> result = new List<string>();
+			// 遍历检查
+			foreach (string value in origin)
+			{
+
+			}
+			return result.ToArray();
+		}
+
+		/// <summary>
 		/// 获取指定环境变量的值
 		/// </summary>
 		/// <param name="variableName">环境变量名</param>
