@@ -20,34 +20,7 @@ namespace Swsk33.EVTools.Util
 		//jdk追加Path变量值
 		private static readonly string ADD_PATH_VALUE = JAVA_HOME_NAME + @"\bin";
 		//Oracle JDK安装附加值
-		private static readonly string[] SETUP_PATHS = { @"C:\Program Files (x86)\Common Files\Oracle\Java\javapath", @"C:\Program Files\Common Files\Oracle\Java\javapath" };
-
-		/// <summary>
-		/// 移除Oracle安装时的附带路径变量
-		/// </summary>
-		private static void removeOracleSetupPath()
-		{
-			string pathValue = Utils.GetVariableValue("Path");
-			foreach (string path in SETUP_PATHS)
-			{
-				pathValue = Utils.removeRedundantValue(pathValue, path);
-			}
-			Utils.RunSetx("Path", pathValue, true);
-		}
-
-		/// <summary>
-		/// 清理Path中冗余的JDK路径信息
-		/// </summary>
-		private static void clearRedundantJDKPath()
-		{
-			string pathValue = Utils.GetVariableValue("Path");
-			foreach (string key in jdkVersions.Keys)
-			{
-				string path = jdkVersions[key] + "\\bin";
-				pathValue = Utils.removeRedundantValue(pathValue, path);
-			}
-			Utils.RunSetx("Path", pathValue, true);
-		}
+		private static readonly string[] ORACLE_SETUP_PATHS = { @"C:\Program Files (x86)\Common Files\Oracle\Java\javapath", @"C:\Program Files\Common Files\Oracle\Java\javapath" };
 
 		/// <summary>
 		/// 检测已安装Oracle JDK版本，信息储存至JDKUtils类的全局静态变量jdkVersions中。
@@ -209,7 +182,14 @@ namespace Swsk33.EVTools.Util
 		{
 			RegistryKey key = Registry.LocalMachine;
 			RegistryKey EVKey = key.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", true);
+			// 先设定JAVA_HOME变量
 			Utils.RunSetx("JAVA_HOME", javaPath, true);
+			if (!RegUtils.IsValueExists(key, @"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", "JAVA_HOME"))
+			{
+				MessageBox.Show("设定JAVA_HOME失败！请退出程序然后右键-以管理员身份运行此程序重试！", "失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+			// 再设定classpath变量
 			if (isJDK9AndAbove)
 			{
 				if (RegUtils.IsValueExists(key, @"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", "classpath"))
@@ -224,22 +204,30 @@ namespace Swsk33.EVTools.Util
 					Utils.RunSetx("classpath", CLASSPATH_VALUE, true);
 				}
 			}
-			removeOracleSetupPath();
-			clearRedundantJDKPath();
-			bool setPath = Utils.AddValueToPath(ADD_PATH_VALUE, false, true);
 			EVKey.Close();
 			key.Close();
-			if (!RegUtils.IsValueExists(key, @"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", "JAVA_HOME"))
-			{
-				MessageBox.Show("设定JAVA_HOME失败！请退出程序然后右键-以管理员身份运行此程序重试！", "失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				return;
-			}
 			if (!isJDK9AndAbove && !RegUtils.IsValueExists(key, @"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", "classpath"))
 			{
 				MessageBox.Show("设定classpath失败！请退出程序然后右键-以管理员身份运行此程序重试！", "失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
-			if (!setPath)
+			// 最后设定Path变量
+			// 执行Path去重
+			List<string> pathValues = new List<string>(Utils.RemoveRedundantValueInPath());
+			// 去除Oracle Java安装时的附带值
+			foreach (string oraclePath in ORACLE_SETUP_PATHS)
+			{
+				for (int i = 0; i < pathValues.Count; i++)
+				{
+					if (pathValues[i].Equals(oraclePath, StringComparison.CurrentCultureIgnoreCase))
+					{
+						pathValues.RemoveAt(i);
+						break;
+					}
+				}
+			}
+			pathValues.Add(ADD_PATH_VALUE);
+			if (Utils.SavePath(pathValues.ToArray()))
 			{
 				MessageBox.Show("追加Path值失败！请退出程序然后右键-以管理员身份运行此程序重试！", "失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;

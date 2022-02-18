@@ -16,7 +16,7 @@ namespace Swsk33.EVTools.Dialog
 
 		private void ManagePathForm_Load(object sender, EventArgs e)
 		{
-			string[] pathValues = RegUtils.GetPathVariable();
+			string[] pathValues = RegUtils.GetPathVariable(false);
 			foreach (string value in pathValues)
 			{
 				pathContentValue.Items.Add(value);

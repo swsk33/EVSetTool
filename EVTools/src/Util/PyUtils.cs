@@ -18,22 +18,6 @@ namespace Swsk33.EVTools.Util
 		private static readonly string PATH_ADDITION_2 = "%" + PYHOME_NAME + "%\\Scripts";
 
 		/// <summary>
-		/// 清理Path中冗余的python路径
-		/// </summary>
-		private static void clearRedundantPyPath()
-		{
-			string pathValue = Utils.GetVariableValue("Path");
-			foreach (string key in pyVersions.Keys)
-			{
-				string path = pyVersions[key];
-				string scriptPath = path + "\\Scripts";
-				pathValue = Utils.removeRedundantValue(pathValue, path);
-				pathValue = Utils.removeRedundantValue(pathValue, scriptPath);
-			}
-			Utils.RunSetx("Path", pathValue, true);
-		}
-
-		/// <summary>
 		/// 获取已安装Python版本，存放于PyUtils类的全局静态变量pyVersions中。
 		/// </summary>
 		public static void GetPyVersions()
@@ -66,16 +50,17 @@ namespace Swsk33.EVTools.Util
 		/// <param name="pyPath">python所在位置</param>
 		public static void SetPythonValue(string pyPath)
 		{
-			clearRedundantPyPath();
+			// 先执行Path去重
+			List<string> pathValues = new List<string>(Utils.RemoveRedundantValueInPath());
 			Utils.RunSetx(PYHOME_NAME, pyPath, true);
-			bool setPath1 = Utils.AddValueToPath(PATH_ADDITION_1, false, true);
-			bool setPath2 = Utils.AddValueToPath(PATH_ADDITION_2, false, true);
+			pathValues.Add(PATH_ADDITION_1);
+			pathValues.Add(PATH_ADDITION_2);
 			if (!RegUtils.IsValueExists(Registry.LocalMachine, @"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", PYHOME_NAME))
 			{
 				MessageBox.Show("设定PYTHON_HOME失败！请退出程序然后右键-以管理员身份运行此程序重试！", "失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
-			if (!setPath1 || !setPath2)
+			if (!Utils.SavePath(pathValues.ToArray()))
 			{
 				MessageBox.Show("追加Path失败！请退出程序然后右键-以管理员身份运行此程序重试！", "失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
