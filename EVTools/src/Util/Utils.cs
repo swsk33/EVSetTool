@@ -72,7 +72,7 @@ namespace Swsk33.EVTools.Util
 		{
 			// 获取Path变量值
 			string[] origin = RegUtils.GetPathVariable(false);
-			// 把Path变量中的值存在的斜杠/全部换成反斜杠，并去除末尾反斜杠（如果有反斜杠结尾的变量的话）
+			// 把Path变量中的值存在的斜杠全部换成反斜杠，并去除末尾反斜杠（如果有反斜杠结尾的变量的话）
 			for (int i = 0; i < origin.Length; i++)
 			{
 				origin[i] = FilePathUtils.RemovePathEndBackslash(origin[i].Replace("/", "\\"));

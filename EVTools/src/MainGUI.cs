@@ -87,11 +87,6 @@ namespace Swsk33.EVTools
 			appendToolTip.SetToolTip(pyOk, "点击以设定Python环境变量。若已经设置Python环境变量，还可以选择列表中其它版本Python然后点击设定按钮以切换至指定Python版本。");
 			appendToolTip.SetToolTip(replaceSysRoot, "点击以将Path环境变量中的C:\\Windows替换为%SystemRoot%的引用变量形式。");
 			appendToolTip.SetToolTip(removeEndSep, "点击以移除Path变量中以反斜杠\\结尾的路径的末尾的反斜杠。");
-			string[] s = Utils.RemoveRedundantValueInPath();
-			foreach (string s2 in s)
-			{
-				Console.WriteLine(s2);
-			}
 		}
 
 		private void jdkManualSetButton_Click(object sender, EventArgs e)
