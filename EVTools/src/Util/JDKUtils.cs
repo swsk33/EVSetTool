@@ -7,23 +7,34 @@ using System.Windows.Forms;
 
 namespace Swsk33.EVTools.Util
 {
+	/// <summary>
+	/// java环境变量实用类
+	/// </summary>
 	public class JDKUtils
 	{
-		//冗余版本信息
+		// 冗余版本信息
 		private static readonly string[] NOT_ADD_VERSION_VALUE = { "1.1", "1.2", "1.3", "1.4", "1.5", "1.6", "1.7", "1.8" };
-		//jdk版本列表
-		public static Dictionary<string, string> jdkVersions = new Dictionary<string, string>();
-		//JAVA_HOME变量名称
+
+		// jdk版本列表
+		public static Dictionary<string, string> JDKVersions = new Dictionary<string, string>();
+
+		// JAVA_HOME变量名称
 		private static readonly string JAVA_HOME_NAME = "%JAVA_HOME%";
-		//classpath变量值
+
+		// classpath变量值
 		private static readonly string CLASSPATH_VALUE = ".;" + JAVA_HOME_NAME + @"\lib\dt.jar;" + JAVA_HOME_NAME + @"\lib\tools.jar";
-		//jdk追加Path变量值
+
+		// jdk追加Path变量值
 		private static readonly string ADD_PATH_VALUE = JAVA_HOME_NAME + @"\bin";
-		//Oracle JDK安装附加值
+
+		// Oracle JDK安装附加值
 		private static readonly string[] ORACLE_SETUP_PATHS = { @"C:\Program Files (x86)\Common Files\Oracle\Java\javapath", @"C:\Program Files\Common Files\Oracle\Java\javapath" };
 
+		// Path中的冗余Java bin路径，需要去除
+		private static List<string> javaBinaryDuplicatePath = new List<string>();
+
 		/// <summary>
-		/// 检测已安装Oracle JDK版本，信息储存至JDKUtils类的全局静态变量jdkVersions中。
+		/// 检测已安装Oracle JDK版本，信息储存至JDKUtils类的全局静态变量JDKVersions中。
 		/// </summary>
 		private static void getOracleJDKVersion()
 		{
@@ -40,7 +51,7 @@ namespace Swsk33.EVTools.Util
 						RegistryKey jdkVersionKey = key.OpenSubKey(@"SOFTWARE\JavaSoft\Java Development Kit\" + version);
 						string path = jdkVersionKey.GetValue("JavaHome").ToString();
 						path = FilePathUtils.RemovePathEndBackslash(path);
-						jdkVersions.Add(version + " - Oracle JDK", path);
+						JDKVersions.Add(version + " - Oracle JDK", path);
 						jdkVersionKey.Close();
 					}
 				}
@@ -56,7 +67,7 @@ namespace Swsk33.EVTools.Util
 					RegistryKey jdkVersionKey = key.OpenSubKey(@"SOFTWARE\JavaSoft\JDK\" + version);
 					string path = jdkVersionKey.GetValue("JavaHome").ToString();
 					path = FilePathUtils.RemovePathEndBackslash(path);
-					jdkVersions.Add(version + " - Oracle JDK", path);
+					JDKVersions.Add(version + " - Oracle JDK", path);
 					jdkVersionKey.Close();
 				}
 				jdkNewVersionsKey.Close();
@@ -64,7 +75,7 @@ namespace Swsk33.EVTools.Util
 		}
 
 		/// <summary>
-		/// 检测已安装Microsoft JDK版本，信息储存至JDKUtils类的全局静态变量jdkVersions中。
+		/// 检测已安装Microsoft JDK版本，信息储存至JDKUtils类的全局静态变量JDKVersions中。
 		/// </summary>
 		private static void getMicrosoftJDKVersion()
 		{
@@ -78,7 +89,7 @@ namespace Swsk33.EVTools.Util
 					RegistryKey jdkInfoKey = msJDKVersionKey.OpenSubKey(msJDKVersion + @"\hotspot\MSI");
 					string path = jdkInfoKey.GetValue("Path").ToString();
 					path = FilePathUtils.RemovePathEndBackslash(path);
-					jdkVersions.Add(msJDKVersion + " - Microsoft Build OpenJDK", path);
+					JDKVersions.Add(msJDKVersion + " - Microsoft Build OpenJDK", path);
 					jdkInfoKey.Close();
 				}
 				msJDKVersionKey.Close();
@@ -87,7 +98,7 @@ namespace Swsk33.EVTools.Util
 		}
 
 		/// <summary>
-		/// 检测已安装Adopt OpenJDK版本，信息储存至JDKUtils类的全局静态变量jdkVersions中。
+		/// 检测已安装Adopt OpenJDK版本，信息储存至JDKUtils类的全局静态变量JDKVersions中。
 		/// </summary>
 		private static void getAdpotJDKVersion()
 		{
@@ -102,7 +113,7 @@ namespace Swsk33.EVTools.Util
 					RegistryKey infoKey = jdkVersionKey.OpenSubKey(adoptJDKVersion + @"\hotspot\MSI");
 					string path = infoKey.GetValue("Path").ToString();
 					path = FilePathUtils.RemovePathEndBackslash(path);
-					jdkVersions.Add(adoptJDKVersion + " - Adopt Hotspot OpenJDK", path);
+					JDKVersions.Add(adoptJDKVersion + " - Adopt Hotspot OpenJDK", path);
 					infoKey.Close();
 				}
 				jdkVersionKey.Close();
@@ -116,7 +127,7 @@ namespace Swsk33.EVTools.Util
 					RegistryKey infoKey = jdkVersionKey.OpenSubKey(adoptJDKVersion + @"\hotspot\MSI");
 					string path = infoKey.GetValue("Path").ToString();
 					path = FilePathUtils.RemovePathEndBackslash(path);
-					jdkVersions.Add(adoptJDKVersion + " - Adopt Hotspot OpenJDK", path);
+					JDKVersions.Add(adoptJDKVersion + " - Adopt Hotspot OpenJDK", path);
 					infoKey.Close();
 				}
 				jdkVersionKey.Close();
@@ -131,7 +142,7 @@ namespace Swsk33.EVTools.Util
 					RegistryKey infoKey = jdkVersionKey.OpenSubKey(adoptJDKVersion + @"\openj9\MSI");
 					string path = infoKey.GetValue("Path").ToString();
 					path = FilePathUtils.RemovePathEndBackslash(path);
-					jdkVersions.Add(adoptJDKVersion + " - Adopt OpenJ9 OpenJDK", path);
+					JDKVersions.Add(adoptJDKVersion + " - Adopt OpenJ9 OpenJDK", path);
 					infoKey.Close();
 				}
 				jdkVersionKey.Close();
@@ -140,7 +151,7 @@ namespace Swsk33.EVTools.Util
 		}
 
 		/// <summary>
-		/// 检测已安装Azul Zulu OpenJDK版本，信息储存至JDKUtils类的全局静态变量jdkVersions中。
+		/// 检测已安装Azul Zulu OpenJDK版本，信息储存至JDKUtils类的全局静态变量JDKVersions中。
 		/// </summary>
 		private static void getAzulZuluJDKVersion()
 		{
@@ -154,7 +165,7 @@ namespace Swsk33.EVTools.Util
 					RegistryKey infoKey = jdkVersionKey.OpenSubKey(zuluJDKVersion);
 					string path = infoKey.GetValue("InstallationPath").ToString();
 					path = FilePathUtils.RemovePathEndBackslash(path);
-					jdkVersions.Add(zuluJDKVersion + " - Azul Zulu OpenJDK", path);
+					JDKVersions.Add(zuluJDKVersion + " - Azul Zulu OpenJDK", path);
 					infoKey.Close();
 				}
 				jdkVersionKey.Close();
@@ -166,11 +177,18 @@ namespace Swsk33.EVTools.Util
 		/// </summary>
 		public static void DetectJDKs()
 		{
-			jdkVersions.Clear();
+			JDKVersions.Clear();
 			getOracleJDKVersion();
 			getMicrosoftJDKVersion();
 			getAdpotJDKVersion();
 			getAzulZuluJDKVersion();
+			// 计算冗余值列表
+			javaBinaryDuplicatePath.Clear();
+			javaBinaryDuplicatePath.AddRange(ORACLE_SETUP_PATHS);
+			foreach (string version in JDKVersions.Keys)
+			{
+				javaBinaryDuplicatePath.Add(JDKVersions[version] + "\\bin");
+			}
 		}
 
 		/// <summary>
@@ -183,7 +201,7 @@ namespace Swsk33.EVTools.Util
 			RegistryKey key = Registry.LocalMachine;
 			RegistryKey EVKey = key.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", true);
 			// 先设定JAVA_HOME变量
-			Utils.RunSetx("JAVA_HOME", javaPath, true);
+			VariableUtils.RunSetx("JAVA_HOME", javaPath, true);
 			if (!RegUtils.IsValueExists(key, @"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", "JAVA_HOME"))
 			{
 				MessageBox.Show("设定JAVA_HOME失败！请退出程序然后右键-以管理员身份运行此程序重试！", "失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -201,7 +219,7 @@ namespace Swsk33.EVTools.Util
 			{
 				if (!RegUtils.IsValueExists(key, @"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", "classpath") || !EVKey.GetValue("classpath").Equals(CLASSPATH_VALUE))
 				{
-					Utils.RunSetx("classpath", CLASSPATH_VALUE, true);
+					VariableUtils.RunSetx("classpath", CLASSPATH_VALUE, true);
 				}
 			}
 			EVKey.Close();
@@ -213,23 +231,26 @@ namespace Swsk33.EVTools.Util
 			}
 			// 最后设定Path变量
 			// 执行Path去重
-			List<string> pathValues = new List<string>(Utils.RemoveRedundantValueInPath());
-			// 去除Oracle Java安装时的附带值
-			foreach (string oraclePath in ORACLE_SETUP_PATHS)
+			List<string> pathValues = new List<string>(VariableUtils.RemoveRedundantValueInPath());
+			// 去除冗余的Java bin路径
+			foreach (string eachDuplicatePath in javaBinaryDuplicatePath)
 			{
 				for (int i = 0; i < pathValues.Count; i++)
 				{
-					if (pathValues[i].Equals(oraclePath, StringComparison.CurrentCultureIgnoreCase))
+					if (eachDuplicatePath.Equals(pathValues[i], StringComparison.CurrentCultureIgnoreCase))
 					{
 						pathValues.RemoveAt(i);
 						break;
 					}
 				}
 			}
-			pathValues.Add(ADD_PATH_VALUE);
-			if (Utils.SavePath(pathValues.ToArray()))
+			if (!ListUtils.ListContainsIgnoreCase(pathValues, ADD_PATH_VALUE))
 			{
-				MessageBox.Show("追加Path值失败！请退出程序然后右键-以管理员身份运行此程序重试！", "失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				pathValues.Add(ADD_PATH_VALUE);
+			}
+			if (!VariableUtils.SavePath(pathValues.ToArray()))
+			{
+				MessageBox.Show("追加Path值失败！请退出程序然后右键-以管理员身份运行此程序重试！也可能是Path变量总长度超出限制！", "失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 			MessageBox.Show("设置完成！", "完成", MessageBoxButtons.OK, MessageBoxIcon.Information);

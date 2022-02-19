@@ -1,5 +1,6 @@
 ﻿using Swsk33.EVTools.Dialog;
 using Swsk33.EVTools.Util;
+using Swsk33.ReadAndWriteSharp.Util;
 using System;
 using System.IO;
 using System.Threading;
@@ -49,7 +50,7 @@ namespace Swsk33.EVTools
 		private void MainGUI_Load(object sender, EventArgs e)
 		{
 			JDKUtils.DetectJDKs();
-			if (JDKUtils.jdkVersions.Count == 0)
+			if (JDKUtils.JDKVersions.Count == 0)
 			{
 				jdkAutoSetOption.Enabled = false;
 				jdkAutoSetValue.Enabled = false;
@@ -59,14 +60,14 @@ namespace Swsk33.EVTools
 			}
 			else
 			{
-				foreach (string version in JDKUtils.jdkVersions.Keys)
+				foreach (string version in JDKUtils.JDKVersions.Keys)
 				{
 					jdkAutoSetValue.Items.Add(version);
 				}
 				jdkAutoSetValue.SelectedIndex = 0;
 			}
 			PyUtils.GetPyVersions();
-			if (PyUtils.pyVersions.Count == 0)
+			if (PyUtils.PythonVersions.Count == 0)
 			{
 				pyAutoSetOption.Enabled = false;
 				pyAutoSetValue.Enabled = false;
@@ -76,17 +77,15 @@ namespace Swsk33.EVTools
 			}
 			else
 			{
-				foreach (string version in PyUtils.pyVersions.Keys)
+				foreach (string version in PyUtils.PythonVersions.Keys)
 				{
 					pyAutoSetValue.Items.Add(version);
 				}
 				pyAutoSetValue.SelectedIndex = 0;
 			}
-			appendToolTip.SetToolTip(isAppend, "勾选此项，指定值会被追加到Path变量最后，优先级最低；反之值会被插入到Path变量最前，优先级最高。");
-			appendToolTip.SetToolTip(JDKok, "点击以设定JDK环境变量。若已经设置JDK环境变量，还可以选择列表中其它版本JDK然后点击设定按钮以切换至指定JDK版本。");
-			appendToolTip.SetToolTip(pyOk, "点击以设定Python环境变量。若已经设置Python环境变量，还可以选择列表中其它版本Python然后点击设定按钮以切换至指定Python版本。");
-			appendToolTip.SetToolTip(replaceSysRoot, "点击以将Path环境变量中的C:\\Windows替换为%SystemRoot%的引用变量形式。");
-			appendToolTip.SetToolTip(removeEndSep, "点击以移除Path变量中以反斜杠\\结尾的路径的末尾的反斜杠。");
+			mainToolTip.SetToolTip(isAppend, "勾选此项，指定值会被追加到Path变量最后，优先级最低；反之值会被插入到Path变量最前，优先级最高。");
+			mainToolTip.SetToolTip(JDKok, "点击以设定JDK环境变量。若已经设置JDK环境变量，还可以选择列表中其它版本JDK然后点击设定按钮以切换至指定JDK版本。");
+			mainToolTip.SetToolTip(pyOk, "点击以设定Python环境变量。若已经设置Python环境变量，还可以选择列表中其它版本Python然后点击设定按钮以切换至指定Python版本。");
 		}
 
 		private void jdkManualSetButton_Click(object sender, EventArgs e)
@@ -111,12 +110,12 @@ namespace Swsk33.EVTools
 			bool isJDK9Above = false;
 			if (jdkAutoSetOption.Checked)
 			{
-				javaPath = JDKUtils.jdkVersions[jdkAutoSetValue.SelectedItem.ToString()];
+				javaPath = JDKUtils.JDKVersions[jdkAutoSetValue.SelectedItem.ToString()];
 			}
 			else if (jdkManualSetOption.Checked)
 			{
 				javaPath = jdkManualSetValue.Text.ToString();
-				if (javaPath.Equals(""))
+				if (StringUtils.IsEmpty(javaPath))
 				{
 					MessageBox.Show("请先指定jdk所在路径！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
 					return;
@@ -139,14 +138,14 @@ namespace Swsk33.EVTools
 		private void jdkRecheck_Click(object sender, EventArgs e)
 		{
 			JDKUtils.DetectJDKs();
-			if (JDKUtils.jdkVersions.Count != 0)
+			if (JDKUtils.JDKVersions.Count != 0)
 			{
 				jdkAutoSetOption.Enabled = true;
 				jdkAutoSetValue.Enabled = true;
 				jdkNotFoundTip.Visible = false;
 				jdkRecheck.Visible = false;
 				jdkAutoSetOption.Checked = true;
-				foreach (string version in JDKUtils.jdkVersions.Keys)
+				foreach (string version in JDKUtils.JDKVersions.Keys)
 				{
 					jdkAutoSetValue.Items.Add(version);
 				}
@@ -156,7 +155,7 @@ namespace Swsk33.EVTools
 
 		private void otherOK_Click(object sender, EventArgs e)
 		{
-			if (otherSetValue.Text.Equals(""))
+			if (StringUtils.IsEmpty(otherSetValue.Text))
 			{
 				MessageBox.Show("请先指定待添加路径！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
@@ -165,7 +164,7 @@ namespace Swsk33.EVTools
 			otherSettingTip.Visible = true;
 			new Thread(() =>
 			{
-				Utils.AddValueToPath(otherSetValue.Text, true, isAppend.Checked);
+				VariableUtils.AddValueToPath(otherSetValue.Text, isAppend.Checked);
 				otherSettingTip.Visible = false;
 				otherOK.Enabled = true;
 			}).Start();
@@ -174,14 +173,14 @@ namespace Swsk33.EVTools
 		private void pyRecheck_Click(object sender, EventArgs e)
 		{
 			PyUtils.GetPyVersions();
-			if (PyUtils.pyVersions.Count != 0)
+			if (PyUtils.PythonVersions.Count != 0)
 			{
 				pyAutoSetValue.Enabled = true;
 				pyAutoSetOption.Enabled = true;
 				pyNotFoundTip.Visible = false;
 				pyRecheck.Visible = false;
 				pyAutoSetOption.Checked = true;
-				foreach (string version in PyUtils.pyVersions.Keys)
+				foreach (string version in PyUtils.PythonVersions.Keys)
 				{
 					pyAutoSetValue.Items.Add(version);
 				}
@@ -202,11 +201,11 @@ namespace Swsk33.EVTools
 			string pyPath = "";
 			if (pyAutoSetOption.Checked)
 			{
-				pyPath = PyUtils.pyVersions[pyAutoSetValue.SelectedItem.ToString()];
+				pyPath = PyUtils.PythonVersions[pyAutoSetValue.SelectedItem.ToString()];
 			}
 			else if (pyManualSetOption.Checked)
 			{
-				if (pyManualSetValue.Text.Equals(""))
+				if (StringUtils.IsEmpty(pyManualSetValue.Text))
 				{
 					MessageBox.Show("请先指定Python所在路径！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
 					return;
@@ -228,44 +227,9 @@ namespace Swsk33.EVTools
 			new ManagePathDialog().ShowDialog();
 		}
 
-		private void replaceSysRoot_Click(object sender, EventArgs e)
+		private void utilitiesButton_Click(object sender, EventArgs e)
 		{
-			replaceSysRoot.Enabled = false;
-			replaceTip.Visible = true;
-			new Thread(() =>
-			{
-				bool success = Utils.SetSystemRootRefer();
-				replaceSysRoot.Enabled = true;
-				replaceTip.Visible = false;
-				if (success)
-				{
-					MessageBox.Show("替换完成！", "完成", MessageBoxButtons.OK, MessageBoxIcon.Information);
-				}
-				else
-				{
-					MessageBox.Show("替换失败！请关闭程序然后右键-以管理员身份运行此程序再试！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
-			}).Start();
-		}
-
-		private void removeEndSep_Click(object sender, EventArgs e)
-		{
-			removeEndSep.Enabled = false;
-			removeTip.Visible = true;
-			new Thread(() =>
-			{
-				bool success = Utils.RemovePathSeparatorAtTheEnd();
-				removeEndSep.Enabled = true;
-				removeTip.Visible = false;
-				if (success)
-				{
-					MessageBox.Show("移除完成！", "完成", MessageBoxButtons.OK, MessageBoxIcon.Information);
-				}
-				else
-				{
-					MessageBox.Show("移除失败！请关闭程序然后右键-以管理员身份运行此程序再试！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
-			}).Start();
+			new UtilitiesDialog().ShowDialog();
 		}
 	}
 }

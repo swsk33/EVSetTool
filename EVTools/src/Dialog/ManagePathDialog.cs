@@ -1,7 +1,7 @@
-﻿using Microsoft.Win32;
-using Swsk33.EVTools.Util;
+﻿using Swsk33.EVTools.Util;
 using Swsk33.ReadAndWriteSharp.System;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -91,10 +91,10 @@ namespace Swsk33.EVTools.Dialog
 		{
 			if (pathContentValue.SelectedIndex >= 0)
 			{
-				string value = new EditDialog().SetSpecificValue(pathContentValue.SelectedItem.ToString());
-				if (value != null)
+				EditDialog dialog = new EditDialog(pathContentValue.SelectedItem.ToString());
+				if (dialog.ShowDialog() == DialogResult.OK)
 				{
-					pathContentValue.Items[pathContentValue.SelectedIndex] = value;
+					pathContentValue.Items[pathContentValue.SelectedIndex] = dialog.ResultValue;
 				}
 			}
 			else
@@ -105,29 +105,25 @@ namespace Swsk33.EVTools.Dialog
 
 		private void save_Click(object sender, EventArgs e)
 		{
-			string totalPathValue = "";
+			List<string> totalPathValue = new List<string>();
 			foreach (string value in pathContentValue.Items)
 			{
-				totalPathValue = totalPathValue + value + ";";
+				totalPathValue.Add(value);
 			}
 			applyTip.Visible = true;
 			save.Enabled = false;
 			cancel.Enabled = false;
 			new Thread(() =>
 			{
-				Utils.RunSetx("Path", totalPathValue, true);
-				Close();
-				RegistryKey EVKey = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment");
-				string getPathValue = EVKey.GetValue("Path", "", RegistryValueOptions.DoNotExpandEnvironmentNames).ToString();
-				EVKey.Close();
-				if (getPathValue.Equals(totalPathValue))
+				if (VariableUtils.SavePath(totalPathValue.ToArray()))
 				{
 					MessageBox.Show("修改完成！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				}
 				else
 				{
-					MessageBox.Show("修改失败！请关闭程序然后右键-以管理员身份运行此程序重试！", "失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show("修改失败！请关闭程序然后右键-以管理员身份运行此程序重试！也可能是Path变量总长度超出限制！", "失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
+				Close();
 			}).Start();
 		}
 
@@ -135,10 +131,10 @@ namespace Swsk33.EVTools.Dialog
 		{
 			if (pathContentValue.SelectedIndex >= 0)
 			{
-				string value = new EditDialog().SetSpecificValue(pathContentValue.SelectedItem.ToString());
-				if (value != null)
+				EditDialog dialog = new EditDialog(pathContentValue.SelectedItem.ToString());
+				if (dialog.ShowDialog() == DialogResult.OK)
 				{
-					pathContentValue.Items[pathContentValue.SelectedIndex] = value;
+					pathContentValue.Items[pathContentValue.SelectedIndex] = dialog.ResultValue;
 				}
 			}
 		}

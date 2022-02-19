@@ -6,7 +6,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{734C17E2-092D-40A5-9B67-553F2B131094}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>Swsk33.EVTools</RootNamespace>
     <AssemblyName>环境变量设置工具</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
@@ -62,8 +62,10 @@
     <Reference Include="System">
       <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.dll</HintPath>
     </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\Dialog\EditDialog.cs">
@@ -71,6 +73,12 @@
     </Compile>
     <Compile Include="src\Dialog\EditDialog.Designer.cs">
       <DependentUpon>EditDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Dialog\UtilitiesDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Dialog\UtilitiesDialog.Designer.cs">
+      <DependentUpon>UtilitiesDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="src\Util\JDKUtils.cs" />
     <Compile Include="src\MainGUI.cs">
@@ -87,10 +95,15 @@
     </Compile>
     <Compile Include="src\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\Util\ListUtils.cs" />
     <Compile Include="src\Util\PyUtils.cs" />
-    <Compile Include="src\Util\Utils.cs" />
+    <Compile Include="src\Util\UtilitiesMethods.cs" />
+    <Compile Include="src\Util\VariableUtils.cs" />
     <EmbeddedResource Include="src\Dialog\EditDialog.resx">
       <DependentUpon>EditDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Dialog\UtilitiesDialog.resx">
+      <DependentUpon>UtilitiesDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="src\MainGUI.resx">
       <DependentUpon>MainGUI.cs</DependentUpon>
