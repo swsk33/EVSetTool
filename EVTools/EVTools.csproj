@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Swsk33.EVTools</RootNamespace>
     <AssemblyName>环境变量设置工具</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
@@ -96,8 +96,8 @@
     <Compile Include="src\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\Util\ListUtils.cs" />
+    <Compile Include="src\Util\PathValuesUtils.cs" />
     <Compile Include="src\Util\PyUtils.cs" />
-    <Compile Include="src\Util\UtilitiesMethods.cs" />
     <Compile Include="src\Util\VariableUtils.cs" />
     <EmbeddedResource Include="src\Dialog\EditDialog.resx">
       <DependentUpon>EditDialog.cs</DependentUpon>

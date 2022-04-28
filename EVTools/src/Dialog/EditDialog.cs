@@ -6,10 +6,13 @@ namespace Swsk33.EVTools.Dialog
 {
 	public partial class EditDialog : Form
 	{
+		/// <summary>
+		/// 结果值
+		/// </summary>
 		private string resultValue = null;
 
 		/// <summary>
-		/// 结果值
+		/// 结果值封装属性
 		/// </summary>
 		public string ResultValue { get => resultValue; set => resultValue = value; }
 
@@ -23,12 +26,18 @@ namespace Swsk33.EVTools.Dialog
 			editValue.Text = origin;
 		}
 
+		/// <summary>
+		/// 取消按钮
+		/// </summary>
 		private void cancel_Click(object sender, EventArgs e)
 		{
 			DialogResult = DialogResult.Cancel;
 			Close();
 		}
 
+		/// <summary>
+		/// 确认按钮
+		/// </summary>
 		private void ok_Click(object sender, EventArgs e)
 		{
 			if (!StringUtils.IsEmpty(editValue.Text))
@@ -41,6 +50,27 @@ namespace Swsk33.EVTools.Dialog
 				DialogResult = DialogResult.Cancel;
 			}
 			Close();
+		}
+
+		/// <summary>
+		/// 输入框键盘事件
+		/// </summary>
+		private void editValue_KeyDown(object sender, KeyEventArgs e)
+		{
+			// 按下回车键时，也执行确认操作
+			if (e.KeyCode == Keys.Enter)
+			{
+				if (!StringUtils.IsEmpty(editValue.Text))
+				{
+					ResultValue = editValue.Text;
+					DialogResult = DialogResult.OK;
+				}
+				else
+				{
+					DialogResult = DialogResult.Cancel;
+				}
+				Close();
+			}
 		}
 	}
 }

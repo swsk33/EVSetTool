@@ -1,5 +1,6 @@
 ﻿using Swsk33.EVTools.Util;
 using Swsk33.ReadAndWriteSharp.System;
+using Swsk33.ReadAndWriteSharp.Util;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -9,11 +10,19 @@ namespace Swsk33.EVTools.Dialog
 {
 	public partial class ManagePathDialog : Form
 	{
+		/// <summary>
+		/// 添加路径时，记录上一次指定的目录
+		/// </summary>
+		private string lastAddPath = "";
+
 		public ManagePathDialog()
 		{
 			InitializeComponent();
 		}
 
+		/// <summary>
+		/// 管理Path窗口初始化
+		/// </summary>
 		private void ManagePathForm_Load(object sender, EventArgs e)
 		{
 			string[] pathValues = RegUtils.GetPathVariable(false);
@@ -28,11 +37,17 @@ namespace Swsk33.EVTools.Dialog
 			buttonToolTip.SetToolTip(edit, "编辑所选元素，也可以双击相应的元素进行编辑");
 		}
 
+		/// <summary>
+		/// 取消按钮
+		/// </summary>
 		private void cancel_Click(object sender, EventArgs e)
 		{
 			Close();
 		}
 
+		/// <summary>
+		/// 向上移动按钮
+		/// </summary>
 		private void up_Click(object sender, EventArgs e)
 		{
 			int index = pathContentValue.SelectedIndex;
@@ -45,6 +60,9 @@ namespace Swsk33.EVTools.Dialog
 			}
 		}
 
+		/// <summary>
+		/// 向下移动按钮
+		/// </summary>
 		private void down_Click(object sender, EventArgs e)
 		{
 			int index = pathContentValue.SelectedIndex;
@@ -57,6 +75,9 @@ namespace Swsk33.EVTools.Dialog
 			}
 		}
 
+		/// <summary>
+		/// 移除按钮
+		/// </summary>
 		private void remove_Click(object sender, EventArgs e)
 		{
 			if (pathContentValue.SelectedIndex >= 0)
@@ -69,13 +90,21 @@ namespace Swsk33.EVTools.Dialog
 			}
 		}
 
+		/// <summary>
+		/// 增加按钮
+		/// </summary>
 		private void add_Click(object sender, EventArgs e)
 		{
 			FolderBrowserDialog dialog = new FolderBrowserDialog();
 			dialog.Description = "请选择路径";
+			if (!StringUtils.IsEmpty(lastAddPath))
+			{
+				dialog.SelectedPath = lastAddPath;
+			}
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
 				string path = dialog.SelectedPath;
+				lastAddPath = path;
 				if (pathContentValue.SelectedIndex >= 0)
 				{
 					pathContentValue.Items.Insert(pathContentValue.SelectedIndex + 1, path);
@@ -87,6 +116,9 @@ namespace Swsk33.EVTools.Dialog
 			}
 		}
 
+		/// <summary>
+		/// 编辑按钮
+		/// </summary>
 		private void edit_Click(object sender, EventArgs e)
 		{
 			if (pathContentValue.SelectedIndex >= 0)
@@ -103,6 +135,9 @@ namespace Swsk33.EVTools.Dialog
 			}
 		}
 
+		/// <summary>
+		/// 保存按钮
+		/// </summary>
 		private void save_Click(object sender, EventArgs e)
 		{
 			List<string> totalPathValue = new List<string>();
@@ -127,6 +162,9 @@ namespace Swsk33.EVTools.Dialog
 			}).Start();
 		}
 
+		/// <summary>
+		/// 双击条目
+		/// </summary>
 		private void pathContentValue_DoubleClick(object sender, EventArgs e)
 		{
 			if (pathContentValue.SelectedIndex >= 0)

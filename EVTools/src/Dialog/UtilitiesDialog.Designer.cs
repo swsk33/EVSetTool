@@ -36,6 +36,7 @@
 			this.processTipLabel = new System.Windows.Forms.Label();
 			this.buttonToolTip = new System.Windows.Forms.ToolTip(this.components);
 			this.toolTipLabel = new System.Windows.Forms.Label();
+			this.removeNotExist = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// replaceSystemRoot
@@ -75,7 +76,7 @@
 			// 
 			this.processTipLabel.AutoSize = true;
 			this.processTipLabel.ForeColor = System.Drawing.Color.Blue;
-			this.processTipLabel.Location = new System.Drawing.Point(5, 147);
+			this.processTipLabel.Location = new System.Drawing.Point(7, 181);
 			this.processTipLabel.Name = "processTipLabel";
 			this.processTipLabel.Size = new System.Drawing.Size(95, 12);
 			this.processTipLabel.TabIndex = 1;
@@ -91,13 +92,25 @@
 			this.toolTipLabel.TabIndex = 2;
 			this.toolTipLabel.Text = "把鼠标放在按钮上以显示详细功能";
 			// 
+			// removeNotExist
+			// 
+			this.removeNotExist.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.removeNotExist.Location = new System.Drawing.Point(12, 139);
+			this.removeNotExist.Name = "removeNotExist";
+			this.removeNotExist.Size = new System.Drawing.Size(218, 29);
+			this.removeNotExist.TabIndex = 0;
+			this.removeNotExist.Text = "去除Path环境变量中不存在的路径";
+			this.removeNotExist.UseVisualStyleBackColor = true;
+			this.removeNotExist.Click += new System.EventHandler(this.removeNotExist_Click);
+			// 
 			// UtilitiesDialog
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(240, 164);
+			this.ClientSize = new System.Drawing.Size(240, 201);
 			this.Controls.Add(this.toolTipLabel);
 			this.Controls.Add(this.processTipLabel);
+			this.Controls.Add(this.removeNotExist);
 			this.Controls.Add(this.removeDuplicate);
 			this.Controls.Add(this.formatPathValue);
 			this.Controls.Add(this.replaceSystemRoot);
@@ -123,5 +136,6 @@
 		private System.Windows.Forms.Label processTipLabel;
 		private System.Windows.Forms.ToolTip buttonToolTip;
 		private System.Windows.Forms.Label toolTipLabel;
+		private System.Windows.Forms.Button removeNotExist;
 	}
 }

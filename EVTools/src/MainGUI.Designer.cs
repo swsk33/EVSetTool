@@ -55,6 +55,7 @@ namespace Swsk33.EVTools
 			this.pyManualSetOption = new System.Windows.Forms.RadioButton();
 			this.pyManualSetValue = new System.Windows.Forms.TextBox();
 			this.other = new System.Windows.Forms.TabPage();
+			this.utilitiesButton = new System.Windows.Forms.Button();
 			this.managePath = new System.Windows.Forms.Button();
 			this.isAppend = new System.Windows.Forms.CheckBox();
 			this.otherSettingTip = new System.Windows.Forms.Label();
@@ -63,7 +64,6 @@ namespace Swsk33.EVTools
 			this.otherSetButton = new System.Windows.Forms.Button();
 			this.otherSetValue = new System.Windows.Forms.TextBox();
 			this.mainToolTip = new System.Windows.Forms.ToolTip(this.components);
-			this.utilitiesButton = new System.Windows.Forms.Button();
 			this.mainTabPane.SuspendLayout();
 			this.jdkSetTab.SuspendLayout();
 			this.pythonTab.SuspendLayout();
@@ -90,7 +90,7 @@ namespace Swsk33.EVTools
 			this.jdkAutoSetOption.Size = new System.Drawing.Size(172, 18);
 			this.jdkAutoSetOption.TabIndex = 1;
 			this.jdkAutoSetOption.TabStop = true;
-			this.jdkAutoSetOption.Text = "自动搜寻jdk并一键设定";
+			this.jdkAutoSetOption.Text = "自动搜寻JDK并一键设定";
 			this.jdkAutoSetOption.UseVisualStyleBackColor = true;
 			this.jdkAutoSetOption.CheckedChanged += new System.EventHandler(this.GetRadioButtonChanged);
 			// 
@@ -111,7 +111,7 @@ namespace Swsk33.EVTools
 			this.jdkManualSetOption.Name = "jdkManualSetOption";
 			this.jdkManualSetOption.Size = new System.Drawing.Size(158, 18);
 			this.jdkManualSetOption.TabIndex = 1;
-			this.jdkManualSetOption.Text = "手动指定jdk所在位置\r\n";
+			this.jdkManualSetOption.Text = "手动指定JDK所在位置\r\n";
 			this.jdkManualSetOption.UseVisualStyleBackColor = true;
 			this.jdkManualSetOption.CheckedChanged += new System.EventHandler(this.GetRadioButtonChanged);
 			// 
@@ -120,6 +120,7 @@ namespace Swsk33.EVTools
 			this.jdkManualSetValue.Enabled = false;
 			this.jdkManualSetValue.Location = new System.Drawing.Point(37, 141);
 			this.jdkManualSetValue.Name = "jdkManualSetValue";
+			this.jdkManualSetValue.ReadOnly = true;
 			this.jdkManualSetValue.Size = new System.Drawing.Size(242, 21);
 			this.jdkManualSetValue.TabIndex = 3;
 			// 
@@ -173,7 +174,7 @@ namespace Swsk33.EVTools
 			this.jdkSetTab.Padding = new System.Windows.Forms.Padding(3);
 			this.jdkSetTab.Size = new System.Drawing.Size(373, 230);
 			this.jdkSetTab.TabIndex = 0;
-			this.jdkSetTab.Text = "jdk环境变量设置";
+			this.jdkSetTab.Text = "JDK环境变量设置";
 			this.jdkSetTab.UseVisualStyleBackColor = true;
 			// 
 			// jdkSettingTip
@@ -185,7 +186,7 @@ namespace Swsk33.EVTools
 			this.jdkSettingTip.Name = "jdkSettingTip";
 			this.jdkSettingTip.Size = new System.Drawing.Size(137, 12);
 			this.jdkSettingTip.TabIndex = 5;
-			this.jdkSettingTip.Text = "正在设定jdk环境变量...";
+			this.jdkSettingTip.Text = "正在设定JDK环境变量...";
 			this.jdkSettingTip.Visible = false;
 			// 
 			// jdkRecheck
@@ -208,7 +209,7 @@ namespace Swsk33.EVTools
 			this.jdkNotFoundTip.Name = "jdkNotFoundTip";
 			this.jdkNotFoundTip.Size = new System.Drawing.Size(252, 14);
 			this.jdkNotFoundTip.TabIndex = 0;
-			this.jdkNotFoundTip.Text = "找不到此电脑安装了jdk，请手动指定！";
+			this.jdkNotFoundTip.Text = "找不到此电脑安装了JDK，请手动指定！";
 			this.jdkNotFoundTip.Visible = false;
 			// 
 			// pythonTab
@@ -228,7 +229,7 @@ namespace Swsk33.EVTools
 			this.pythonTab.Name = "pythonTab";
 			this.pythonTab.Size = new System.Drawing.Size(373, 230);
 			this.pythonTab.TabIndex = 2;
-			this.pythonTab.Text = "python环境变量设置";
+			this.pythonTab.Text = "Python环境变量设置";
 			this.pythonTab.UseVisualStyleBackColor = true;
 			// 
 			// pyAutoSetValue
@@ -260,7 +261,7 @@ namespace Swsk33.EVTools
 			this.pySettingTip.Name = "pySettingTip";
 			this.pySettingTip.Size = new System.Drawing.Size(155, 12);
 			this.pySettingTip.TabIndex = 15;
-			this.pySettingTip.Text = "正在设定python环境变量...";
+			this.pySettingTip.Text = "正在设定Python环境变量...";
 			this.pySettingTip.Visible = false;
 			// 
 			// pyAutoSetOption
@@ -273,15 +274,15 @@ namespace Swsk33.EVTools
 			this.pyAutoSetOption.Size = new System.Drawing.Size(193, 18);
 			this.pyAutoSetOption.TabIndex = 8;
 			this.pyAutoSetOption.TabStop = true;
-			this.pyAutoSetOption.Text = "自动搜寻python并一键设定";
+			this.pyAutoSetOption.Text = "自动搜寻Python并一键设定";
 			this.pyAutoSetOption.UseVisualStyleBackColor = true;
 			this.pyAutoSetOption.CheckedChanged += new System.EventHandler(this.GetRadioButtonChanged);
 			// 
 			// pyOk
 			// 
-			this.pyOk.Location = new System.Drawing.Point(155, 181);
+			this.pyOk.Location = new System.Drawing.Point(150, 180);
 			this.pyOk.Name = "pyOk";
-			this.pyOk.Size = new System.Drawing.Size(75, 23);
+			this.pyOk.Size = new System.Drawing.Size(80, 23);
 			this.pyOk.TabIndex = 13;
 			this.pyOk.Text = "设定";
 			this.pyOk.UseVisualStyleBackColor = true;
@@ -296,7 +297,7 @@ namespace Swsk33.EVTools
 			this.pyNotFoundTip.Name = "pyNotFoundTip";
 			this.pyNotFoundTip.Size = new System.Drawing.Size(273, 14);
 			this.pyNotFoundTip.TabIndex = 6;
-			this.pyNotFoundTip.Text = "找不到此电脑安装了python，请手动指定！";
+			this.pyNotFoundTip.Text = "找不到此电脑安装了Python，请手动指定！";
 			this.pyNotFoundTip.Visible = false;
 			// 
 			// pyAutoSetLabel
@@ -328,7 +329,7 @@ namespace Swsk33.EVTools
 			this.pyManualSetOption.Name = "pyManualSetOption";
 			this.pyManualSetOption.Size = new System.Drawing.Size(179, 18);
 			this.pyManualSetOption.TabIndex = 9;
-			this.pyManualSetOption.Text = "手动指定python所在位置\r\n";
+			this.pyManualSetOption.Text = "手动指定Python所在位置\r\n";
 			this.pyManualSetOption.UseVisualStyleBackColor = true;
 			this.pyManualSetOption.CheckedChanged += new System.EventHandler(this.GetRadioButtonChanged);
 			// 
@@ -337,6 +338,7 @@ namespace Swsk33.EVTools
 			this.pyManualSetValue.Enabled = false;
 			this.pyManualSetValue.Location = new System.Drawing.Point(50, 145);
 			this.pyManualSetValue.Name = "pyManualSetValue";
+			this.pyManualSetValue.ReadOnly = true;
 			this.pyManualSetValue.Size = new System.Drawing.Size(217, 21);
 			this.pyManualSetValue.TabIndex = 11;
 			// 
@@ -357,6 +359,17 @@ namespace Swsk33.EVTools
 			this.other.TabIndex = 1;
 			this.other.Text = "加入路径至Path环境变量";
 			this.other.UseVisualStyleBackColor = true;
+			// 
+			// utilitiesButton
+			// 
+			this.utilitiesButton.Location = new System.Drawing.Point(5, 4);
+			this.utilitiesButton.Margin = new System.Windows.Forms.Padding(2);
+			this.utilitiesButton.Name = "utilitiesButton";
+			this.utilitiesButton.Size = new System.Drawing.Size(66, 26);
+			this.utilitiesButton.TabIndex = 11;
+			this.utilitiesButton.Text = "实用工具";
+			this.utilitiesButton.UseVisualStyleBackColor = true;
+			this.utilitiesButton.Click += new System.EventHandler(this.utilitiesButton_Click);
 			// 
 			// managePath
 			// 
@@ -407,9 +420,9 @@ namespace Swsk33.EVTools
 			// 
 			// otherOK
 			// 
-			this.otherOK.Location = new System.Drawing.Point(144, 152);
+			this.otherOK.Location = new System.Drawing.Point(144, 154);
 			this.otherOK.Name = "otherOK";
-			this.otherOK.Size = new System.Drawing.Size(75, 26);
+			this.otherOK.Size = new System.Drawing.Size(75, 30);
 			this.otherOK.TabIndex = 7;
 			this.otherOK.Text = "添加";
 			this.otherOK.UseVisualStyleBackColor = true;
@@ -417,7 +430,7 @@ namespace Swsk33.EVTools
 			// 
 			// otherSetButton
 			// 
-			this.otherSetButton.Location = new System.Drawing.Point(277, 107);
+			this.otherSetButton.Location = new System.Drawing.Point(277, 108);
 			this.otherSetButton.Name = "otherSetButton";
 			this.otherSetButton.Size = new System.Drawing.Size(75, 23);
 			this.otherSetButton.TabIndex = 6;
@@ -432,17 +445,6 @@ namespace Swsk33.EVTools
 			this.otherSetValue.Size = new System.Drawing.Size(240, 21);
 			this.otherSetValue.TabIndex = 5;
 			// 
-			// utilitiesButton
-			// 
-			this.utilitiesButton.Location = new System.Drawing.Point(5, 4);
-			this.utilitiesButton.Margin = new System.Windows.Forms.Padding(2);
-			this.utilitiesButton.Name = "utilitiesButton";
-			this.utilitiesButton.Size = new System.Drawing.Size(66, 26);
-			this.utilitiesButton.TabIndex = 11;
-			this.utilitiesButton.Text = "实用工具";
-			this.utilitiesButton.UseVisualStyleBackColor = true;
-			this.utilitiesButton.Click += new System.EventHandler(this.utilitiesButton_Click);
-			// 
 			// MainGUI
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -455,7 +457,7 @@ namespace Swsk33.EVTools
 			this.MinimizeBox = false;
 			this.Name = "MainGUI";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "环境变量设置工具-4.0.0";
+			this.Text = "环境变量设置工具 4.2.3";
 			this.Load += new System.EventHandler(this.MainGUI_Load);
 			this.mainTabPane.ResumeLayout(false);
 			this.jdkSetTab.ResumeLayout(false);

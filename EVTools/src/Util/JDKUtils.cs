@@ -12,25 +12,39 @@ namespace Swsk33.EVTools.Util
 	/// </summary>
 	public class JDKUtils
 	{
-		// 冗余版本信息
+		/// <summary>
+		/// 冗余版本信息
+		/// </summary>
 		private static readonly string[] NOT_ADD_VERSION_VALUE = { "1.1", "1.2", "1.3", "1.4", "1.5", "1.6", "1.7", "1.8" };
 
-		// jdk版本列表
+		/// <summary>
+		/// jdk版本列表
+		/// </summary>
 		public static Dictionary<string, string> JDKVersions = new Dictionary<string, string>();
 
-		// JAVA_HOME变量名称
+		/// <summary>
+		/// JAVA_HOME变量名称
+		/// </summary>
 		private static readonly string JAVA_HOME_NAME = "%JAVA_HOME%";
 
-		// classpath变量值
+		/// <summary>
+		/// classpath变量值
+		/// </summary>
 		private static readonly string CLASSPATH_VALUE = ".;" + JAVA_HOME_NAME + @"\lib\dt.jar;" + JAVA_HOME_NAME + @"\lib\tools.jar";
 
-		// jdk追加Path变量值
+		/// <summary>
+		/// jdk追加Path变量值
+		/// </summary>
 		private static readonly string ADD_PATH_VALUE = JAVA_HOME_NAME + @"\bin";
 
-		// Oracle JDK安装附加值
+		/// <summary>
+		/// Oracle JDK安装附加值
+		/// </summary>
 		private static readonly string[] ORACLE_SETUP_PATHS = { @"C:\Program Files (x86)\Common Files\Oracle\Java\javapath", @"C:\Program Files\Common Files\Oracle\Java\javapath" };
 
-		// Path中的冗余Java bin路径，需要去除
+		/// <summary>
+		/// Path中的冗余Java bin路径，需要去除
+		/// </summary>
 		private static List<string> javaBinaryDuplicatePath = new List<string>();
 
 		/// <summary>
@@ -231,23 +245,15 @@ namespace Swsk33.EVTools.Util
 			}
 			// 最后设定Path变量
 			// 执行Path去重
-			List<string> pathValues = new List<string>(VariableUtils.RemoveRedundantValueInPath());
+			List<string> pathValues = new List<string>(PathValuesUtils.RemoveDuplicateValueInPathAndFormat());
 			// 去除冗余的Java bin路径
-			foreach (string eachDuplicatePath in javaBinaryDuplicatePath)
-			{
-				for (int i = 0; i < pathValues.Count; i++)
-				{
-					if (eachDuplicatePath.Equals(pathValues[i], StringComparison.CurrentCultureIgnoreCase))
-					{
-						pathValues.RemoveAt(i);
-						break;
-					}
-				}
-			}
+			ListUtils.BatchRemoveFromList(pathValues, javaBinaryDuplicatePath);
+			// 添加到Path
 			if (!ListUtils.ListContainsIgnoreCase(pathValues, ADD_PATH_VALUE))
 			{
 				pathValues.Add(ADD_PATH_VALUE);
 			}
+			// 保存Path
 			if (!VariableUtils.SavePath(pathValues.ToArray()))
 			{
 				MessageBox.Show("追加Path值失败！请退出程序然后右键-以管理员身份运行此程序重试！也可能是Path变量总长度超出限制！", "失败", MessageBoxButtons.OK, MessageBoxIcon.Error);

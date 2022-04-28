@@ -1,7 +1,6 @@
 ﻿using Microsoft.Win32;
 using Swsk33.ReadAndWriteSharp.System;
 using Swsk33.ReadAndWriteSharp.Util;
-using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -12,19 +11,29 @@ namespace Swsk33.EVTools.Util
 	/// </summary>
 	public class PyUtils
 	{
-		// python版本列表
+		/// <summary>
+		/// python版本列表
+		/// </summary>
 		public static Dictionary<string, string> PythonVersions = new Dictionary<string, string>();
 
-		// python home变量名
+		/// <summary>
+		/// python home变量名
+		/// </summary>
 		private static readonly string PYHOME_NAME = "PYTHON_HOME";
 
-		// Path追加变量1
+		/// <summary>
+		/// Path追加变量1
+		/// </summary>
 		private static readonly string PATH_ADDITION_1 = "%" + PYHOME_NAME + "%";
 
-		// Path追加变量2
+		/// <summary>
+		/// Path追加变量2
+		/// </summary>
 		private static readonly string PATH_ADDITION_2 = "%" + PYHOME_NAME + "%\\Scripts";
 
-		// Path中的冗余Python bin路径，需要去除
+		/// <summary>
+		/// Path中的冗余Python bin路径，需要去除
+		/// </summary>
 		private static List<string> pythonBinaryDuplicatePath = new List<string>();
 
 		/// <summary>
@@ -76,19 +85,10 @@ namespace Swsk33.EVTools.Util
 			}
 			// 再设定Path变量
 			// 先执行Path去重
-			List<string> pathValues = new List<string>(VariableUtils.RemoveRedundantValueInPath());
+			List<string> pathValues = new List<string>(PathValuesUtils.RemoveDuplicateValueInPathAndFormat());
 			// 去除冗余路径
-			foreach (string eachDuplicatePath in pythonBinaryDuplicatePath)
-			{
-				for (int i = 0; i < pathValues.Count; i++)
-				{
-					if (eachDuplicatePath.Equals(pathValues[i], StringComparison.CurrentCultureIgnoreCase))
-					{
-						pathValues.RemoveAt(i);
-						break;
-					}
-				}
-			}
+			ListUtils.BatchRemoveFromList(pathValues, pythonBinaryDuplicatePath);
+			// 加入到Path
 			if (!ListUtils.ListContainsIgnoreCase(pathValues, PATH_ADDITION_1))
 			{
 				pathValues.Add(PATH_ADDITION_1);
@@ -97,6 +97,7 @@ namespace Swsk33.EVTools.Util
 			{
 				pathValues.Add(PATH_ADDITION_2);
 			}
+			// 保存Path
 			if (!VariableUtils.SavePath(pathValues.ToArray()))
 			{
 				MessageBox.Show("追加Path失败！请退出程序然后右键-以管理员身份运行此程序重试！也可能是Path变量总长度超出限制！", "失败", MessageBoxButtons.OK, MessageBoxIcon.Error);

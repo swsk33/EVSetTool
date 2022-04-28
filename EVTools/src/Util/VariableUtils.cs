@@ -1,6 +1,5 @@
 ﻿using Swsk33.ReadAndWriteSharp.System;
 using Swsk33.ReadAndWriteSharp.Util;
-using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -28,84 +27,6 @@ namespace Swsk33.EVTools.Util
 			value = FilePathUtils.RemovePathEndBackslash(value);
 			args.Add(value);
 			TerminalUtils.RunCommand("setx", args.ToArray());
-		}
-
-		/// <summary>
-		/// 获取环境变量Path中的变量形式
-		/// </summary>
-		/// <returns>一个字典，字典的键是Path中变量形式的值（例如%JAVA_HOME%\bin），其值则为这个变量的值（例如C:\Program Files\Zulu\zulu-17）</returns>
-		public static Dictionary<string, string> GetVariablesInPath()
-		{
-			Dictionary<string, string> result = new Dictionary<string, string>();
-			// 先获取展开值后的环境变量Path，并把里面的斜杠换成反斜杠，并将以反斜杠结尾的部分去除
-			string[] valuesExpanded = RegUtils.GetPathVariable(true);
-			for (int i = 0; i < valuesExpanded.Length; i++)
-			{
-				valuesExpanded[i] = FilePathUtils.RemovePathEndBackslash(valuesExpanded[i].Replace("/", "\\"));
-			}
-			// 再获取没有展开值的环境变量Path，并把里面的斜杠换成反斜杠，并将以反斜杠结尾的部分去除
-			string[] valuesNotExpanded = RegUtils.GetPathVariable(false);
-			for (int i = 0; i < valuesNotExpanded.Length; i++)
-			{
-				valuesNotExpanded[i] = FilePathUtils.RemovePathEndBackslash(valuesNotExpanded[i].Replace("/", "\\"));
-			}
-			// 进行对比，不一样的则为变量形式
-			for (int i = 0; i < valuesExpanded.Length; i++)
-			{
-				if (!valuesNotExpanded[i].Equals(valuesExpanded[i]) && !result.ContainsKey(valuesNotExpanded[i]))
-				{
-					result.Add(valuesNotExpanded[i], valuesExpanded[i]);
-				}
-			}
-			return result;
-		}
-
-		/// <summary>
-		/// Path值去重
-		/// <para>下列情况视为重复：</para>
-		/// <list type="bullet">Path中有两个一模一样的值</list>
-		/// <list type="bullet">Path中同时存在两个实质相同的路径，但是大小写不一样，例如"C:\abc"和"C:\Abc"，两者重复</list>
-		/// <list type="bullet">Path中同时存在一个路径和一个路径带末尾斜杠，例如"C:\a"和"C:\a\"，两者视为重复，保留前者（即使大小写不同）</list>
-		/// <list type="bullet">Path中同时存在一个变量形式路径和这个变量的值，例如"%JAVA_HOME%\bin"和"C:\Program Files\Zulu\zulu-17"或者"%JAVA_HOME%\bin\"和"C:\Program Files\Zulu\zulu-17"或者"%JAVA_HOME%\bin"和"C:\Program Files\Zulu\zulu-17\"，两者重复，保留变量（不以反斜杠结尾的）</list>
-		/// <list type="bullet">Path中有两个实质相同的路径，但是斜杠不一样，例如C:\a\b和C:/a/b，两者视为重复，保留前者（即使大小写不同）</list>
-		/// </summary>
-		/// <returns>去重后的Path环境变量，数组形式</returns>
-		public static string[] RemoveRedundantValueInPath()
-		{
-			// 用于存放结果的数组
-			List<string> result = new List<string>();
-			// 获取Path变量值
-			string[] origin = RegUtils.GetPathVariable(false);
-			// 把Path变量中的值存在的斜杠全部换成反斜杠，并去除末尾反斜杠（如果有反斜杠结尾的变量的话）
-			for (int i = 0; i < origin.Length; i++)
-			{
-				origin[i] = FilePathUtils.RemovePathEndBackslash(origin[i].Replace("/", "\\"));
-			}
-			// 第一遍检查是否有重复值，筛查一遍并将结果放进结果数组
-			foreach (string originValue in origin)
-			{
-				// 检查结果列表中是否存在当前遍历的路径值
-				if (!ListUtils.ListContainsIgnoreCase(result, originValue))
-				{
-					result.Add(originValue);
-				}
-			}
-			// 第二遍检查是否同时存在一个变量形式路径和这个变量的值
-			// 获取Path中变量形式值
-			Dictionary<string, string> variables = GetVariablesInPath();
-			// 遍历Path中变量形式的路径及其对应的实际值
-			foreach (string key in variables.Keys)
-			{
-				for (int i = 0; i < result.Count; i++)
-				{
-					if (variables[key].Equals(result[i], StringComparison.CurrentCultureIgnoreCase))
-					{
-						result.RemoveAt(i);
-						i--;
-					}
-				}
-			}
-			return result.ToArray();
 		}
 
 		/// <summary>

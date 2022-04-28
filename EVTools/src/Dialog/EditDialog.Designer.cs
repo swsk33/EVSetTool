@@ -37,16 +37,19 @@ namespace Swsk33.EVTools.Dialog
 			// 
 			// editValue
 			// 
-			this.editValue.Location = new System.Drawing.Point(46, 38);
+			this.editValue.Location = new System.Drawing.Point(34, 30);
+			this.editValue.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.editValue.Name = "editValue";
-			this.editValue.Size = new System.Drawing.Size(336, 25);
+			this.editValue.Size = new System.Drawing.Size(253, 21);
 			this.editValue.TabIndex = 0;
+			this.editValue.KeyDown += new System.Windows.Forms.KeyEventHandler(this.editValue_KeyDown);
 			// 
 			// ok
 			// 
-			this.ok.Location = new System.Drawing.Point(87, 88);
+			this.ok.Location = new System.Drawing.Point(65, 70);
+			this.ok.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.ok.Name = "ok";
-			this.ok.Size = new System.Drawing.Size(76, 28);
+			this.ok.Size = new System.Drawing.Size(57, 22);
 			this.ok.TabIndex = 1;
 			this.ok.Text = "确定";
 			this.ok.UseVisualStyleBackColor = true;
@@ -54,27 +57,29 @@ namespace Swsk33.EVTools.Dialog
 			// 
 			// cancel
 			// 
-			this.cancel.Location = new System.Drawing.Point(258, 88);
+			this.cancel.Location = new System.Drawing.Point(194, 70);
+			this.cancel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.cancel.Name = "cancel";
-			this.cancel.Size = new System.Drawing.Size(76, 28);
+			this.cancel.Size = new System.Drawing.Size(57, 22);
 			this.cancel.TabIndex = 1;
 			this.cancel.Text = "取消";
 			this.cancel.UseVisualStyleBackColor = true;
 			this.cancel.Click += new System.EventHandler(this.cancel_Click);
 			// 
-			// EditForm
+			// EditDialog
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(426, 144);
+			this.ClientSize = new System.Drawing.Size(320, 115);
 			this.Controls.Add(this.cancel);
 			this.Controls.Add(this.ok);
 			this.Controls.Add(this.editValue);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
-			this.Name = "EditForm";
+			this.Name = "EditDialog";
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "编辑该条目";

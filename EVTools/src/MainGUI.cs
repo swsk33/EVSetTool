@@ -10,6 +10,11 @@ namespace Swsk33.EVTools
 {
 	public partial class MainGUI : Form
 	{
+		/// <summary>
+		/// 在使用添加路径至Path选项卡时，记录上一次指定的目录
+		/// </summary>
+		private string lastAddPath = "";
+
 		public MainGUI()
 		{
 			InitializeComponent();
@@ -47,8 +52,12 @@ namespace Swsk33.EVTools
 			}
 		}
 
+		/// <summary>
+		/// 窗口加载初始化
+		/// </summary>
 		private void MainGUI_Load(object sender, EventArgs e)
 		{
+			// 探测JDK
 			JDKUtils.DetectJDKs();
 			if (JDKUtils.JDKVersions.Count == 0)
 			{
@@ -66,6 +75,7 @@ namespace Swsk33.EVTools
 				}
 				jdkAutoSetValue.SelectedIndex = 0;
 			}
+			// 探测Python
 			PyUtils.GetPyVersions();
 			if (PyUtils.PythonVersions.Count == 0)
 			{
@@ -88,6 +98,9 @@ namespace Swsk33.EVTools
 			mainToolTip.SetToolTip(pyOk, "点击以设定Python环境变量。若已经设置Python环境变量，还可以选择列表中其它版本Python然后点击设定按钮以切换至指定Python版本。");
 		}
 
+		/// <summary>
+		/// 手动选择JDK路径-浏览按钮
+		/// </summary>
 		private void jdkManualSetButton_Click(object sender, EventArgs e)
 		{
 			FolderBrowserDialog dialog = new FolderBrowserDialog();
@@ -96,14 +109,9 @@ namespace Swsk33.EVTools
 			jdkManualSetValue.Text = dialog.SelectedPath;
 		}
 
-		private void otherSetButton_Click(object sender, EventArgs e)
-		{
-			FolderBrowserDialog dialog = new FolderBrowserDialog();
-			dialog.Description = "请选择路径";
-			dialog.ShowDialog();
-			otherSetValue.Text = dialog.SelectedPath;
-		}
-
+		/// <summary>
+		/// 确认设定JDK环境变量
+		/// </summary>
 		private void JDKok_Click(object sender, EventArgs e)
 		{
 			string javaPath = "";
@@ -135,6 +143,9 @@ namespace Swsk33.EVTools
 			}).Start();
 		}
 
+		/// <summary>
+		/// 重新探测JDK按钮
+		/// </summary>
 		private void jdkRecheck_Click(object sender, EventArgs e)
 		{
 			JDKUtils.DetectJDKs();
@@ -153,23 +164,9 @@ namespace Swsk33.EVTools
 			}
 		}
 
-		private void otherOK_Click(object sender, EventArgs e)
-		{
-			if (StringUtils.IsEmpty(otherSetValue.Text))
-			{
-				MessageBox.Show("请先指定待添加路径！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				return;
-			}
-			otherOK.Enabled = false;
-			otherSettingTip.Visible = true;
-			new Thread(() =>
-			{
-				VariableUtils.AddValueToPath(otherSetValue.Text, isAppend.Checked);
-				otherSettingTip.Visible = false;
-				otherOK.Enabled = true;
-			}).Start();
-		}
-
+		/// <summary>
+		/// 重新探测Python按钮
+		/// </summary>
 		private void pyRecheck_Click(object sender, EventArgs e)
 		{
 			PyUtils.GetPyVersions();
@@ -188,6 +185,9 @@ namespace Swsk33.EVTools
 			}
 		}
 
+		/// <summary>
+		/// 手动设定Python路径-浏览按钮
+		/// </summary>
 		private void pyManualSetFind_Click(object sender, EventArgs e)
 		{
 			FolderBrowserDialog dialog = new FolderBrowserDialog();
@@ -196,6 +196,9 @@ namespace Swsk33.EVTools
 			pyManualSetValue.Text = dialog.SelectedPath;
 		}
 
+		/// <summary>
+		/// 设定Python环境变量按钮
+		/// </summary>
 		private void pyOk_Click(object sender, EventArgs e)
 		{
 			string pyPath = "";
@@ -222,14 +225,61 @@ namespace Swsk33.EVTools
 			}).Start();
 		}
 
+		/// <summary>
+		/// 实用工具按钮
+		/// </summary>
+		private void utilitiesButton_Click(object sender, EventArgs e)
+		{
+			new UtilitiesDialog().ShowDialog();
+		}
+
+		/// <summary>
+		/// 管理Path变量按钮
+		/// </summary>
 		private void managePath_Click(object sender, EventArgs e)
 		{
 			new ManagePathDialog().ShowDialog();
 		}
 
-		private void utilitiesButton_Click(object sender, EventArgs e)
+		/// <summary>
+		/// 加入路径至Path-浏览按钮
+		/// </summary>
+		private void otherSetButton_Click(object sender, EventArgs e)
 		{
-			new UtilitiesDialog().ShowDialog();
+			FolderBrowserDialog dialog = new FolderBrowserDialog();
+			dialog.Description = "请选择路径";
+			if (!StringUtils.IsEmpty(lastAddPath))
+			{
+				dialog.SelectedPath = lastAddPath;
+			}
+			dialog.ShowDialog();
+			otherSetValue.Text = dialog.SelectedPath;
+			lastAddPath = dialog.SelectedPath;
+		}
+
+		/// <summary>
+		/// 加入路径至Path环境变量-确认按钮
+		/// </summary>
+		private void otherOK_Click(object sender, EventArgs e)
+		{
+			if (StringUtils.IsEmpty(otherSetValue.Text))
+			{
+				MessageBox.Show("请先指定待添加路径！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+			if (otherSetValue.Text.Contains("\""))
+			{
+				MessageBox.Show("添加的路径中不能包含英文双引号(\")！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+			otherOK.Enabled = false;
+			otherSettingTip.Visible = true;
+			new Thread(() =>
+			{
+				VariableUtils.AddValueToPath(otherSetValue.Text, isAppend.Checked);
+				otherSettingTip.Visible = false;
+				otherOK.Enabled = true;
+			}).Start();
 		}
 	}
 }

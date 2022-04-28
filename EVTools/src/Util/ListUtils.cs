@@ -25,5 +25,25 @@ namespace Swsk33.EVTools.Util
 			}
 			return false;
 		}
+
+		/// <summary>
+		/// 批量从列表中移除一些项
+		/// </summary>
+		/// <param name="origin">待批量移除项目的列表</param>
+		/// <param name="removeStrings">被移除的条目</param>
+		public static void BatchRemoveFromList(List<string> origin, List<string> removeStrings)
+		{
+			foreach (string item in removeStrings)
+			{
+				for (int i = 0; i < origin.Count; i++)
+				{
+					if (origin[i].Equals(item, StringComparison.CurrentCultureIgnoreCase))
+					{
+						origin.RemoveAt(i);
+						i--;
+					}
+				}
+			}
+		}
 	}
 }
