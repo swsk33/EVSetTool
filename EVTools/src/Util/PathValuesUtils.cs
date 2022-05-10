@@ -59,23 +59,25 @@ namespace Swsk33.EVTools.Util
 			string[] pathValues = RegUtils.GetPathVariable(false);
 			for (int i = 0; i < pathValues.Length; i++)
 			{
-				// 先排除长度小于裁剪变量的
-				if (pathValues[i].Length < systemRootName.Length || pathValues[i].Length < systemRootValue.Length)
+				string prefix;
+				// 检测路径是否是C:\Windows打头
+				if (pathValues[i].Length >= systemRootValue.Length)
 				{
-					continue;
-				}
-				// 先检测路径是否是C:\Windows打头
-				string prefix = pathValues[i].Substring(0, systemRootValue.Length);
-				if (prefix.Equals(systemRootValue, StringComparison.CurrentCultureIgnoreCase))
-				{
-					pathValues[i] = pathValues[i].Replace(prefix, systemRootName);
-					continue;
+					prefix = pathValues[i].Substring(0, systemRootValue.Length);
+					if (prefix.Equals(systemRootValue, StringComparison.CurrentCultureIgnoreCase))
+					{
+						pathValues[i] = pathValues[i].Replace(prefix, systemRootName);
+						continue;
+					}
 				}
 				// 否则，规整大小写
-				prefix = pathValues[i].Substring(0, systemRootName.Length);
-				if (prefix.Equals(systemRootName, StringComparison.CurrentCultureIgnoreCase) && !prefix.Equals(systemRootName))
+				if (pathValues[i].Length >= systemRootName.Length)
 				{
-					pathValues[i] = pathValues[i].Replace(prefix, systemRootName);
+					prefix = pathValues[i].Substring(0, systemRootName.Length);
+					if (prefix.Equals(systemRootName, StringComparison.CurrentCultureIgnoreCase) && !prefix.Equals(systemRootName))
+					{
+						pathValues[i] = pathValues[i].Replace(prefix, systemRootName);
+					}
 				}
 			}
 			return pathValues;

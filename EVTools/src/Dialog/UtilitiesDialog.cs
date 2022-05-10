@@ -20,6 +20,7 @@ namespace Swsk33.EVTools.Dialog
 			replaceSystemRoot.Enabled = enable;
 			formatPathValue.Enabled = enable;
 			removeDuplicate.Enabled = enable;
+			removeNotExist.Enabled = enable;
 			processTipLabel.Visible = !enable;
 		}
 

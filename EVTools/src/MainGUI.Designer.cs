@@ -457,7 +457,7 @@ namespace Swsk33.EVTools
 			this.MinimizeBox = false;
 			this.Name = "MainGUI";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "环境变量设置工具 4.2.3";
+			this.Text = "环境变量设置工具";
 			this.Load += new System.EventHandler(this.MainGUI_Load);
 			this.mainTabPane.ResumeLayout(false);
 			this.jdkSetTab.ResumeLayout(false);

@@ -57,6 +57,10 @@ namespace Swsk33.EVTools
 		/// </summary>
 		private void MainGUI_Load(object sender, EventArgs e)
 		{
+			// 检查更新
+			CheckUpdateUtils.CheckUpdate();
+			// 设定标题带版本号
+			Text = Text + " " + CheckUpdateUtils.VERSION;
 			// 探测JDK
 			JDKUtils.DetectJDKs();
 			if (JDKUtils.JDKVersions.Count == 0)
