@@ -1,5 +1,6 @@
 ﻿using Swsk33.ReadAndWriteSharp.System;
 using Swsk33.ReadAndWriteSharp.Util;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -11,22 +12,13 @@ namespace Swsk33.EVTools.Util
 	public class VariableUtils
 	{
 		/// <summary>
-		/// 运行setx命令设定环境变量
+		/// 设定环境变量
 		/// </summary>
 		/// <param name="varName">设定变量名</param>
 		/// <param name="value">变量值</param>
-		/// <param name="isSysVar">是否是系统变量</param>
-		public static void RunSetx(string varName, string value, bool isSysVar)
+		public static void SetSystemVariable(string varName, string value)
 		{
-			List<string> args = new List<string>();
-			if (isSysVar)
-			{
-				args.Add("/m");
-			}
-			args.Add(varName);
-			value = FilePathUtils.RemovePathEndBackslash(value);
-			args.Add(value);
-			TerminalUtils.RunCommand("setx", args.ToArray());
+			Environment.SetEnvironmentVariable(varName, FilePathUtils.RemovePathEndBackslash(value), EnvironmentVariableTarget.Machine);
 		}
 
 		/// <summary>
@@ -37,7 +29,7 @@ namespace Swsk33.EVTools.Util
 		public static bool SavePath(string[] pathValues)
 		{
 			string saveTotalValue = string.Join(";", pathValues) + ";";
-			RunSetx("Path", saveTotalValue, true);
+			SetSystemVariable("Path", saveTotalValue);
 			if (saveTotalValue.Equals(string.Join(";", RegUtils.GetPathVariable(false)) + ";"))
 			{
 				return true;

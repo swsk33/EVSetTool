@@ -48,7 +48,7 @@ namespace Swsk33.EVTools.Util
 		private static List<string> javaBinaryDuplicatePath = new List<string>();
 
 		/// <summary>
-		/// 检测已安装Oracle JDK版本，信息储存至JDKUtils类的全局静态变量JDKVersions中。
+		/// 检测已安装Oracle JDK版本，信息储存至JDKUtils类的全局静态变量JDKVersions中
 		/// </summary>
 		private static void getOracleJDKVersion()
 		{
@@ -89,7 +89,7 @@ namespace Swsk33.EVTools.Util
 		}
 
 		/// <summary>
-		/// 检测已安装Microsoft JDK版本，信息储存至JDKUtils类的全局静态变量JDKVersions中。
+		/// 检测已安装Microsoft JDK版本，信息储存至JDKUtils类的全局静态变量JDKVersions中
 		/// </summary>
 		private static void getMicrosoftJDKVersion()
 		{
@@ -215,7 +215,7 @@ namespace Swsk33.EVTools.Util
 			RegistryKey key = Registry.LocalMachine;
 			RegistryKey EVKey = key.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", true);
 			// 先设定JAVA_HOME变量
-			VariableUtils.RunSetx("JAVA_HOME", javaPath, true);
+			VariableUtils.SetSystemVariable("JAVA_HOME", javaPath);
 			if (!RegUtils.IsValueExists(key, @"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", "JAVA_HOME"))
 			{
 				MessageBox.Show("设定JAVA_HOME失败！请退出程序然后右键-以管理员身份运行此程序重试！", "失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -233,7 +233,7 @@ namespace Swsk33.EVTools.Util
 			{
 				if (!RegUtils.IsValueExists(key, @"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", "classpath") || !EVKey.GetValue("classpath").Equals(CLASSPATH_VALUE))
 				{
-					VariableUtils.RunSetx("classpath", CLASSPATH_VALUE, true);
+					VariableUtils.SetSystemVariable("classpath", CLASSPATH_VALUE);
 				}
 			}
 			EVKey.Close();

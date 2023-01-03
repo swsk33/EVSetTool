@@ -77,7 +77,7 @@ namespace Swsk33.EVTools.Util
 		public static void SetPythonValue(string pyPath)
 		{
 			// 先设定PYTHON_HOME变量
-			VariableUtils.RunSetx(PYHOME_NAME, pyPath, true);
+			VariableUtils.SetSystemVariable(PYHOME_NAME, pyPath);
 			if (!RegUtils.IsValueExists(Registry.LocalMachine, @"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", PYHOME_NAME))
 			{
 				MessageBox.Show("设定PYTHON_HOME失败！请退出程序然后右键-以管理员身份运行此程序重试！", "失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
