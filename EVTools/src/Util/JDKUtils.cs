@@ -244,8 +244,7 @@ namespace Swsk33.EVTools.Util
 				return;
 			}
 			// 最后设定Path变量
-			// 执行Path去重
-			List<string> pathValues = new List<string>(PathValuesUtils.RemoveDuplicateValueInPathAndFormat());
+			List<string> pathValues = new List<string>(RegUtils.GetPathVariable(false));
 			// 去除冗余的Java bin路径
 			ListUtils.BatchRemoveFromList(pathValues, javaBinaryDuplicatePath);
 			// 添加到Path

@@ -56,8 +56,8 @@
     <Reference Include="Costura, Version=4.1.0.0, Culture=neutral, PublicKeyToken=9919ef960d84173d, processorArchitecture=MSIL">
       <HintPath>..\packages\Costura.Fody.4.1.0\lib\net40\Costura.dll</HintPath>
     </Reference>
-    <Reference Include="ReadAndWriteSharp, Version=3.6.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Swsk33.ReadAndWriteSharp.3.6.0\lib\net46\ReadAndWriteSharp.dll</HintPath>
+    <Reference Include="ReadAndWriteSharp, Version=3.6.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Swsk33.ReadAndWriteSharp.3.6.5\lib\net46\ReadAndWriteSharp.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.dll</HintPath>

@@ -1,6 +1,5 @@
 ﻿using Swsk33.ReadAndWriteSharp.System;
 using Swsk33.ReadAndWriteSharp.Util;
-using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -18,7 +17,14 @@ namespace Swsk33.EVTools.Util
 		/// <param name="value">变量值</param>
 		public static void SetSystemVariable(string varName, string value)
 		{
-			Environment.SetEnvironmentVariable(varName, FilePathUtils.RemovePathEndBackslash(value), EnvironmentVariableTarget.Machine);
+			List<string> args = new List<string>
+			{
+				"/m",
+				varName
+			};
+			value = FilePathUtils.RemovePathEndBackslash(value);
+			args.Add(value);
+			TerminalUtils.RunCommand("setx", args.ToArray());
 		}
 
 		/// <summary>
