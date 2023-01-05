@@ -15,7 +15,7 @@ namespace Swsk33.EVTools.Util
 		/// 获取环境变量Path中的变量形式
 		/// </summary>
 		/// <returns>一个字典，字典的键是Path中变量形式的值（例如%JAVA_HOME%\bin），其值则为这个变量的值（例如C:\Program Files\Zulu\zulu-17\bin），所有值都经过了格式化</returns>
-		public static Dictionary<string, string> GetVariablesInPath()
+		private static Dictionary<string, string> GetVariablesInPath()
 		{
 			Dictionary<string, string> result = new Dictionary<string, string>();
 			// 先获取展开值后的环境变量Path
@@ -97,7 +97,7 @@ namespace Swsk33.EVTools.Util
 		{
 			// 用于存放结果的数组
 			List<string> result = new List<string>();
-			// 获取Path变量值
+			// 获取格式化后的Path变量值
 			string[] origin = GetFormatedPathValues(false);
 			// 第一遍检查是否有重复值，筛查一遍并将结果放进结果数组
 			foreach (string originValue in origin)
@@ -148,8 +148,8 @@ namespace Swsk33.EVTools.Util
 						i--;
 						continue;
 					}
-					eachPath = FilePathUtils.RemovePathEndBackslash(variables[eachPath].Replace("/", "\\"));
 					// 否则，进一步检测其对应路径是否存在
+					eachPath = FilePathUtils.RemovePathEndBackslash(variables[eachPath].Replace("/", "\\"));
 					if (!Directory.Exists(eachPath) && !File.Exists(eachPath))
 					{
 						result.RemoveAt(i);
