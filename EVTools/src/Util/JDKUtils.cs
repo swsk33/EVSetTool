@@ -202,6 +202,7 @@ namespace Swsk33.EVTools.Util
 			foreach (string version in JDKVersions.Keys)
 			{
 				javaBinaryDuplicatePath.Add(JDKVersions[version] + "\\bin");
+				javaBinaryDuplicatePath.Add(JDKVersions[version] + "\\bin\\");
 			}
 		}
 

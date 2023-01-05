@@ -68,17 +68,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\Dialog\BackupDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Dialog\BackupDialog.Designer.cs">
+      <DependentUpon>BackupDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\Dialog\EditDialog.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="src\Dialog\EditDialog.Designer.cs">
       <DependentUpon>EditDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\Dialog\UtilitiesDialog.cs">
+    <Compile Include="src\Dialog\ToolboxDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="src\Dialog\UtilitiesDialog.Designer.cs">
-      <DependentUpon>UtilitiesDialog.cs</DependentUpon>
+    <Compile Include="src\Dialog\ToolboxDialog.Designer.cs">
+      <DependentUpon>ToolboxDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Dialog\PathCleanDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Dialog\PathCleanDialog.Designer.cs">
+      <DependentUpon>PathCleanDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="src\Util\JDKUtils.cs" />
     <Compile Include="src\MainGUI.cs">
@@ -99,11 +111,17 @@
     <Compile Include="src\Util\PathValuesUtils.cs" />
     <Compile Include="src\Util\PyUtils.cs" />
     <Compile Include="src\Util\VariableUtils.cs" />
+    <EmbeddedResource Include="src\Dialog\BackupDialog.resx">
+      <DependentUpon>BackupDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="src\Dialog\EditDialog.resx">
       <DependentUpon>EditDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="src\Dialog\UtilitiesDialog.resx">
-      <DependentUpon>UtilitiesDialog.cs</DependentUpon>
+    <EmbeddedResource Include="src\Dialog\ToolboxDialog.resx">
+      <DependentUpon>ToolboxDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Dialog\PathCleanDialog.resx">
+      <DependentUpon>PathCleanDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="src\MainGUI.resx">
       <DependentUpon>MainGUI.cs</DependentUpon>

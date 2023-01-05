@@ -84,8 +84,7 @@ namespace Swsk33.EVTools.Util
 				return;
 			}
 			// 再设定Path变量
-			// 先执行Path去重
-			List<string> pathValues = new List<string>(PathValuesUtils.RemoveDuplicateValueInPathAndFormat());
+			List<string> pathValues = new List<string>(RegUtils.GetPathVariable(false));
 			// 去除冗余路径
 			ListUtils.BatchRemoveFromList(pathValues, pythonBinaryDuplicatePath);
 			// 加入到Path

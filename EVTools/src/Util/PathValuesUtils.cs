@@ -14,7 +14,7 @@ namespace Swsk33.EVTools.Util
 		/// <summary>
 		/// 获取环境变量Path中的变量形式
 		/// </summary>
-		/// <returns>一个字典，字典的键是Path中变量形式的值（例如%JAVA_HOME%\bin），其值则为这个变量的值（例如C:\Program Files\Zulu\zulu-17），所有值都经过了格式化</returns>
+		/// <returns>一个字典，字典的键是Path中变量形式的值（例如%JAVA_HOME%\bin），其值则为这个变量的值（例如C:\Program Files\Zulu\zulu-17\bin），所有值都经过了格式化</returns>
 		public static Dictionary<string, string> GetVariablesInPath()
 		{
 			Dictionary<string, string> result = new Dictionary<string, string>();

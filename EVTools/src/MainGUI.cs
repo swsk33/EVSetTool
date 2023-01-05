@@ -230,7 +230,7 @@ namespace Swsk33.EVTools
 		/// </summary>
 		private void utilitiesButton_Click(object sender, EventArgs e)
 		{
-			new UtilitiesDialog().ShowDialog();
+			new ToolboxDialog().ShowDialog();
 		}
 
 		/// <summary>

@@ -4,9 +4,9 @@ using System.Windows.Forms;
 
 namespace Swsk33.EVTools.Dialog
 {
-	public partial class UtilitiesDialog : Form
+	public partial class PathCleanDialog : Form
 	{
-		public UtilitiesDialog()
+		public PathCleanDialog()
 		{
 			InitializeComponent();
 		}

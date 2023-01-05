@@ -1,6 +1,6 @@
 ﻿namespace Swsk33.EVTools.Dialog
 {
-	partial class UtilitiesDialog
+	partial class PathCleanDialog
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UtilitiesDialog));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PathCleanDialog));
 			this.replaceSystemRoot = new System.Windows.Forms.Button();
 			this.formatPathValue = new System.Windows.Forms.Button();
 			this.removeDuplicate = new System.Windows.Forms.Button();
@@ -121,7 +121,7 @@
 			this.Name = "UtilitiesDialog";
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "实用工具";
+			this.Text = "Path强迫症工具";
 			this.Load += new System.EventHandler(this.UtilitiesDialog_Load);
 			this.ResumeLayout(false);
 			this.PerformLayout();
