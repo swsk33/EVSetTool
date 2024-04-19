@@ -9,12 +9,13 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Swsk33.EVTools</RootNamespace>
     <AssemblyName>环境变量设置工具</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -92,7 +93,14 @@
     <Compile Include="src\Dialog\PathCleanDialog.Designer.cs">
       <DependentUpon>PathCleanDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\Util\JDKUtils.cs" />
+    <Compile Include="src\Strategy\Context\JdkDetectContext.cs" />
+    <Compile Include="src\Strategy\IJdkDetectStrategy.cs" />
+    <Compile Include="src\Strategy\Impl\AdoptJdkDetectStrategy.cs" />
+    <Compile Include="src\Strategy\Impl\LibericaJdkDetectStrategy.cs" />
+    <Compile Include="src\Strategy\Impl\MicrosoftJdkDetectStrategy.cs" />
+    <Compile Include="src\Strategy\Impl\OracleJdkDetectStrategy.cs" />
+    <Compile Include="src\Strategy\Impl\ZuluJdkDetectStrategy.cs" />
+    <Compile Include="src\Util\JdkUtils.cs" />
     <Compile Include="src\MainGUI.cs">
       <SubType>Form</SubType>
     </Compile>

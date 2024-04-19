@@ -9,32 +9,32 @@ namespace Swsk33.EVTools.Util
 	/// <summary>
 	/// python环境变量实用类
 	/// </summary>
-	public class PyUtils
+	public static class PyUtils
 	{
 		/// <summary>
 		/// python版本列表
 		/// </summary>
-		public static Dictionary<string, string> PythonVersions = new Dictionary<string, string>();
+		public static readonly Dictionary<string, string> PythonVersions = new Dictionary<string, string>();
 
 		/// <summary>
 		/// python home变量名
 		/// </summary>
-		private static readonly string PYHOME_NAME = "PYTHON_HOME";
+		private static readonly string PyhomeName = "PYTHON_HOME";
 
 		/// <summary>
 		/// Path追加变量1
 		/// </summary>
-		private static readonly string PATH_ADDITION_1 = "%" + PYHOME_NAME + "%";
+		private static readonly string PathAddition1 = "%" + PyhomeName + "%";
 
 		/// <summary>
 		/// Path追加变量2
 		/// </summary>
-		private static readonly string PATH_ADDITION_2 = "%" + PYHOME_NAME + "%\\Scripts";
+		private static readonly string PathAddition2 = "%" + PyhomeName + "%\\Scripts";
 
 		/// <summary>
 		/// Path中的冗余Python bin路径，需要去除
 		/// </summary>
-		private static List<string> pythonBinaryDuplicatePath = new List<string>();
+		private static readonly List<string> PythonBinaryDuplicatePath = new List<string>();
 
 		/// <summary>
 		/// 获取已安装Python版本，存放于PyUtils类的全局静态变量PythonVersions中。
@@ -59,14 +59,16 @@ namespace Swsk33.EVTools.Util
 						eachPyVerKey.Close();
 					}
 				}
+
 				pyVersionKey.Close();
 			}
+
 			// 计算冗余值列表
-			pythonBinaryDuplicatePath.Clear();
+			PythonBinaryDuplicatePath.Clear();
 			foreach (string version in PythonVersions.Keys)
 			{
-				pythonBinaryDuplicatePath.Add(PythonVersions[version]);
-				pythonBinaryDuplicatePath.Add(PythonVersions[version] + "\\Scripts");
+				PythonBinaryDuplicatePath.Add(PythonVersions[version]);
+				PythonBinaryDuplicatePath.Add(PythonVersions[version] + "\\Scripts");
 			}
 		}
 
@@ -77,32 +79,36 @@ namespace Swsk33.EVTools.Util
 		public static void SetPythonValue(string pyPath)
 		{
 			// 先设定PYTHON_HOME变量
-			VariableUtils.SetSystemVariable(PYHOME_NAME, pyPath);
-			if (!RegUtils.IsValueExists(Registry.LocalMachine, @"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", PYHOME_NAME))
+			VariableUtils.SetSystemVariable(PyhomeName, pyPath);
+			if (!RegUtils.IsValueExists(Registry.LocalMachine, @"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", PyhomeName))
 			{
-				MessageBox.Show("设定PYTHON_HOME失败！请退出程序然后右键-以管理员身份运行此程序重试！", "失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(@"设定PYTHON_HOME失败！请退出程序然后右键-以管理员身份运行此程序重试！", @"失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
+
 			// 再设定Path变量
 			List<string> pathValues = new List<string>(RegUtils.GetPathVariable(false));
 			// 去除冗余路径
-			ListUtils.BatchRemoveFromList(pathValues, pythonBinaryDuplicatePath);
+			ListUtils.BatchRemoveFromList(pathValues, PythonBinaryDuplicatePath);
 			// 加入到Path
-			if (!ListUtils.ListContainsIgnoreCase(pathValues, PATH_ADDITION_1))
+			if (!ListUtils.ListContainsIgnoreCase(pathValues, PathAddition1))
 			{
-				pathValues.Add(PATH_ADDITION_1);
+				pathValues.Add(PathAddition1);
 			}
-			if (!ListUtils.ListContainsIgnoreCase(pathValues, PATH_ADDITION_2))
+
+			if (!ListUtils.ListContainsIgnoreCase(pathValues, PathAddition2))
 			{
-				pathValues.Add(PATH_ADDITION_2);
+				pathValues.Add(PathAddition2);
 			}
+
 			// 保存Path
 			if (!VariableUtils.SavePath(pathValues.ToArray()))
 			{
-				MessageBox.Show("追加Path失败！请退出程序然后右键-以管理员身份运行此程序重试！也可能是Path变量总长度超出限制！", "失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(@"追加Path失败！请退出程序然后右键-以管理员身份运行此程序重试！也可能是Path变量总长度超出限制！", @"失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
-			MessageBox.Show("设置完成！", "完成", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+			MessageBox.Show(@"设置完成！", @"完成", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 	}
 }

@@ -6,9 +6,10 @@
 
 可以自动搜索到以下已安装的JDK：
 - [Oracle JDK](https://www.oracle.com/java/technologies/javase-downloads.html)
-- [AdoptOpenJDK (Hotspot or OpenJ9)](https://adoptopenjdk.net/)
+- [Adopt OpenJDK (Hotspot or OpenJ9)](https://adoptopenjdk.net/)
 - [Microsoft Build Of OpenJDK](https://www.microsoft.com/openjdk) 
-- [Azul Zulu](https://azul.com/downloads)
+- [Azul Zulu OpenJDK](https://azul.com/downloads)
+- [BellSoft Liberica OpenJDK](https://bell-sw.com/libericajdk/)
 
 也可以自动搜索已安装的Python，不过只有是安装给电脑上所有用户的Python（安装时选择了Install for all users）才能被检测到。
 
@@ -30,10 +31,10 @@
 
 [官网下载](https://dotnet.microsoft.com/download/dotnet-framework/net48)
 
-软件的使用方法很简单，下载后双击exe即可打开，是单文件应用程序。软件会自动探测已安装的JDK和Python，然后选择版本设定即可。
+软件的使用方法很简单，下载后双击`exe`即可打开，是单文件应用程序。软件会自动探测已安装的JDK和Python，然后选择版本设定即可。
 
 如果已经设定过了JDK/Python环境变量，并且你的电脑安装了多个版本的JDK/Python，仍然可以使用本程序重新设定为别的版本的JDK/Python环境变量以达到切换版本的效果，也可以选择手动指定位置。
 
 少数电脑设定了环境变量可能需要重启系统才会生效。
 
-> 最后更新：2023.1.5
+> 最后更新：2024.4.19

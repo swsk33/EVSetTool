@@ -42,11 +42,11 @@ namespace Swsk33.EVTools.Dialog
 			{
 				if (VariableUtils.SavePath(PathValuesUtils.ReplacePathSystemRootReference()))
 				{
-					MessageBox.Show("操作成功！", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					MessageBox.Show(@"操作成功！", @"成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				}
 				else
 				{
-					MessageBox.Show("操作失败！请退出程序后重新右键-以管理员身份运行此程序再试！", "失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show(@"操作失败！请退出程序后重新右键-以管理员身份运行此程序再试！", @"失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 				operateAllButtons(true);
 			}).Start();
@@ -60,13 +60,13 @@ namespace Swsk33.EVTools.Dialog
 			operateAllButtons(false);
 			new Thread(() =>
 			{
-				if (VariableUtils.SavePath(PathValuesUtils.GetFormatedPathValues(false)))
+				if (VariableUtils.SavePath(PathValuesUtils.GetFormattedPathValues(false)))
 				{
-					MessageBox.Show("操作成功！", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					MessageBox.Show(@"操作成功！", @"成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				}
 				else
 				{
-					MessageBox.Show("操作失败！请退出程序后重新右键-以管理员身份运行此程序再试！", "失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show(@"操作失败！请退出程序后重新右键-以管理员身份运行此程序再试！", @"失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 				operateAllButtons(true);
 			}).Start();
@@ -82,11 +82,11 @@ namespace Swsk33.EVTools.Dialog
 			{
 				if (VariableUtils.SavePath(PathValuesUtils.RemoveDuplicateValueInPathAndFormat()))
 				{
-					MessageBox.Show("操作成功！", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					MessageBox.Show(@"操作成功！", @"成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				}
 				else
 				{
-					MessageBox.Show("操作失败！请退出程序后重新右键-以管理员身份运行此程序再试！", "失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show(@"操作失败！请退出程序后重新右键-以管理员身份运行此程序再试！", @"失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 				operateAllButtons(true);
 			}).Start();
@@ -102,11 +102,11 @@ namespace Swsk33.EVTools.Dialog
 			{
 				if (VariableUtils.SavePath(PathValuesUtils.RemoveNotExistPathInPathValues()))
 				{
-					MessageBox.Show("操作成功！", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					MessageBox.Show(@"操作成功！", @"成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				}
 				else
 				{
-					MessageBox.Show("操作失败！请退出程序后重新右键-以管理员身份运行此程序再试！", "失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show(@"操作失败！请退出程序后重新右键-以管理员身份运行此程序再试！", @"失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 				operateAllButtons(true);
 			}).Start();

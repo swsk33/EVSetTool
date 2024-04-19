@@ -1,20 +1,15 @@
-﻿using Swsk33.ReadAndWriteSharp.Util;
-using System;
+﻿using System;
 using System.Windows.Forms;
+using Swsk33.ReadAndWriteSharp.Util;
 
 namespace Swsk33.EVTools.Dialog
 {
 	public partial class EditDialog : Form
 	{
 		/// <summary>
-		/// 结果值
-		/// </summary>
-		private string resultValue = null;
-
-		/// <summary>
 		/// 结果值封装属性
 		/// </summary>
-		public string ResultValue { get => resultValue; set => resultValue = value; }
+		public string ResultValue { get; set; }
 
 		/// <summary>
 		/// 实例化一个编辑窗口
@@ -49,6 +44,7 @@ namespace Swsk33.EVTools.Dialog
 			{
 				DialogResult = DialogResult.Cancel;
 			}
+
 			Close();
 		}
 
@@ -69,6 +65,7 @@ namespace Swsk33.EVTools.Dialog
 				{
 					DialogResult = DialogResult.Cancel;
 				}
+
 				Close();
 			}
 		}

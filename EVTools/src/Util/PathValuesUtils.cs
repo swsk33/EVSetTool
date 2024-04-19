@@ -9,7 +9,7 @@ namespace Swsk33.EVTools.Util
 	/// <summary>
 	/// 用于对Path环境变量中的值进行常见处理的实用类
 	/// </summary>
-	public class PathValuesUtils
+	public static class PathValuesUtils
 	{
 		/// <summary>
 		/// 获取环境变量Path中的变量形式
@@ -19,9 +19,9 @@ namespace Swsk33.EVTools.Util
 		{
 			Dictionary<string, string> result = new Dictionary<string, string>();
 			// 先获取展开值后的环境变量Path
-			string[] valuesExpanded = GetFormatedPathValues(true);
+			string[] valuesExpanded = GetFormattedPathValues(true);
 			// 再获取没有展开值的环境变量Path
-			string[] valuesNotExpanded = GetFormatedPathValues(false);
+			string[] valuesNotExpanded = GetFormattedPathValues(false);
 			// 进行对比，不一样的则为变量形式
 			for (int i = 0; i < valuesExpanded.Length; i++)
 			{
@@ -38,7 +38,7 @@ namespace Swsk33.EVTools.Util
 		/// </summary>
 		/// <param name="expand">是否展开其中的变量引用</param>
 		/// <returns>格式化后的Path变量列表</returns>
-		public static string[] GetFormatedPathValues(bool expand)
+		public static string[] GetFormattedPathValues(bool expand)
 		{
 			string[] pathValues = RegUtils.GetPathVariable(expand);
 			for (int i = 0; i < pathValues.Length; i++)
@@ -98,7 +98,7 @@ namespace Swsk33.EVTools.Util
 			// 用于存放结果的数组
 			List<string> result = new List<string>();
 			// 获取格式化后的Path变量值
-			string[] origin = GetFormatedPathValues(false);
+			string[] origin = GetFormattedPathValues(false);
 			// 第一遍检查是否有重复值，筛查一遍并将结果放进结果数组
 			foreach (string originValue in origin)
 			{

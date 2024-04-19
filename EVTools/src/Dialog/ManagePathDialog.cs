@@ -86,7 +86,7 @@ namespace Swsk33.EVTools.Dialog
 			}
 			else
 			{
-				MessageBox.Show("请选择要删除的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(@"请选择要删除的值！", @"提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
 
@@ -131,7 +131,7 @@ namespace Swsk33.EVTools.Dialog
 			}
 			else
 			{
-				MessageBox.Show("请选择要修改的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(@"请选择要修改的值！", @"提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
 
@@ -152,11 +152,11 @@ namespace Swsk33.EVTools.Dialog
 			{
 				if (VariableUtils.SavePath(totalPathValue.ToArray()))
 				{
-					MessageBox.Show("修改完成！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					MessageBox.Show(@"修改完成！", @"提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				}
 				else
 				{
-					MessageBox.Show("修改失败！请关闭程序然后右键-以管理员身份运行此程序重试！也可能是Path变量总长度超出限制！", "失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show(@"修改失败！请关闭程序然后右键-以管理员身份运行此程序重试！也可能是Path变量总长度超出限制！", @"失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 				Close();
 			}).Start();

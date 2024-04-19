@@ -8,7 +8,7 @@ namespace Swsk33.EVTools.Util
 	/// <summary>
 	/// 用于环境变量的实用类
 	/// </summary>
-	public class VariableUtils
+	public static class VariableUtils
 	{
 		/// <summary>
 		/// 设定环境变量
@@ -57,7 +57,7 @@ namespace Swsk33.EVTools.Util
 			// 检查重复
 			if (ListUtils.ListContainsIgnoreCase(originValues, value))
 			{
-				MessageBox.Show("该路径已经存在于Path变量中！无需再次添加！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				MessageBox.Show(@"该路径已经存在于Path变量中！无需再次添加！", @"提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				return;
 			}
 			// 开始加入
@@ -72,11 +72,11 @@ namespace Swsk33.EVTools.Util
 			// 保存Path变量值
 			if (SavePath(originValues.ToArray()))
 			{
-				MessageBox.Show("已成功添加路径至Path变量！若没有立即生效，请关闭现有已打开终端或者重启电脑再试！", "完成", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				MessageBox.Show(@"已成功添加路径至Path变量！若没有立即生效，请关闭现有已打开终端或者重启电脑再试！", @"完成", MessageBoxButtons.OK, MessageBoxIcon.Information);
 			}
 			else
 			{
-				MessageBox.Show("添加路径到Path变量失败！请关闭该程序然后右键-以管理员身份运行该程序再试！", "失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(@"添加路径到Path变量失败！请关闭该程序然后右键-以管理员身份运行该程序再试！", @"失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
 	}

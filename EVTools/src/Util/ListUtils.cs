@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Swsk33.EVTools.Util
 {
 	/// <summary>
 	/// 列表实用类
 	/// </summary>
-	public class ListUtils
+	public static class ListUtils
 	{
 		/// <summary>
 		/// 判断一个字符串元素是否在一个字符串列表中，判断时忽略大小写
@@ -23,6 +24,7 @@ namespace Swsk33.EVTools.Util
 					return true;
 				}
 			}
+
 			return false;
 		}
 
