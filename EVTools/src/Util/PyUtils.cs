@@ -19,17 +19,17 @@ namespace Swsk33.EVTools.Util
 		/// <summary>
 		/// python home变量名
 		/// </summary>
-		private static readonly string PyhomeName = "PYTHON_HOME";
+		private const string PyHomeName = "PYTHON_HOME";
 
 		/// <summary>
 		/// Path追加变量1
 		/// </summary>
-		private static readonly string PathAddition1 = "%" + PyhomeName + "%";
+		private static readonly string PathAddition1 = $@"%{PyHomeName}%";
 
 		/// <summary>
 		/// Path追加变量2
 		/// </summary>
-		private static readonly string PathAddition2 = "%" + PyhomeName + "%\\Scripts";
+		private static readonly string PathAddition2 = $@"%{PyHomeName}%\Scripts";
 
 		/// <summary>
 		/// Path中的冗余Python bin路径，需要去除
@@ -55,7 +55,7 @@ namespace Swsk33.EVTools.Util
 						RegistryKey eachPyVerKey = key.OpenSubKey(eachPyVarsionPath);
 						string pyPath = eachPyVerKey.GetValue("").ToString();
 						pyPath = FilePathUtils.RemovePathEndBackslash(pyPath);
-						PyUtils.PythonVersions.Add(version, pyPath);
+						PythonVersions.Add(version, pyPath);
 						eachPyVerKey.Close();
 					}
 				}
@@ -68,7 +68,7 @@ namespace Swsk33.EVTools.Util
 			foreach (string version in PythonVersions.Keys)
 			{
 				PythonBinaryDuplicatePath.Add(PythonVersions[version]);
-				PythonBinaryDuplicatePath.Add(PythonVersions[version] + "\\Scripts");
+				PythonBinaryDuplicatePath.Add($@"{PythonVersions[version]}\Scripts");
 			}
 		}
 
@@ -79,10 +79,10 @@ namespace Swsk33.EVTools.Util
 		public static void SetPythonValue(string pyPath)
 		{
 			// 先设定PYTHON_HOME变量
-			VariableUtils.SetSystemVariable(PyhomeName, pyPath);
-			if (!RegUtils.IsValueExists(Registry.LocalMachine, @"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", PyhomeName))
+			VariableUtils.SetSystemVariable(PyHomeName, pyPath);
+			if (!RegUtils.IsValueExists(Registry.LocalMachine, @"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", PyHomeName))
 			{
-				MessageBox.Show(@"设定PYTHON_HOME失败！请退出程序然后右键-以管理员身份运行此程序重试！", @"失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show($@"设定{PyHomeName}失败！请退出程序然后右键-以管理员身份运行此程序重试！", @"失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 

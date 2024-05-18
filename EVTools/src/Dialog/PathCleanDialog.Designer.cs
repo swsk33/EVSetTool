@@ -103,7 +103,7 @@
 			this.removeNotExist.UseVisualStyleBackColor = true;
 			this.removeNotExist.Click += new System.EventHandler(this.removeNotExist_Click);
 			// 
-			// UtilitiesDialog
+			// PathCleanDialog
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -118,14 +118,12 @@
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
-			this.Name = "UtilitiesDialog";
+			this.Name = "PathCleanDialog";
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Path强迫症工具";
-			this.Load += new System.EventHandler(this.UtilitiesDialog_Load);
 			this.ResumeLayout(false);
 			this.PerformLayout();
-
 		}
 
 		#endregion

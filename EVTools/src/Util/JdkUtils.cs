@@ -19,17 +19,22 @@ namespace Swsk33.EVTools.Util
 		/// <summary>
 		/// JAVA_HOME变量名称
 		/// </summary>
-		private static readonly string JavaHomeName = "%JAVA_HOME%";
+		private const string JavaHomeName = "JAVA_HOME";
+
+		/// <summary>
+		/// JAVA_HOME变量引用形式
+		/// </summary>
+		private static readonly string JavaHomeVariable = $"%{JavaHomeName}%";
 
 		/// <summary>
 		/// classpath变量值
 		/// </summary>
-		private static readonly string ClasspathValue = ".;" + JavaHomeName + @"\lib\dt.jar;" + JavaHomeName + @"\lib\tools.jar";
+		private static readonly string ClasspathValue = $@".;{JavaHomeVariable}\lib\dt.jar;{JavaHomeVariable}\lib\tools.jar";
 
 		/// <summary>
 		/// jdk追加Path变量值
 		/// </summary>
-		private static readonly string AddPathValue = JavaHomeName + @"\bin";
+		private static readonly string AddPathValue = $@"{JavaHomeVariable}\bin";
 
 		/// <summary>
 		/// Path中的冗余Java bin路径，需要去除
@@ -50,8 +55,8 @@ namespace Swsk33.EVTools.Util
 			// 加入已有JDK的配置冗余值
 			foreach (string version in JdkVersions.Keys)
 			{
-				JavaBinaryDuplicatePath.Add(JdkVersions[version] + "\\bin");
-				JavaBinaryDuplicatePath.Add(JdkVersions[version] + "\\bin\\");
+				JavaBinaryDuplicatePath.Add($@"{JdkVersions[version]}\bin");
+				JavaBinaryDuplicatePath.Add($@"{JdkVersions[version]}\bin\");
 			}
 		}
 
@@ -65,10 +70,10 @@ namespace Swsk33.EVTools.Util
 			RegistryKey key = Registry.LocalMachine;
 			RegistryKey evKey = key.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", true);
 			// 先设定JAVA_HOME变量
-			VariableUtils.SetSystemVariable("JAVA_HOME", javaPath);
-			if (!RegUtils.IsValueExists(key, @"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", "JAVA_HOME"))
+			VariableUtils.SetSystemVariable(JavaHomeName, javaPath);
+			if (!RegUtils.IsValueExists(key, @"SYSTEM\CurrentControlSet\Control\Session Manager\Environment", JavaHomeName))
 			{
-				MessageBox.Show(@"设定JAVA_HOME失败！请退出程序然后右键-以管理员身份运行此程序重试！", @"失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show($@"设定{JavaHomeName}失败！请退出程序然后右键-以管理员身份运行此程序重试！", @"失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 

@@ -81,6 +81,12 @@
     <Compile Include="src\Dialog\EditDialog.Designer.cs">
       <DependentUpon>EditDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\Dialog\MsysEnvironmentDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Dialog\MsysEnvironmentDialog.Designer.cs">
+      <DependentUpon>MsysEnvironmentDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\Dialog\ToolboxDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,6 +99,7 @@
     <Compile Include="src\Dialog\PathCleanDialog.Designer.cs">
       <DependentUpon>PathCleanDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\Model\MsysEnvironment.cs" />
     <Compile Include="src\Strategy\Context\JdkDetectContext.cs" />
     <Compile Include="src\Strategy\IJdkDetectStrategy.cs" />
     <Compile Include="src\Strategy\Impl\AdoptJdkDetectStrategy.cs" />
@@ -116,6 +123,7 @@
     <Compile Include="src\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\Util\ListUtils.cs" />
+    <Compile Include="src\Util\MsysUtils.cs" />
     <Compile Include="src\Util\PathValuesUtils.cs" />
     <Compile Include="src\Util\PyUtils.cs" />
     <Compile Include="src\Util\VariableUtils.cs" />
@@ -124,6 +132,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="src\Dialog\EditDialog.resx">
       <DependentUpon>EditDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Dialog\MsysEnvironmentDialog.resx">
+      <DependentUpon>MsysEnvironmentDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="src\Dialog\ToolboxDialog.resx">
       <DependentUpon>ToolboxDialog.cs</DependentUpon>

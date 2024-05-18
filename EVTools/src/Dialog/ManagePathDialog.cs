@@ -15,9 +15,32 @@ namespace Swsk33.EVTools.Dialog
 		/// </summary>
 		private string lastAddPath = "";
 
-		public ManagePathDialog()
+		/// <summary>
+		/// 唯一单例
+		/// </summary>
+		private static readonly ManagePathDialog Instance = new ManagePathDialog();
+
+		/// <summary>
+		/// 单例模式，私有化构造器
+		/// </summary>
+		private ManagePathDialog()
 		{
 			InitializeComponent();
+			// 设定提示语
+			buttonToolTip.SetToolTip(up, "上移选定元素");
+			buttonToolTip.SetToolTip(down, "下移选定元素");
+			buttonToolTip.SetToolTip(remove, "移除选定元素");
+			buttonToolTip.SetToolTip(add, "在选定元素之后插入路径，若未选择元素则在尾部插入");
+			buttonToolTip.SetToolTip(edit, "编辑所选元素，也可以双击相应的元素进行编辑");
+		}
+
+		/// <summary>
+		/// 获取唯一单例
+		/// </summary>
+		/// <returns>ManagePathDialog唯一单例</returns>
+		public static ManagePathDialog GetInstance()
+		{
+			return Instance;
 		}
 
 		/// <summary>
@@ -25,16 +48,13 @@ namespace Swsk33.EVTools.Dialog
 		/// </summary>
 		private void ManagePathForm_Load(object sender, EventArgs e)
 		{
+			// 加入Path至列表
+			pathContentValue.Items.Clear();
 			string[] pathValues = RegUtils.GetPathVariable(false);
 			foreach (string value in pathValues)
 			{
 				pathContentValue.Items.Add(value);
 			}
-			buttonToolTip.SetToolTip(up, "上移选定元素");
-			buttonToolTip.SetToolTip(down, "下移选定元素");
-			buttonToolTip.SetToolTip(remove, "移除选定元素");
-			buttonToolTip.SetToolTip(add, "在选定元素之后插入路径，若未选择元素则在尾部插入");
-			buttonToolTip.SetToolTip(edit, "编辑所选元素，也可以双击相应的元素进行编辑");
 		}
 
 		/// <summary>
@@ -96,11 +116,12 @@ namespace Swsk33.EVTools.Dialog
 		private void add_Click(object sender, EventArgs e)
 		{
 			FolderBrowserDialog dialog = new FolderBrowserDialog();
-			dialog.Description = "请选择路径";
+			dialog.Description = @"请选择路径";
 			if (!StringUtils.IsEmpty(lastAddPath))
 			{
 				dialog.SelectedPath = lastAddPath;
 			}
+
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
 				string path = dialog.SelectedPath;
@@ -127,6 +148,7 @@ namespace Swsk33.EVTools.Dialog
 				if (dialog.ShowDialog() == DialogResult.OK)
 				{
 					pathContentValue.Items[pathContentValue.SelectedIndex] = dialog.ResultValue;
+					dialog.Dispose();
 				}
 			}
 			else
@@ -145,6 +167,7 @@ namespace Swsk33.EVTools.Dialog
 			{
 				totalPathValue.Add(value);
 			}
+
 			applyTip.Visible = true;
 			save.Enabled = false;
 			cancel.Enabled = false;
@@ -158,6 +181,10 @@ namespace Swsk33.EVTools.Dialog
 				{
 					MessageBox.Show(@"修改失败！请关闭程序然后右键-以管理员身份运行此程序重试！也可能是Path变量总长度超出限制！", @"失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
+
+				applyTip.Visible = false;
+				save.Enabled = true;
+				cancel.Enabled = true;
 				Close();
 			}).Start();
 		}
@@ -173,6 +200,7 @@ namespace Swsk33.EVTools.Dialog
 				if (dialog.ShowDialog() == DialogResult.OK)
 				{
 					pathContentValue.Items[pathContentValue.SelectedIndex] = dialog.ResultValue;
+					dialog.Dispose();
 				}
 			}
 		}

@@ -27,7 +27,7 @@ namespace Swsk33.EVTools.Dialog
 		private void cancel_Click(object sender, EventArgs e)
 		{
 			DialogResult = DialogResult.Cancel;
-			Close();
+			Dispose();
 		}
 
 		/// <summary>

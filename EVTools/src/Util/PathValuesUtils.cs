@@ -30,6 +30,7 @@ namespace Swsk33.EVTools.Util
 					result.Add(valuesNotExpanded[i], valuesExpanded[i]);
 				}
 			}
+
 			return result;
 		}
 
@@ -45,6 +46,7 @@ namespace Swsk33.EVTools.Util
 			{
 				pathValues[i] = FilePathUtils.RemovePathEndBackslash(pathValues[i].Replace("/", "\\"));
 			}
+
 			return pathValues;
 		}
 
@@ -70,6 +72,7 @@ namespace Swsk33.EVTools.Util
 						continue;
 					}
 				}
+
 				// 否则，规整大小写
 				if (pathValues[i].Length >= systemRootName.Length)
 				{
@@ -80,6 +83,7 @@ namespace Swsk33.EVTools.Util
 					}
 				}
 			}
+
 			return pathValues;
 		}
 
@@ -108,6 +112,7 @@ namespace Swsk33.EVTools.Util
 					result.Add(originValue);
 				}
 			}
+
 			// 第二遍检查是否同时存在一个变量形式路径和这个变量的值
 			// 获取Path中变量形式值
 			Dictionary<string, string> variables = GetVariablesInPath();
@@ -123,6 +128,7 @@ namespace Swsk33.EVTools.Util
 					}
 				}
 			}
+
 			return result.ToArray();
 		}
 
@@ -134,21 +140,22 @@ namespace Swsk33.EVTools.Util
 		{
 			List<string> result = new List<string>(RegUtils.GetPathVariable(false));
 			Dictionary<string, string> variables = GetVariablesInPath();
-			string eachPath;
 			for (int i = 0; i < result.Count; i++)
 			{
+				string eachPath;
 				// 如果这个值中包含%，说明是变量引用形式，获取其实际值
 				if (result[i].Contains("%"))
 				{
-					// 变量列表中不存在该值，说明这个值是不存在的路径
 					eachPath = FilePathUtils.RemovePathEndBackslash(result[i].Replace("/", "\\"));
+					// 变量列表中不存在该值，说明这个值是不存在的路径
 					if (!variables.ContainsKey(eachPath))
 					{
 						result.RemoveAt(i);
 						i--;
 						continue;
 					}
-					// 否则，进一步检测其对应路径是否存在
+
+					// 否则，进一步展开变量，并检测其对应路径是否存在
 					eachPath = FilePathUtils.RemovePathEndBackslash(variables[eachPath].Replace("/", "\\"));
 					if (!Directory.Exists(eachPath) && !File.Exists(eachPath))
 					{
@@ -167,6 +174,7 @@ namespace Swsk33.EVTools.Util
 					}
 				}
 			}
+
 			return result.ToArray();
 		}
 	}

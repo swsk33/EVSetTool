@@ -54,7 +54,14 @@ namespace Swsk33.EVTools
 	        this.pyManualSetButton = new System.Windows.Forms.Button();
 	        this.pyManualSetOption = new System.Windows.Forms.RadioButton();
 	        this.pyManualSetValue = new System.Windows.Forms.TextBox();
-	        this.other = new System.Windows.Forms.TabPage();
+	        this.msysTab = new System.Windows.Forms.TabPage();
+	        this.msysSetTipLabel = new System.Windows.Forms.Label();
+	        this.msysSetTip = new System.Windows.Forms.Label();
+	        this.msysEnvButton = new System.Windows.Forms.Button();
+	        this.msysOk = new System.Windows.Forms.Button();
+	        this.msysSetButton = new System.Windows.Forms.Button();
+	        this.msysPath = new System.Windows.Forms.TextBox();
+	        this.pathTab = new System.Windows.Forms.TabPage();
 	        this.utilitiesButton = new System.Windows.Forms.Button();
 	        this.managePath = new System.Windows.Forms.Button();
 	        this.isAppend = new System.Windows.Forms.CheckBox();
@@ -67,7 +74,8 @@ namespace Swsk33.EVTools
 	        this.mainTabPane.SuspendLayout();
 	        this.jdkSetTab.SuspendLayout();
 	        this.pythonTab.SuspendLayout();
-	        this.other.SuspendLayout();
+	        this.msysTab.SuspendLayout();
+	        this.pathTab.SuspendLayout();
 	        this.SuspendLayout();
 	        // 
 	        // jdkAutoSetLabel
@@ -149,7 +157,8 @@ namespace Swsk33.EVTools
 	        // 
 	        this.mainTabPane.Controls.Add(this.jdkSetTab);
 	        this.mainTabPane.Controls.Add(this.pythonTab);
-	        this.mainTabPane.Controls.Add(this.other);
+	        this.mainTabPane.Controls.Add(this.msysTab);
+	        this.mainTabPane.Controls.Add(this.pathTab);
 	        this.mainTabPane.Dock = System.Windows.Forms.DockStyle.Top;
 	        this.mainTabPane.Location = new System.Drawing.Point(0, 0);
 	        this.mainTabPane.Name = "mainTabPane";
@@ -174,7 +183,7 @@ namespace Swsk33.EVTools
 	        this.jdkSetTab.Padding = new System.Windows.Forms.Padding(3);
 	        this.jdkSetTab.Size = new System.Drawing.Size(373, 230);
 	        this.jdkSetTab.TabIndex = 0;
-	        this.jdkSetTab.Text = "JDK环境变量设置";
+	        this.jdkSetTab.Text = "JDK设置";
 	        this.jdkSetTab.UseVisualStyleBackColor = true;
 	        // 
 	        // jdkSettingTip
@@ -229,7 +238,7 @@ namespace Swsk33.EVTools
 	        this.pythonTab.Name = "pythonTab";
 	        this.pythonTab.Size = new System.Drawing.Size(373, 230);
 	        this.pythonTab.TabIndex = 2;
-	        this.pythonTab.Text = "Python环境变量设置";
+	        this.pythonTab.Text = "Python设置";
 	        this.pythonTab.UseVisualStyleBackColor = true;
 	        // 
 	        // pyAutoSetValue
@@ -342,23 +351,98 @@ namespace Swsk33.EVTools
 	        this.pyManualSetValue.Size = new System.Drawing.Size(217, 21);
 	        this.pyManualSetValue.TabIndex = 11;
 	        // 
-	        // other
+	        // msysTab
 	        // 
-	        this.other.Controls.Add(this.utilitiesButton);
-	        this.other.Controls.Add(this.managePath);
-	        this.other.Controls.Add(this.isAppend);
-	        this.other.Controls.Add(this.otherSettingTip);
-	        this.other.Controls.Add(this.otherSetTip);
-	        this.other.Controls.Add(this.otherOK);
-	        this.other.Controls.Add(this.otherSetButton);
-	        this.other.Controls.Add(this.otherSetValue);
-	        this.other.Location = new System.Drawing.Point(4, 22);
-	        this.other.Name = "other";
-	        this.other.Padding = new System.Windows.Forms.Padding(3);
-	        this.other.Size = new System.Drawing.Size(373, 230);
-	        this.other.TabIndex = 1;
-	        this.other.Text = "加入路径至Path环境变量";
-	        this.other.UseVisualStyleBackColor = true;
+	        this.msysTab.Controls.Add(this.msysSetTipLabel);
+	        this.msysTab.Controls.Add(this.msysSetTip);
+	        this.msysTab.Controls.Add(this.msysEnvButton);
+	        this.msysTab.Controls.Add(this.msysOk);
+	        this.msysTab.Controls.Add(this.msysSetButton);
+	        this.msysTab.Controls.Add(this.msysPath);
+	        this.msysTab.Location = new System.Drawing.Point(4, 22);
+	        this.msysTab.Name = "msysTab";
+	        this.msysTab.Size = new System.Drawing.Size(373, 230);
+	        this.msysTab.TabIndex = 3;
+	        this.msysTab.Text = "Msys2设置";
+	        this.msysTab.UseVisualStyleBackColor = true;
+	        // 
+	        // msysSetTipLabel
+	        // 
+	        this.msysSetTipLabel.AutoSize = true;
+	        this.msysSetTipLabel.Font = new System.Drawing.Font("新宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+	        this.msysSetTipLabel.Location = new System.Drawing.Point(29, 51);
+	        this.msysSetTipLabel.Name = "msysSetTipLabel";
+	        this.msysSetTipLabel.Size = new System.Drawing.Size(189, 14);
+	        this.msysSetTipLabel.TabIndex = 20;
+	        this.msysSetTipLabel.Text = "请指定目录并加至Path变量：";
+	        // 
+	        // msysSetTip
+	        // 
+	        this.msysSetTip.AutoSize = true;
+	        this.msysSetTip.ForeColor = System.Drawing.Color.Blue;
+	        this.msysSetTip.Location = new System.Drawing.Point(2, 214);
+	        this.msysSetTip.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+	        this.msysSetTip.Name = "msysSetTip";
+	        this.msysSetTip.Size = new System.Drawing.Size(149, 12);
+	        this.msysSetTip.TabIndex = 19;
+	        this.msysSetTip.Text = "正在设定Msys2环境变量...";
+	        this.msysSetTip.Visible = false;
+	        // 
+	        // msysEnvButton
+	        // 
+	        this.msysEnvButton.Location = new System.Drawing.Point(55, 154);
+	        this.msysEnvButton.Name = "msysEnvButton";
+	        this.msysEnvButton.Size = new System.Drawing.Size(122, 31);
+	        this.msysEnvButton.TabIndex = 17;
+	        this.msysEnvButton.Text = "启用的Msys2环境";
+	        this.msysEnvButton.UseVisualStyleBackColor = true;
+	        this.msysEnvButton.Click += new System.EventHandler(this.msysEnvButton_Click);
+	        // 
+	        // msysOk
+	        // 
+	        this.msysOk.Location = new System.Drawing.Point(215, 154);
+	        this.msysOk.Name = "msysOk";
+	        this.msysOk.Size = new System.Drawing.Size(80, 31);
+	        this.msysOk.TabIndex = 17;
+	        this.msysOk.Text = "设定";
+	        this.msysOk.UseVisualStyleBackColor = true;
+	        this.msysOk.Click += new System.EventHandler(this.setMsysButton_Click);
+	        // 
+	        // msysSetButton
+	        // 
+	        this.msysSetButton.Location = new System.Drawing.Point(274, 96);
+	        this.msysSetButton.Name = "msysSetButton";
+	        this.msysSetButton.Size = new System.Drawing.Size(75, 23);
+	        this.msysSetButton.TabIndex = 18;
+	        this.msysSetButton.Text = "浏览";
+	        this.msysSetButton.UseVisualStyleBackColor = true;
+	        this.msysSetButton.Click += new System.EventHandler(this.msysSetButton_Click);
+	        // 
+	        // msysPath
+	        // 
+	        this.msysPath.Location = new System.Drawing.Point(29, 98);
+	        this.msysPath.Name = "msysPath";
+	        this.msysPath.ReadOnly = true;
+	        this.msysPath.Size = new System.Drawing.Size(227, 21);
+	        this.msysPath.TabIndex = 16;
+	        // 
+	        // pathTab
+	        // 
+	        this.pathTab.Controls.Add(this.utilitiesButton);
+	        this.pathTab.Controls.Add(this.managePath);
+	        this.pathTab.Controls.Add(this.isAppend);
+	        this.pathTab.Controls.Add(this.otherSettingTip);
+	        this.pathTab.Controls.Add(this.otherSetTip);
+	        this.pathTab.Controls.Add(this.otherOK);
+	        this.pathTab.Controls.Add(this.otherSetButton);
+	        this.pathTab.Controls.Add(this.otherSetValue);
+	        this.pathTab.Location = new System.Drawing.Point(4, 22);
+	        this.pathTab.Name = "pathTab";
+	        this.pathTab.Padding = new System.Windows.Forms.Padding(3);
+	        this.pathTab.Size = new System.Drawing.Size(373, 230);
+	        this.pathTab.TabIndex = 1;
+	        this.pathTab.Text = "Path管理";
+	        this.pathTab.UseVisualStyleBackColor = true;
 	        // 
 	        // utilitiesButton
 	        // 
@@ -420,7 +504,7 @@ namespace Swsk33.EVTools
 	        // 
 	        // otherOK
 	        // 
-	        this.otherOK.Location = new System.Drawing.Point(144, 154);
+	        this.otherOK.Location = new System.Drawing.Point(148, 162);
 	        this.otherOK.Name = "otherOK";
 	        this.otherOK.Size = new System.Drawing.Size(75, 30);
 	        this.otherOK.TabIndex = 7;
@@ -457,17 +541,30 @@ namespace Swsk33.EVTools
 	        this.MinimizeBox = false;
 	        this.Name = "MainGUI";
 	        this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-	        this.Text = "环境变量设置工具 5.2.0";
+	        this.Text = "环境变量设置工具 6.0.0";
 	        this.Load += new System.EventHandler(this.MainGUI_Load);
 	        this.mainTabPane.ResumeLayout(false);
 	        this.jdkSetTab.ResumeLayout(false);
 	        this.jdkSetTab.PerformLayout();
 	        this.pythonTab.ResumeLayout(false);
 	        this.pythonTab.PerformLayout();
-	        this.other.ResumeLayout(false);
-	        this.other.PerformLayout();
+	        this.msysTab.ResumeLayout(false);
+	        this.msysTab.PerformLayout();
+	        this.pathTab.ResumeLayout(false);
+	        this.pathTab.PerformLayout();
 	        this.ResumeLayout(false);
         }
+
+        private System.Windows.Forms.Button msysEnvButton;
+
+        private System.Windows.Forms.Label msysSetTipLabel;
+
+        private System.Windows.Forms.Label msysSetTip;
+        private System.Windows.Forms.Button msysOk;
+        private System.Windows.Forms.Button msysSetButton;
+        private System.Windows.Forms.TextBox msysPath;
+
+        private System.Windows.Forms.TabPage msysTab;
 
         #endregion
 
@@ -480,7 +577,7 @@ namespace Swsk33.EVTools
         private System.Windows.Forms.Button JDKok;
         private System.Windows.Forms.TabControl mainTabPane;
         private System.Windows.Forms.TabPage jdkSetTab;
-        private System.Windows.Forms.TabPage other;
+        private System.Windows.Forms.TabPage pathTab;
         private System.Windows.Forms.Label jdkNotFoundTip;
         private System.Windows.Forms.Label otherSetTip;
         private System.Windows.Forms.Button otherOK;
@@ -506,4 +603,3 @@ namespace Swsk33.EVTools
 		private System.Windows.Forms.Button utilitiesButton;
 	}
 }
-

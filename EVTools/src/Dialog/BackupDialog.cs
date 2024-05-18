@@ -18,20 +18,22 @@ namespace Swsk33.EVTools.Dialog
 		private static readonly Dictionary<string, Encoding> EncodingPage = new Dictionary<string, Encoding>();
 
 		/// <summary>
-		/// 静态块
+		/// 唯一单例
 		/// </summary>
-		static BackupDialog()
+		private static readonly BackupDialog Instance = new BackupDialog();
+
+		/// <summary>
+		/// 单例模式，私有化构造器
+		/// </summary>
+		private BackupDialog()
 		{
+			InitializeComponent();
+			// 初始化编码
 			EncodingPage.Add("GBK", Encoding.GetEncoding("GBK"));
 			EncodingPage.Add("UTF-8", new UTF8Encoding(false));
 			EncodingPage.Add("UTF-8 with BOM", new UTF8Encoding(true));
 			EncodingPage.Add("UTF-16", Encoding.GetEncoding("UTF-16"));
 			EncodingPage.Add("ASCII", Encoding.GetEncoding("ASCII"));
-		}
-
-		public BackupDialog()
-		{
-			InitializeComponent();
 			foreach (string key in EncodingPage.Keys)
 			{
 				encodingBox.Items.Add(key);
@@ -41,13 +43,22 @@ namespace Swsk33.EVTools.Dialog
 		}
 
 		/// <summary>
+		/// 获取唯一单例
+		/// </summary>
+		/// <returns>BackupDialog唯一单例</returns>
+		public static BackupDialog GetInstance()
+		{
+			return Instance;
+		}
+
+		/// <summary>
 		/// 环境变量转为命令
 		/// </summary>
 		/// <param name="varName">环境变量名</param>
 		/// <returns>cmd命令形式</returns>
 		private string VarToCommand(string varName)
 		{
-			return "setx /m " + StringUtils.SurroundByDoubleQuotes(varName) + " " + StringUtils.SurroundByDoubleQuotes(RegUtils.GetEnvironmentVariable(varName, expandVarCheckBox.Checked).Replace("%", "%%"));
+			return $@"setx /m {StringUtils.SurroundByDoubleQuotes(varName)} {StringUtils.SurroundByDoubleQuotes(RegUtils.GetEnvironmentVariable(varName, expandVarCheckBox.Checked).Replace("%", "%%"))}";
 		}
 
 		/// <summary>
@@ -74,7 +85,7 @@ namespace Swsk33.EVTools.Dialog
 				OperateButtons(false);
 				new Thread(() =>
 				{
-					string content = "@echo off\r\n" + VarToCommand("Path") + "\r\necho 还原Path变量完成！按任意键退出！\r\npause>nul";
+					string content = $"@echo off\r\n{VarToCommand("Path")}\r\necho 还原Path变量完成！按任意键退出！\r\npause>nul";
 					File.WriteAllText(dialog.FileName, content, EncodingPage[encodingBox.SelectedItem.ToString()]);
 					MessageBox.Show(@"备份脚本已导出至：" + dialog.FileName, @"完成", MessageBoxButtons.OK, MessageBoxIcon.Information);
 					OperateButtons(true);

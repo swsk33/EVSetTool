@@ -120,14 +120,14 @@ namespace Swsk33.EVTools
 		private void JDKok_Click(object sender, EventArgs e)
 		{
 			string javaPath = "";
-			bool isJDK9Above = false;
+			bool isJdk9Above = false;
 			if (jdkAutoSetOption.Checked)
 			{
 				javaPath = JdkUtils.JdkVersions[jdkAutoSetValue.SelectedItem.ToString()];
 			}
 			else if (jdkManualSetOption.Checked)
 			{
-				javaPath = jdkManualSetValue.Text.ToString();
+				javaPath = jdkManualSetValue.Text;
 				if (StringUtils.IsEmpty(javaPath))
 				{
 					MessageBox.Show(@"请先指定jdk所在路径！", @"错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -137,14 +137,14 @@ namespace Swsk33.EVTools
 
 			if (!Directory.Exists(javaPath + "\\jre"))
 			{
-				isJDK9Above = true;
+				isJdk9Above = true;
 			}
 
 			JDKok.Enabled = false;
 			jdkSettingTip.Visible = true;
 			new Thread(() =>
 			{
-				JdkUtils.SetJdkValue(javaPath, isJDK9Above);
+				JdkUtils.SetJdkValue(javaPath, isJdk9Above);
 				jdkSettingTip.Visible = false;
 				JDKok.Enabled = true;
 			}).Start();
@@ -237,11 +237,22 @@ namespace Swsk33.EVTools
 		}
 
 		/// <summary>
+		/// 设定Msys2路径按钮-选择路径
+		/// </summary>
+		private void msysSetButton_Click(object sender, EventArgs e)
+		{
+			FolderBrowserDialog dialog = new FolderBrowserDialog();
+			dialog.Description = @"请选择Msys2所在的文件夹";
+			dialog.ShowDialog();
+			msysPath.Text = dialog.SelectedPath;
+		}
+
+		/// <summary>
 		/// 实用工具按钮
 		/// </summary>
 		private void utilitiesButton_Click(object sender, EventArgs e)
 		{
-			new ToolboxDialog().ShowDialog();
+			ToolboxDialog.GetInstance().ShowDialog();
 		}
 
 		/// <summary>
@@ -249,7 +260,7 @@ namespace Swsk33.EVTools
 		/// </summary>
 		private void managePath_Click(object sender, EventArgs e)
 		{
-			new ManagePathDialog().ShowDialog();
+			ManagePathDialog.GetInstance().ShowDialog();
 		}
 
 		/// <summary>
@@ -293,6 +304,38 @@ namespace Swsk33.EVTools
 				VariableUtils.AddValueToPath(otherSetValue.Text, isAppend.Checked);
 				otherSettingTip.Visible = false;
 				otherOK.Enabled = true;
+			}).Start();
+		}
+
+		/// <summary>
+		/// 打开Msys2环境配置窗口
+		/// </summary>
+		private void msysEnvButton_Click(object sender, EventArgs e)
+		{
+			MsysEnvironmentDialog.GetInstance().ShowDialog();
+		}
+
+		/// <summary>
+		/// 设定Msys2的环境变量
+		/// </summary>
+		private void setMsysButton_Click(object sender, EventArgs e)
+		{
+			string msysPathString = msysPath.Text;
+			if (StringUtils.IsEmpty(msysPathString))
+			{
+				MessageBox.Show(@"请先指定Msys2的安装路径！", @"错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
+			msysOk.Enabled = false;
+			msysEnvButton.Enabled = false;
+			msysSetTip.Visible = true;
+			new Thread(() =>
+			{
+				MsysUtils.SetMsysValue(msysPathString);
+				msysOk.Enabled = true;
+				msysEnvButton.Enabled = true;
+				msysSetTip.Visible = false;
 			}).Start();
 		}
 	}
